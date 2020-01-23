@@ -6,7 +6,11 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "author": "",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mager19/tailwindBase.git"
+    },
+    "author": "mager19",
     "license": "ISC",
     "devDependencies": {
         "browser-sync": "^2.26.3",

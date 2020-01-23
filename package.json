@@ -1,0 +1,24 @@
+{
+  "name": "tailwindbase",
+  "version": "1.0.0",
+  "description": "Base de theme WordPress usando Tailwind css",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mager19/tailwindBase.git"
+  },
+  "keywords": [
+    "tailwind",
+    "WordPress",
+    "Theme"
+  ],
+  "author": "mager19",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mager19/tailwindBase/issues"
+  },
+  "homepage": "https://github.com/mager19/tailwindBase#readme"
+}
