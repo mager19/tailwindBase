@@ -1,0 +1,123 @@
+<?php
+if( function_exists('acf_add_local_field_group') ):
+
+acf_add_local_field_group(array(
+	'key' => 'group_5b3f98550147d',
+	'title' => 'Author Fields',
+	'fields' => array(
+		array(
+			'key' => 'field_5b3f985a24f17',
+			'label' => 'Author image',
+			'name' => 'author_image',
+			'type' => 'image',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array(
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+			'return_format' => 'array',
+			'preview_size' => 'thumbnail',
+			'library' => 'all',
+			'min_width' => '',
+			'min_height' => '',
+			'min_size' => '',
+			'max_width' => '',
+			'max_height' => '',
+			'max_size' => '',
+			'mime_types' => '',
+		),
+		array(
+			'key' => 'field_5b3f98b924f18',
+			'label' => 'Social',
+			'name' => 'social_icons_author',
+			'type' => 'repeater',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array(
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+			'collapsed' => '',
+			'min' => 0,
+			'max' => 0,
+			'layout' => 'table',
+			'button_label' => '',
+			'sub_fields' => array(
+				array(
+					'key' => 'field_5b3f98c724f19',
+					'label' => '',
+					'name' => 'social_icon',
+					'type' => 'select',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'choices' => array(
+						'facebook' => 'Facebook',
+						'twitter' => 'Twitter',
+						'youtube' => 'YouTube',
+						'instagram' => 'Instagram',
+						'tripadvisor' => 'Tripadvisor',
+						'linkedin' => 'Linkedin',
+					),
+					'default_value' => array(
+					),
+					'allow_null' => 0,
+					'multiple' => 0,
+					'ui' => 0,
+					'ajax' => 0,
+					'return_format' => 'array',
+					'placeholder' => '',
+				),
+				array(
+					'key' => 'field_5b3f98e424f1a',
+					'label' => 'Add Link Profile',
+					'name' => 'social_profile',
+					'type' => 'text',
+					'instructions' => 'add url https://www.facebook.com/ ...',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'maxlength' => '',
+				),
+			),
+		),
+	),
+	'location' => array(
+		array(
+			array(
+				'param' => 'user_role',
+				'operator' => '==',
+				'value' => 'all',
+			),
+		),
+	),
+	'menu_order' => 0,
+	'position' => 'normal',
+	'style' => 'default',
+	'label_placement' => 'top',
+	'instruction_placement' => 'label',
+	'hide_on_screen' => '',
+	'active' => 1,
+	'description' => '',
+));
+
+endif;
+?>

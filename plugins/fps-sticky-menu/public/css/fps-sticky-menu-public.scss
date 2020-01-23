@@ -1,0 +1,154 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+.fps-sticky-menu__container {
+  width: 100%;
+  background: black;
+  color: white;
+  z-index: 999;
+  position: fixed;
+  padding: 0 15px;
+  a {
+    color: white;
+  }
+  transition: 0.3s all;
+}
+
+.fps-sticky-menu__container-inner {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: auto;
+  min-height: 57px;
+}
+
+.fps-sticky-menu__container.is-top {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.fps-sticky-menu__container.is-top,
+.headroom--pinned .fps-sticky-menu__container.is-top,
+.headroom--unpinned .fps-sticky-menu__container {
+  transform: translateY(-60px);
+}
+
+.headroom--pinned .fps-sticky-menu__container {
+  transform: translateY(0);
+}
+
+.fps-sticky-menu__logo {
+  width: auto;
+  margin-right: 15px;
+  img {
+    max-height: 40px;
+    width: auto;
+  }
+}
+.fps-sticky-menu__nav {
+  display: flex;
+  margin-right: auto;
+
+  .menu {
+    margin: 0;
+    display: flex;
+    list-style: none;
+    li {
+      padding: 16px 0;
+      padding-right: 24px;
+    }
+  }
+
+  .sub-menu {
+    display: none;
+    position: absolute;
+    list-style: none;
+    margin: 0;
+    padding: 16px;
+    margin-top: 13px;
+    border-top: 2px solid;
+
+    .sub-menu {
+      display: none;
+    }
+
+    li {
+      &:first-child {
+        padding-top: 0;
+      }
+      padding-top: 16px;
+      padding-bottom: 0;
+    }
+  }
+
+  li:hover {
+    .sub-menu {
+      display: block;
+    }
+  }
+}
+.fps-sticky-menu__buttons {
+  display: flex;
+}
+.fps-sticky-menu__button {
+  a {
+    padding: 16px;
+  }
+}
+.fps-sticky-menu__button-cta {
+  a,
+  a:hover {
+    padding: 8px;
+    color: white;
+    font-weight: bold;
+  }
+}
+
+.fps-sticky-menu__toggler {
+  display: none;
+  padding-right: 16px;
+  a {
+    display: flex;
+  }
+}
+
+@media (max-width: 990px) {
+  .fps-sticky-menu__toggler {
+    display: block;
+  }
+  .fps-sticky-menu__logo {
+    display: none;
+  }
+  .fps-sticky-menu__nav {
+    display: none;
+    position: absolute;
+    top: 56px;
+
+    ul.menu {
+      background-color: black;
+      padding: 24px;
+      padding-top: 0;
+      width: 100%;
+      display: block;
+      li {
+        padding-bottom: 0;
+      }
+      .sub-menu {
+        display: block;
+        border: none;
+        background: transparent;
+        position: static;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  .fps-sticky-menu__nav.is-open {
+    display: block;
+  }
+}

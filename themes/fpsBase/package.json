@@ -1,0 +1,19 @@
+{
+    "name": "fpsbase",
+    "version": "1.0.0",
+    "description": "--- ###### 15 Nov   * Adding Function of Yoast meta description",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "browser-sync": "^2.26.3",
+        "autoprefixer": "^9.7.4",
+        "gulp": "^3.9.1",
+        "gulp-postcss": "^8.0.0",
+        "precss": "^4.0.0",
+        "tailwindcss": "^1.1.4"
+    }
+}
