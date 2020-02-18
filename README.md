@@ -1,6 +1,17 @@
+# New Updates 2020
+
+### 18 January
+
+-   Updating Plugins
+-   Add Mixin
+-   to use them from PostCSS Mixins, through the mixin:
+    Without parameters : `@mixin section-padding;`
+    With parameters : `@mixin section-padding 90px, 120px;`
+
 # New Updates 2019
 
 ### 12 December
+
 -   Updating Plugins
 -   Sort out main functions in function.php file
 -   404 page (created fields in 'option')

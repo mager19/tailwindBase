@@ -11506,8 +11506,8 @@ Base styles
 .foo {
   color: green;
   /* How use to mixins */
-  padding-top: 60px;
-  padding-bottom: 60px;
+  padding-top: 90px;
+  padding-bottom: 120px;
 }
 
 @media (min-width: 640px) {
