@@ -21,7 +21,7 @@ get_header(); ?>
 		<div class="container m-auto ">
 			<!-- Three columns -->
 			<div class="flex mb-2 h-12 content-center justify-center mb-0">
-				<h4 class="flex items-center rotate-90">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem, unde.</h4>
+				<h4 class="flex items-center rotate-90 foo">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem, unde.</h4>
 
 				<button class="blue_button px-2">Test</button>
 			</div>

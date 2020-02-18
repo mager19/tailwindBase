@@ -10,3 +10,10 @@ $base: red;
         font-size: 32px;
     }
 }
+
+.foo {
+    @extend .title--1;
+    color: green;
+    /* How use to mixins */
+    @mixin section-padding;
+}

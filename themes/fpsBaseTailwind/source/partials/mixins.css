@@ -1,0 +1,44 @@
+/* Sintax
+@define-mixin nameMixin $property: value */
+
+/* //Mixin Background-image */
+@define-mixin background-image $background-position: center center,
+    $background-size: cover, $background-repeat: no-repeat {
+    background-position: $background-position;
+    background-size: $background-size;
+    background-repeat: $background-repeat;
+}
+
+@define-mixin mIcons $content: "backup", $font-size: 18px {
+    content: $content;
+    direction: ltr;
+    display: inline-block;
+    font-family: "Material Icons";
+    font-size: $font-size;
+    font-style: normal;
+    font-weight: normal;
+    letter-spacing: normal;
+    line-height: 1;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    -webkit-font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+}
+
+@define-mixin center-block $max-width: 600px {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: $max-width;
+    display: block;
+    width: 100%;
+}
+
+@define-mixin section-padding $padding-top: 60px, $padding-bottom: 60px {
+    padding-top: $padding-top;
+    padding-bottom: $padding-bottom;
+}
+
+@define-mixin fade $time {
+    transition: all ease $time;
+}

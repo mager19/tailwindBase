@@ -627,15 +627,6 @@ video {
   }
 }
 
-/*****
-Base styles 
-*****/
-
-.top-bar h4 {
-    background-color: #C89EC4;
-    font-size: 32px;
-  }
-
 .sr-only {
   position: absolute;
   width: 1px;
@@ -11484,6 +11475,39 @@ Base styles
 
 .z-auto {
   z-index: auto;
+}
+
+/* Define Theme Fonts */
+
+/* Define Theme Font Weights: */
+
+/* Columns and gap */
+
+/* Sintax
+@define-mixin nameMixin $property: value */
+
+/* //Mixin Background-image */
+
+.foo {
+  /* @include fontSize(64px); */
+  line-height: 90px;
+  font-size: 64px !important;
+}
+
+/*****
+Base styles 
+*****/
+
+.top-bar h4 {
+    background-color: #C89EC4;
+    font-size: 32px;
+  }
+
+.foo {
+  color: green;
+  /* How use to mixins */
+  padding-top: 60px;
+  padding-bottom: 60px;
 }
 
 @media (min-width: 640px) {
