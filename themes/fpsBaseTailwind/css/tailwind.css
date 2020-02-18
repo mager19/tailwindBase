@@ -627,6 +627,110 @@ video {
   }
 }
 
+/* Define Theme Fonts */
+
+/* Define Theme Font Weights: */
+
+/* Columns and gap */
+
+/* Sintax
+@define-mixin nameMixin $property: value */
+
+/* //Mixin Background-image */
+
+.title--1 {
+    font-family: "adelle", sans-serif;
+    font-weight: 700;
+  }
+
+.title--2 {
+    font-family: "adelle", sans-serif;
+    font-weight: 700;
+  }
+
+.title--3 {
+    font-family: "adelle", sans-serif;
+    font-weight: 700;
+  }
+
+.title--4 {
+    font-family: "adelle", sans-serif;
+    font-weight: 700;
+  }
+
+.title--5 {
+    font-family: "adelle", sans-serif;
+    font-weight: 700;
+  }
+
+.title--6 {
+    font-family: "adelle", sans-serif;
+    font-weight: 700;
+  }
+
+/* Titles Defined Figma */
+
+.foo {
+  font-size: 64px;
+  line-height: 90px;
+}
+
+/* Other Titles */
+
+@defined-placeholder .title--button {
+  font-size: 14px;
+
+  font-weight: 700;
+
+  line-height: 16px;
+
+  letter-spacing: 0.1em;
+
+  text-transform: uppercase;
+
+  font-family: "brandon-grotesque", sans-serif;
+}
+
+@defined .title--overline {
+  font-size: 14px;
+
+  font-family: "brandon-grotesque", sans-serif;
+
+  font-weight: 900;
+
+  line-height: 16px;
+
+  letter-spacing: 0.1em;
+
+  text-transform: uppercase;
+}
+
+@defined .title--caption {
+  font-size: 12px;
+
+  line-height: 16px;
+
+  letter-spacing: 0.4px;
+
+  font-weight: 600;
+}
+
+/*****
+Base styles 
+*****/
+
+.top-bar h4 {
+    background-color: #C89EC4;
+    font-size: 32px;
+  }
+
+.foo {
+  color: green;
+  /* How use to mixins */
+  padding-top: 90px;
+  padding-bottom: 120px;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -11475,39 +11579,6 @@ video {
 
 .z-auto {
   z-index: auto;
-}
-
-/* Define Theme Fonts */
-
-/* Define Theme Font Weights: */
-
-/* Columns and gap */
-
-/* Sintax
-@define-mixin nameMixin $property: value */
-
-/* //Mixin Background-image */
-
-.foo {
-  /* @include fontSize(64px); */
-  line-height: 90px;
-  font-size: 64px !important;
-}
-
-/*****
-Base styles 
-*****/
-
-.top-bar h4 {
-    background-color: #C89EC4;
-    font-size: 32px;
-  }
-
-.foo {
-  color: green;
-  /* How use to mixins */
-  padding-top: 90px;
-  padding-bottom: 120px;
 }
 
 @media (min-width: 640px) {

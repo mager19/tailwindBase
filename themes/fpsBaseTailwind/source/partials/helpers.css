@@ -3,3 +3,81 @@
     line-height: 90px;
     font-size: 64px !important;
 }
+
+@for $i from 1 to 6 {
+    .title--$i {
+        font-family: $font-family-base;
+        font-weight: $font-weight-bold;
+    }
+}
+
+/* Titles Defined Figma */
+
+@define-placeholder title--1 {
+    font-size: 64px;
+    line-height: 90px;
+}
+
+@define-placeholder title--2 {
+    font-size: 48px;
+    line-height: 67px;
+}
+
+@define-placeholder title--3 {
+    font-size: 36px;
+    line-height: 51px;
+}
+
+@define-placeholder title--4 {
+    font-size: 24px;
+    line-height: 36px;
+}
+
+@define-placeholder title--5 {
+    font-size: 18px;
+    line-height: 27px;
+}
+
+@define-placeholder title--6 {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+/* Other Titles */
+
+@define-placeholder title--lead {
+    font-size: 18px;
+    font-weight: $font-weight-normal;
+    line-height: 30px;
+}
+
+@define-placeholder title--body {
+    font-size: 16px;
+    font-weight: $font-weight-normal;
+    line-height: 26px;
+}
+
+@defined-placeholder .title--button {
+    font-size: 14px;
+    font-weight: $font-weight-bold;
+    line-height: 16px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: $font-family-alt;
+}
+
+@defined .title--overline {
+    font-size: 14px;
+    font-family: $font-family-alt;
+    font-weight: 900;
+    line-height: 16px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+@defined .title--caption {
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.4px;
+    font-weight: $font-weight-semi;
+}

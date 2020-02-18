@@ -12,8 +12,8 @@ $base: red;
 }
 
 .foo {
-    @extend .title--1;
     color: green;
     /* How use to mixins */
     @mixin section-padding 90px, 120px;
+    @extend title--1;
 }

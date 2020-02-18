@@ -2,8 +2,6 @@
 
 @import "tailwindcss/components";
 
-@import "tailwindcss/utilities";
-
 @import "./partials/variables.css";
 
 @import "./partials/mixins.css";
@@ -11,3 +9,5 @@
 @import "./partials/helpers.css";
 
 @import "./partials/base.css";
+
+@import "tailwindcss/utilities";
