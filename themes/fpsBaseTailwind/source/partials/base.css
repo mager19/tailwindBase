@@ -1,0 +1,12 @@
+/*****
+Base styles 
+*****/
+
+$base: red;
+
+.top-bar {
+    h4 {
+        background-color: theme("colors.test-color");
+        font-size: 32px;
+    }
+}

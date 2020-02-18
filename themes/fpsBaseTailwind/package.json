@@ -1,0 +1,27 @@
+{
+    "name": "fpsBaseTailwind",
+    "version": "1.0.0",
+    "description": "--- ###### 15 Nov   * Adding Function of Yoast meta description",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mager19/tailwindBase.git"
+    },
+    "author": "mager19",
+    "license": "ISC",
+    "devDependencies": {
+        "autoprefixer": "^9.7.4",
+        "browser-sync": "^2.26.3",
+        "gulp": "^3.9.1",
+        "gulp-postcss": "^8.0.0",
+        "gulp-sourcemaps": "^2.6.5",
+        "postcss-import": "^12.0.1",
+        "postcss-mixins": "^6.2.3",
+        "postcss-simple-extend": "^1.0.0",
+        "precss": "^4.0.0",
+        "tailwindcss": "^1.1.4"
+    }
+}
