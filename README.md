@@ -5,10 +5,10 @@
 -   Updating Plugins
 -   Add Mixin
 -   to use them from PostCSS Mixins, through the mixin: <br>
-    Without parameters : `@mixin section-padding;`
+    Without parameters : `@mixin section-padding;`<br>
     With parameters : `@mixin section-padding 90px, 120px;`
 -   Add @extend - File Helpers.css <br>
-    Defined: `@define-placeholder title--1 {font-size: 64px;line-height: 90px;}`
+    Defined: `@define-placeholder title--1 {font-size: 64px;line-height: 90px;}`<br>
     Use: `@extend title--1;`
 
 # New Updates 2019
