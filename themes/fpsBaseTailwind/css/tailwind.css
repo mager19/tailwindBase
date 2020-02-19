@@ -639,97 +639,271 @@ video {
 /* //Mixin Background-image */
 
 .title--1 {
-    font-family: "adelle", sans-serif;
-    font-weight: 700;
-  }
+  font-family: "adelle", sans-serif;
+  font-weight: 700;
+}
 
 .title--2 {
-    font-family: "adelle", sans-serif;
-    font-weight: 700;
-  }
+  font-family: "adelle", sans-serif;
+  font-weight: 700;
+}
 
 .title--3 {
-    font-family: "adelle", sans-serif;
-    font-weight: 700;
-  }
+  font-family: "adelle", sans-serif;
+  font-weight: 700;
+}
 
 .title--4 {
-    font-family: "adelle", sans-serif;
-    font-weight: 700;
-  }
+  font-family: "adelle", sans-serif;
+  font-weight: 700;
+}
 
 .title--5 {
-    font-family: "adelle", sans-serif;
-    font-weight: 700;
-  }
+  font-family: "adelle", sans-serif;
+  font-weight: 700;
+}
 
 .title--6 {
-    font-family: "adelle", sans-serif;
-    font-weight: 700;
-  }
+  font-family: "adelle", sans-serif;
+  font-weight: 700;
+}
 
-/* Titles Defined Figma */
+.test--mio {
+  color: green;
+}
 
-.foo {
-  font-size: 64px;
+.title--1 {
+  color: blue;
+  font-size: 4rem;
   line-height: 90px;
 }
 
-/* Other Titles */
+.title--2 {
+  color: red;
+  font-size: 3rem;
+  line-height: 67px;
+}
 
-@defined-placeholder .title--button {
-  font-size: 14px;
+.title--3 {
+  font-size: 2.25rem;
+  line-height: 51px;
+}
 
+.title--4 {
+  font-size: 1.5rem;
+  line-height: 36px;
+}
+
+.title--5 {
+  font-size: 1.125rem;
+  line-height: 27px;
+}
+
+.title--6 {
+  font-size: 1rem;
+  line-height: 24px;
+}
+
+​
+    
+​
+    .title--lead {
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 30px;
+}
+
+​ .title--body {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 26px;
+}
+
+​ .title--button {
+  font-size: 0.875rem;
   font-weight: 700;
-
   line-height: 16px;
-
   letter-spacing: 0.1em;
-
   text-transform: uppercase;
-
   font-family: "brandon-grotesque", sans-serif;
 }
 
-@defined .title--overline {
-  font-size: 14px;
-
+​ .title--overline {
+  font-size: 0.875rem;
   font-family: "brandon-grotesque", sans-serif;
-
   font-weight: 900;
-
   line-height: 16px;
-
   letter-spacing: 0.1em;
-
   text-transform: uppercase;
 }
 
-@defined .title--caption {
-  font-size: 12px;
-
+​ .title--caption {
+  font-size: 0.75rem;
   line-height: 16px;
-
   letter-spacing: 0.4px;
-
   font-weight: 600;
+}
+
+@media screen and (min-width: 768px) {
+  ​
+
+​
+.title-md--1 {
+    font-size: 4rem;
+    line-height: 90px;
+  }
+
+  ​
+
+​
+.title-md--2 {
+    font-size: 3rem;
+    line-height: 67px;
+  }
+
+  ​
+
+​
+.title-md--3 {
+    font-size: 2.25rem;
+    line-height: 51px;
+  }
+
+  ​
+
+​
+.title-md--4 {
+    font-size: 1.5rem;
+    line-height: 36px;
+  }
+
+  ​
+
+​
+.title-md--5 {
+    font-size: 1.125rem;
+    line-height: 27px;
+  }
+
+  ​
+
+​
+.title-md--6 {
+    font-size: 1rem;
+    line-height: 24px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  ​
+
+​
+.title-lg--1 {
+    font-size: 4rem;
+    line-height: 90px;
+  }
+
+  ​
+
+​
+.title-lg--2 {
+    font-size: 3rem;
+    line-height: 67px;
+  }
+
+  ​
+
+​
+.title-lg--3 {
+    font-size: 2.25rem;
+    line-height: 51px;
+  }
+
+  ​
+
+​
+.title-lg--4 {
+    font-size: 1.5rem;
+    line-height: 36px;
+  }
+
+  ​
+
+​
+.title-lg--5 {
+    font-size: 1.125rem;
+    line-height: 27px;
+  }
+
+  ​
+
+​
+.title-lg--6 {
+    font-size: 1rem;
+    line-height: 24px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  ​
+
+​
+.title-xl--1 {
+    font-size: 4rem;
+    line-height: 90px;
+  }
+
+  ​
+
+​
+.title-xl--2 {
+    font-size: 3rem;
+    line-height: 67px;
+  }
+
+  ​
+
+​
+.title-xl--3 {
+    font-size: 2.25rem;
+    line-height: 51px;
+  }
+
+  ​
+
+​
+.title-xl--4 {
+    font-size: 1.5rem;
+    line-height: 36px;
+  }
+
+  ​
+
+​
+.title-xl--5 {
+    font-size: 1.125rem;
+    line-height: 27px;
+  }
+
+  ​
+
+​
+.title-xl--6 {
+    font-size: 1rem;
+    line-height: 24px;
+  }
 }
 
 /*****
 Base styles 
 *****/
 
-.top-bar h4 {
-    background-color: #C89EC4;
-    font-size: 32px;
-  }
-
-.foo {
-  color: green;
-  /* How use to mixins */
-  padding-top: 90px;
-  padding-bottom: 120px;
-}
+/* 
+.top-bar {
+    h4 {
+        @apply title--2;
+    }
+} */
 
 .sr-only {
   position: absolute;
@@ -11343,12 +11517,12 @@ Base styles
 }
 
 .break-normal {
-  word-wrap: normal;
+  overflow-wrap: normal;
   word-break: normal;
 }
 
 .break-words {
-  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .break-all {
@@ -22194,12 +22368,12 @@ Base styles
   }
 
   .sm\:break-normal {
-    word-wrap: normal;
+    overflow-wrap: normal;
     word-break: normal;
   }
 
   .sm\:break-words {
-    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .sm\:break-all {
@@ -33046,12 +33220,12 @@ Base styles
   }
 
   .md\:break-normal {
-    word-wrap: normal;
+    overflow-wrap: normal;
     word-break: normal;
   }
 
   .md\:break-words {
-    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .md\:break-all {
@@ -43898,12 +44072,12 @@ Base styles
   }
 
   .lg\:break-normal {
-    word-wrap: normal;
+    overflow-wrap: normal;
     word-break: normal;
   }
 
   .lg\:break-words {
-    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .lg\:break-all {
@@ -54750,12 +54924,12 @@ Base styles
   }
 
   .xl\:break-normal {
-    word-wrap: normal;
+    overflow-wrap: normal;
     word-break: normal;
   }
 
   .xl\:break-words {
-    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .xl\:break-all {

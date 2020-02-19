@@ -1,9 +1,3 @@
-@define-placeholder .title--1 {
-    /* @include fontSize(64px); */
-    line-height: 90px;
-    font-size: 64px !important;
-}
-
 @for $i from 1 to 6 {
     .title--$i {
         font-family: $font-family-base;
@@ -11,73 +5,165 @@
     }
 }
 
-/* Titles Defined Figma */
-
-@define-placeholder title--1 {
-    font-size: 64px;
-    line-height: 90px;
+.test {
+    &--mio {
+        color: green;
+    }
 }
 
-@define-placeholder title--2 {
-    font-size: 48px;
-    line-height: 67px;
+.title {
+    &--1 {
+        color: blue;
+        font-size: rem(64px);
+        line-height: 90px;
+    }
+    &--2 {
+        color: red;
+        font-size: rem(48px);
+        line-height: 67px;
+    }
+    &--3 {
+        font-size: rem(36px);
+        line-height: 51px;
+    }
+    &--4 {
+        font-size: rem(24px);
+        line-height: 36px;
+    }
+    &--5 {
+        font-size: rem(18px);
+        line-height: 27px;
+    }
+    &--6 {
+        font-size: rem(16px);
+        line-height: 24px;
+    }
+    ​
+    /* // Other Titles */
+​
+    &--lead {
+        font-size: rem(18px);
+        font-weight: $font-weight-normal;
+        line-height: 30px;
+    }
+    ​ &--body {
+        font-weight: $font-weight-normal;
+        font-size: rem(16px);
+        line-height: 26px;
+    }
+    ​ &--button {
+        font-size: rem(14px);
+        font-weight: $font-weight-bold;
+        line-height: 16px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-family: $font-family-alt;
+    }
+    ​ &--overline {
+        font-size: rem(14px);
+        font-family: $font-family-alt;
+        font-weight: 900;
+        line-height: 16px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+    ​ &--caption {
+        font-size: rem(12px);
+        line-height: 16px;
+        letter-spacing: 0.4px;
+        font-weight: $font-weight-semi;
+    }
 }
-
-@define-placeholder title--3 {
-    font-size: 36px;
-    line-height: 51px;
+​
+/* // for table example .title-md--1; */
+​
+.title-md {
+    @media screen and (min-width: 768px) {
+        &--1 {
+            font-size: rem(64px);
+            line-height: 90px;
+        }
+        &--2 {
+            font-size: rem(48px);
+            line-height: 67px;
+        }
+        &--3 {
+            font-size: rem(36px);
+            line-height: 51px;
+        }
+        &--4 {
+            font-size: rem(24px);
+            line-height: 36px;
+        }
+        &--5 {
+            font-size: rem(18px);
+            line-height: 27px;
+        }
+        &--6 {
+            font-size: rem(16px);
+            line-height: 24px;
+        }
+    }
 }
-
-@define-placeholder title--4 {
-    font-size: 24px;
-    line-height: 36px;
+​
+/* // for Desktop example .title-lg--1; */
+​
+.title-lg {
+    @media screen and (min-width: 992px) {
+        &--1 {
+            font-size: rem(64px);
+            line-height: 90px;
+        }
+        &--2 {
+            font-size: rem(48px);
+            line-height: 67px;
+        }
+        &--3 {
+            font-size: rem(36px);
+            line-height: 51px;
+        }
+        &--4 {
+            font-size: rem(24px);
+            line-height: 36px;
+        }
+        &--5 {
+            font-size: rem(18px);
+            line-height: 27px;
+        }
+        &--6 {
+            font-size: rem(16px);
+            line-height: 24px;
+        }
+    }
 }
-
-@define-placeholder title--5 {
-    font-size: 18px;
-    line-height: 27px;
-}
-
-@define-placeholder title--6 {
-    font-size: 16px;
-    line-height: 24px;
-}
-
-/* Other Titles */
-
-@define-placeholder title--lead {
-    font-size: 18px;
-    font-weight: $font-weight-normal;
-    line-height: 30px;
-}
-
-@define-placeholder title--body {
-    font-size: 16px;
-    font-weight: $font-weight-normal;
-    line-height: 26px;
-}
-
-@defined-placeholder .title--button {
-    font-size: 14px;
-    font-weight: $font-weight-bold;
-    line-height: 16px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-family: $font-family-alt;
-}
-
-@defined .title--overline {
-    font-size: 14px;
-    font-family: $font-family-alt;
-    font-weight: 900;
-    line-height: 16px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-}
-
-@defined .title--caption {
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0.4px;
-    font-weight: $font-weight-semi;
+​
+/* // for Desktop example .title-xl--1; */
+​
+.title-xl {
+    @media screen and (min-width: 1024px) {
+        &--1 {
+            font-size: rem(64px);
+            line-height: 90px;
+        }
+        &--2 {
+            font-size: rem(48px);
+            line-height: 67px;
+        }
+        &--3 {
+            font-size: rem(36px);
+            line-height: 51px;
+        }
+        &--4 {
+            font-size: rem(24px);
+            line-height: 36px;
+        }
+        &--5 {
+            font-size: rem(18px);
+            line-height: 27px;
+        }
+        &--6 {
+            font-size: rem(16px);
+            line-height: 24px;
+        }
+    }
 }

@@ -1,19 +1,9 @@
 /*****
 Base styles 
 *****/
-
-$base: red;
-
+/* 
 .top-bar {
     h4 {
-        background-color: theme("colors.test-color");
-        font-size: 32px;
+        @apply title--2;
     }
-}
-
-.foo {
-    color: green;
-    /* How use to mixins */
-    @mixin section-padding 90px, 120px;
-    @extend title--1;
-}
+} */

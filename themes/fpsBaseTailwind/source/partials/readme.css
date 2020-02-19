@@ -11,17 +11,6 @@ $variable-name: #4d4d4d;
     color: $variable-name;
 }
 
-/*****
-Extends
-*****/
-@define-placeholder gigantic {
-    font-size: 2em;
-}
-
-.selector {
-    @extend gigantic;
-}
-
 /***** 
 Mixins
 *****/
@@ -40,4 +29,12 @@ Colors tailwind.config.js
 *****/
 .selector {
     background-color: theme("colors.test-color");
+}
+
+/*****
+PostCSS 
+*****/
+.selector {
+    font-size: rem(24px); /* Simple */
+    padding: rem(5px 10px); /* Multiple values */
 }

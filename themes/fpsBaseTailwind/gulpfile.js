@@ -13,13 +13,18 @@ gulp.task("css", function () {
             .pipe(
                 postcss([
                     require("postcss-import"),
+                    require('postcss-rem'),
                     require("postcss-mixins"),
-                    require("postcss-simple-extend"),
+                    require("precss"),
                     require("tailwindcss"),
                     require("autoprefixer"),
-                    require("precss")
+                    require('postcss-nested'),
                 ])
             )
+            .on('error', function (errorInfo) {  // if the error event is triggered, do something
+                console.log(errorInfo.toString()); // show the error information
+                this.emit('end'); // tell the gulp that the task is ended gracefully and resume
+            })
             // ...
             .pipe(sourcemaps.write('../maps'))
             .pipe(gulp.dest("css/"))
