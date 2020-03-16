@@ -1,4 +1,4 @@
-/* 
+/*
     Created on : 14 May, 2014, 4:08:11 PM
     Author     : umesh
 */
@@ -26,40 +26,21 @@
 /* Slider Styling */
 .template-holder {
     float: left;
-    text-align: center;
-    padding-bottom: 10px;
 }
-
-.template-holder:hover{
-    opacity: 1;
-    transition: opacity .25s ease;
-    -moz-transition: opacity .25s ease;
-    -webkit-transition: opacity .25s ease;
-    background: #ddd;
-}
-
 .template-holder img.theme-preview {
     max-width: 220px;
-    max-height: 220px;
 }
 .template-holder a{
     font-size: medium;
-    line-height: 1.5; 
+    line-height: 1.5;
 }
 .template-selector{
-    float: none;
-    display: block;
+    float: left;
     margin: 0 10px;
-    text-align: center;
-    text-decoration: none;
-    color: #555;
-    font-weight: bold;    
 }
-
 .template-holder a img {
     border: 2px solid transparent;
     margin: 5px 0 0 0;
-    display: inline-block;
 }
 .template-holder.active-theme {
     opacity: 1;
@@ -95,7 +76,7 @@
     overflow: hidden;
 }
 .action-wrapper .spinner {
-    float: none; 
+    float: none;
     margin-top: 4px;
     margin-bottom: 0;
 }
@@ -106,11 +87,8 @@
     margin-left: 5px;
 }
 .load_template.button-primary {
-    margin: 0 auto;
-    margin-top: 10px;
-    width: 80%;
-    display: block;
-    text-align: center;
+    margin: 10px 0 0 10px;
+    max-width: 220px;
 }
 .preview-email {
     clear: left;
@@ -130,17 +108,11 @@
     padding: 4px;
     width: 220px;
 }
-
-.template-settings-options .options-label{
-    display: inline-block;
-    width: 180px;
-}
 .wrap .updated.preview-email-status, .wrap .error.preview-email-status {
     margin: 20px 0 0;
 }
 /* Placeholder list table styling */
-#placeholder-list-wrapper,
-#template-images-wrapper {
+#placeholder-list-wrapper {
     display: none;
 }
 .template-placeholders-list {
@@ -185,3 +157,6 @@ li .step-count {
     padding: 5px 0;
     width: 45px;
 }
+
+
+/* 354920-1465403918 */

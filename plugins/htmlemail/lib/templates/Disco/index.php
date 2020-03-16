@@ -15,7 +15,7 @@ define('BUILDER_DEFAULT_ALTERNATIVE_COLOR', '#eebb00');
 
 define('BUILDER_DEFAULT_TITLE_COLOR', '#eebb00');
 
-define('BUILDER_DEFAULT_EMAIL_TITLE', 'Default Email Title');
+define('BUILDER_DEFAULT_EMAIL_TITLE', 'Default Email Title');	 	 		 	 	 				 		 
 
 
 /* You can define settings for this template here */

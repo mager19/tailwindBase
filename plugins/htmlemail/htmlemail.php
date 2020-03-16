@@ -4,7 +4,7 @@ Plugin Name: HTML Email Templates
 Plugin URI: https://premium.wpmudev.org/project/html-email-templates/
 Description: Allows you to add HTML templates for all of the standard Wordpress emails. In Multisite templates can be set network wide or can be allowed to set site wise template, if template override for the site is enabled and template is not specified for a site, network template will be used.
 Author: WPMU DEV
-Version: 2.0.7
+Version: 2.0.6
 Author URI: http://premium.wpmudev.org/
 Network: true
 WDP ID: 142
@@ -77,11 +77,6 @@ class HTML_emailer {
 	 * @var path Template URL
 	 */
 	var $theme_url = '';
-	
-	/**
-	* @var theme
-	*/
-	public $html_theme = '';
 
 	/**
 	 * @var path to assets
@@ -237,21 +232,6 @@ class HTML_emailer {
 		//Fetch HTML email settings
 		$htmlemail_settings = get_site_option( 'htmlemail_settings' );
 
-		$current_template_name = isset( $htmlemail_settings['template_name'] ) ? ucfirst( strtolower( $htmlemail_settings['template_name'] ) ) : false;
-
-		if( !$current_template_name ){
-			return compact( 'to', 'subject', 'message', 'headers', 'attachments' );
-		}
-
-		$template_directory = $this->plugin_dir . 'lib/templates/';
-		$theme_path = $template_directory . $current_template_name;
-
-		$this->template_url       = $this->plugin_url . 'lib/templates/';
-		$this->theme_url = $this->template_url . $current_template_name;
-
-		//Get Default Variables
-		require_once( $theme_path . '/index.php' );
-
 		//Check if site is allowed to use its own template
 		$site_override = isset( $htmlemail_settings['site_override'] ) ? $htmlemail_settings['site_override'] : '';
 		//As the network has site id 1, it loads the template for blog with id 1 but for preview we need to show network template
@@ -284,9 +264,8 @@ class HTML_emailer {
 			} else {
 				$message = preg_replace( '~\{USER_NAME}~', '', $message );
 			}
-			$message = preg_replace( '~\{USER_EMAIL}~', $to, $message );
 
-			$message = $this->replace_placeholders( $message, $args, false );
+			$message = $this->replace_placeholders( $message, false );
 		}
 
 		//Compact & return all the vars
@@ -384,14 +363,10 @@ class HTML_emailer {
 			$modify_html_email  = get_option( 'modify_html_email' );
 
 		}
-
-		$current_template_name = isset( $htmlemail_settings['template_name'] ) ? $htmlemail_settings['template_name'] : '';
-
 		$modify_html_email = isset( $modify_html_email ) ? $modify_html_email : 1;
 
 		//Whether to allow subsites to specify their own html template
 		$site_override = isset( $htmlemail_settings['site_override'] ) ? $htmlemail_settings ['site_override'] : '';
-
 		?>
 		<div class="wrap">
 			<form method="post">
@@ -447,13 +422,12 @@ class HTML_emailer {
 								<a id="load_template_<?php echo $template_name; ?>" class="load_template button-primary disabled" href="#" title="<?php esc_attr_e( 'Load template html', 'htmlemail' ); ?>"><?php echo __( 'Load Template ', 'htmlemail' ) . $template['name']; ?></a>
 								</div><?php
 							} ?>
-							<input type="hidden" name="html_theme" id="html_theme" value="<?php echo esc_attr( $this->get_html_theme() ); ?>" />
+
 						</div>
 						</div><?php
 					} ?>
 				</div><?php
-				echo $this->list_placeholders( '', true );
-				echo $this->template_images(); ?>
+				echo $this->list_placeholders( '', true ); ?>
 				<div class="action-wrapper submit">
 					<input type="submit" name="save_html_email_options" class="button-primary"
 						value="<?php _e( 'Save', 'htmlemail' ); ?>"/>
@@ -487,51 +461,9 @@ class HTML_emailer {
 					</label><?php
 				}
 				?>
-
-				<input type="hidden" id="current_template_name" name="htmlemail_settings[template_name]" value="<?php echo $current_template_name; ?>" />
-
 			</form>
 		</div>
 		<?php
-	}
-	
-	function update_html_theme($html_theme){
-		$html_theme = preg_replace("/[^-_a-z0-9]+/", "", $html_theme);
-		$this->html_theme = $html_theme;		
-		if ( is_network_admin() || ! is_multisite() ) {
-			update_site_option( 'html_theme', $html_theme );
-		}else{
-			update_option( 'html_theme', $html_theme );
-		}
-	}
-	
-	function get_html_theme(){
-		if ( $this->html_theme != "" ){
-			return $this->html_theme;
-		}else{
-			if ( is_network_admin() || is_multisite() ) {
-				return get_site_option( 'html_theme' );
-			}else{
-				return get_option( 'html_theme' );
-			}	
-		}
-		return false;
-	}
-	
-	function get_html_theme_path($html_theme = ""){
-		$html_theme = ( $html_theme == "" ) ? $this->get_html_theme() : "";
-		if ( $this->theme_path == "") {
-			$this->theme_path = $this->template_directory . $html_theme;
-		}
-		return $this->theme_path;
-	}
-	
-	function get_html_theme_url($html_theme = ""){
-		if ($html_theme=="") $html_theme = $this->get_html_theme();
-		if ( $this->theme_url == "") {
-			$this->theme_url = $this->template_url . $html_theme;
-		}
-		return $this->theme_url ;
 	}
 
 	function register_scripts() {
@@ -562,7 +494,6 @@ class HTML_emailer {
 		wp_enqueue_style( 'htmlemail_css' );
 		wp_enqueue_script( 'htmlemail_js' );
 		wp_enqueue_style( 'thickbox' );
-		wp_enqueue_media();
 	}
 
 	/**
@@ -599,8 +530,6 @@ class HTML_emailer {
 		if ( empty( $_GET['theme'] ) ) {
 			wp_send_json_error( 'no theme specified' );
 		}
-		$this->html_theme = $_GET['theme'];
-		$this->update_html_theme( ucfirst( strtolower( $_GET['theme'] ) ) );
 		$content = $this->get_contents_elements( $_GET['theme'] );
 		wp_send_json_success( $content );
 	}
@@ -616,13 +545,6 @@ class HTML_emailer {
 		if ( ! $theme_name ) {
 			return false;
 		}
-		$this->html_theme = $theme_name;
-		
-		$html_theme = $this->get_html_theme();		
-		if ( ! $html_theme ){
-			$this->update_html_theme( $theme_name );
-		}
-		
 		$contents         = array();
 		$theme_name       = explode( ' ', $theme_name );
 		$theme_name       = implode( '', $theme_name );
@@ -711,7 +633,7 @@ class HTML_emailer {
 		//Replace CSS Variabls
 		$possible_settings = array(
 			'BG_COLOR',
-			//'BG_IMAGE', //Now it's controlled by uploader
+			'BG_IMAGE',
 			'LINK_COLOR',
 			'BODY_COLOR',
 			'ALTERNATIVE_COLOR',
@@ -726,11 +648,6 @@ class HTML_emailer {
 
 		foreach ( $this->settings as $setting ) {
 			if ( defined( 'BUILDER_DEFAULT_' . $setting ) ) {
-				/*
-				// Since BG_IMAGE removed from $possible_settings
-				// It was causing issues when
-				// wp-content/plugins/htmlemail/lib/templates/sometheme/template.php file includes the BG_IMAGE placeholder,
-				// in the editor it will show as empty {} 
 				if ( $setting == 'BG_IMAGE' ) {
 					//full path for image
 					$value = defined( constant( 'BUILDER_DEFAULT_' . $setting ) ) ? $this->theme_url . constant( 'BUILDER_DEFAULT_' . $setting ) : '';
@@ -738,8 +655,6 @@ class HTML_emailer {
 				} else {
 					$value = constant( 'BUILDER_DEFAULT_' . $setting );
 				}
-				*/
-				$value = constant( 'BUILDER_DEFAULT_' . $setting );
 			}
 			if ( stripos( $setting, 'color' ) ) {
 				$value = preg_replace( '/[^A-Za-z0-9\-]/', '', $value );
@@ -865,15 +780,6 @@ class HTML_emailer {
 				'{BLOG_URL}'         => __( 'Blog / Site URL', 'htmlemail' ),
 				'{BLOG_NAME}'        => __( 'Blog / Site name', 'htmlemail' ),
 				'{ADMIN_EMAIL}'      => __( 'Email address of the support or contact person. Same as {FROM_EMAIL}', 'htmlemail' ),
-				'{USER_NAME}'		 => __( 'The display name of the recipient', 'htmlemail' ),
-				'{USER_EMAIL}'		 => __( 'The display email of the recipient', 'htmlemail' ),
-				'{EMAIL_TITLE}'		 => __( 'By default displays the Blog / Site name. It can be extended with the <code>wpmudev_htmlemail/email_title</code> filter. For example in order to return the subject instead of the Blog / Site name: <code>
-											add_filter( \'wpmudev_htmlemail/email_title\', function( $blog_url, $subject, $mail_args ){
-											return $subject;
-										}, 10, 3 );
-											</code>', 'htmlemail' ),
-				'{BG_IMAGE}'		 => __( 'A background image of the email template. You can upload background image from the "Images that can be used in template" section', 'htmlemail' ),
-				'{HEADER_IMAGE}'	 => __( 'An image that appears in the email header. You can upload header image from the "Images that can be used in template" section', 'htmlemail' ),
 				'{BLOG_DESCRIPTION}' => __( 'Blog Description', 'htmlemail' ),
 				'{DATE}'             => __( 'Current date', 'htmlemail' ),
 				'{TIME}'             => __( 'Current time', 'htmlemail' ),
@@ -910,59 +816,10 @@ class HTML_emailer {
 		return $placeholders;
 	}
 
-	function template_images(){
-
-		//Fetch the images if set
-		$html_images = array();
-		if ( ! is_multisite() || is_network_admin() ) {
-			$html_images 			= get_site_option( 'html_template_images' );
-		} else {
-			$html_images 			= get_option( 'html_template_images' );
-		}
-
-		$bg_image = $header_image = '';
-		if( is_array( $html_images ) ){
-
-			$bg_image = isset( $html_images['bg'] ) ? esc_url( $html_images['bg'] ) : '';
-			$header_image = isset( $html_images['header'] ) ? esc_url( $html_images['header'] ) : '';
-				
-		}
-
-		$output = '<h4><a href="#template-images-wrapper" class="template-toggle" title="' . esc_attr__( 'Template images', 'htmlemail' ) . '">' . __( 'Images that can be used in template', 'htmlemail' ) .
-			          '[<span class="toggle-indicator">+</span>]</a></h4>';
-
-		$output .= '<div class="template-settings-section template-images-section" id="template-images-wrapper">';
-
-			$output .= '<div class="template-settings-options template-images-options">';
-			
-				$output .= '<div class="template-bg-image-wrap">';
-					$output .= '<label class="options-label">' . __( 'Background image', 'htmlemail' ) . '</label>';
-					$output .= '<input type="text" id="template-bg-image" name="html_template_images[bg]" value="' . $bg_image . '" />';
-					$output .= '<input type="button" name="upload-bg-btn" id="upload-bg-btn" class="button-secondary template-image-upload" data-image-box="template-bg-image" value="' . __( 'Upload Image', 'htmlemail' ) . '" title="' . __( 'Upload background image', 'htmlemail' ) . '">';
-				$output .= '</div>';
-
-				$output .= '<div class="template-header-image-wrap">';
-					$output .= '<label class="options-label">' . __( 'Header image', 'htmlemail' ) . '</label>';
-					$output .= '<input type="text" id="template-header-image" name="html_template_images[header]" value="' . $header_image . '" />';
-					$output .= '<input type="button" name="upload-header-btn" id="upload-header-btn" class="button-secondary template-image-upload" data-image-box="template-header-image" value="' . __( 'Upload Image', 'htmlemail' ) . '" title="' . __( 'Upload header image', 'htmlemail' ) . '" />';
-				$output .= '</div>';
-
-			$output .= '</div>';
-		$output .= '</div>';
-
-		return $output;
-	}
-
 	/**
 	 * Replaces placeholder text in email templates
 	 */
-	function replace_placeholders( $content, $mail_args = array(), $demo_message = true ) {		
-		$html_theme = $this->get_html_theme();
-		$html_theme = ( $html_theme ) ? $html_theme : $this->html_theme;
-		
-		$this->theme_path = $this->get_html_theme_path($html_theme);
-		$this->theme_url = $this->get_html_theme_url($html_theme);
-		require_once( $this->theme_path . '/index.php' );
+	function replace_placeholders( $content, $demo_message = true ) {
 
 		$placeholders     = $this->list_placeholders( $content );
 		$current_blog_id  = get_current_blog_id();
@@ -984,43 +841,8 @@ class HTML_emailer {
 			$display_name = '';
 		}
 
-		$html_images = array();
-		if ( ! is_multisite() || is_network_admin() ) {
-			$html_images 			= get_site_option( 'html_template_images' );
-		} else {
-			$html_images 			= get_option( 'html_template_images' );
-		}
-
-		$bg_image = $header_image = false;
-		if( is_array( $html_images ) ){
-
-			$bg_image = isset( $html_images['bg'] ) && $html_images['bg'] != '' ? esc_url( $html_images['bg'] ) : false;
-			$header_image = isset( $html_images['header'] ) && $html_images['header'] != '' ? $this->get_image_by_url( $html_images['header'] ) : false;
-				
-		}
-
-		if( ! $bg_image ){
-			$bg_image     = defined( 'BUILDER_DEFAULT_BG_IMAGE' ) ? $this->theme_url . '/' . constant( 'BUILDER_DEFAULT_BG_IMAGE' ) : '';
-		}
-		
-		if( ! $header_image ){
-			$header_image = defined( 'BUILDER_DEFAULT_HEADER_IMAGE' ) ? '<img src="' . esc_url( $this->theme_url . '/' . constant( 'BUILDER_DEFAULT_HEADER_IMAGE' ) ) . '" alt="" />' : '';
-		}	
-
-		if ( ! $header_image ){
-			if ( defined( 'BUILDER_DEFAULT_HEADER_IMAGE') && ! defined('HEADER_IMAGE') ){
-				$header_image = defined( 'BUILDER_DEFAULT_HEADER_IMAGE' ) ? '<img src="' . esc_url( $this->theme_url . '/' . constant('BUILDER_DEFAULT_HEADER_IMAGE') ) . '" style="max-width:100%;" height="auto" />' : '';
-			}
-			elseif ( defined('HEADER_IMAGE') ){
-				$host = parse_url( constant('HEADER_IMAGE'), PHP_URL_HOST);
-				if ( $host == "" ) {
-					$header_image = '<img src="' . esc_url( $this->theme_url . '/' . constant('HEADER_IMAGE') ) . '" style="max-width:100%;" height="auto" />';
-				}
-				else{
-					$header_image = '<img src="' . esc_url( constant('HEADER_IMAGE') ) . '" style="max-width:100%;" height="auto" />';
-				}
-			}
-		}
+		$bg_image     = defined( 'BUILDER_DEFAULT_BG_IMAGE' ) ? $this->theme_url . '/' . constant( 'BUILDER_DEFAULT_BG_IMAGE' ) : '';
+		$header_image = defined( 'BUILDER_DEFAULT_HEADER_IMAGE' ) ? '<img src="' . $this->theme_url . '/' . constant( 'BUILDER_DEFAULT_HEADER_IMAGE' ) . '" />' : '';
 
 		//Sidebar
 		$posts_list = $this->htmlemail_recent_posts();
@@ -1066,12 +888,10 @@ class HTML_emailer {
 				//Compatibility with previous version of the plugin, as it used MESSAGE instead of {MESSAGE}
 				$key = 'MESSAGE';
 			}
-			$content = str_replace( array( $key, '{USER_NAME}', '{USER_EMAIL}' ), array( $message, 'Jon', 'example@domain.com' ), $content );
+			$content = str_replace( $key, $message, $content );
+
+			$content = preg_replace( "/({USER_NAME})/", 'Jon', $content );
 		}
-
-		$subject = isset( $mail_args['subject'] ) ? $mail_args['subject'] : '';
-		$email_title = apply_filters( 'wpmudev_htmlemail/email_title', $blog_name, $subject, $mail_args );
-
 		$placeholders_list = array(
 			'{}'                 => '',
 			'{SIDEBAR_TITLE}'    => $sidebar_title,
@@ -1082,7 +902,7 @@ class HTML_emailer {
 			'{FROM_EMAIL}'       => $from_email,
 			'{BLOG_URL}'         => $blog_url,
 			'{BLOG_NAME}'        => $blog_name,
-			'{EMAIL_TITLE}'      => $email_title,
+			'{EMAIL_TITLE}'      => $blog_name,
 			'{ADMIN_EMAIL}'      => $admin_email,
 			'{BG_IMAGE}'         => $bg_image,
 			'{HEADER_IMAGE}'     => $header_image,
@@ -1101,21 +921,6 @@ class HTML_emailer {
 		$content = preg_replace( "/(%7BADMIN_EMAIL%7D)/", $admin_email, $content );
 
 		return $content;
-	}
-
-	/**
-	 * Returns the whole img by url
-	 * @param string $url, the url of the image we want to retrieve
-	 * @param string $size, the size of the image
-	 * @return string
-	 */
-	function get_image_by_url( $url, $size = 'full' ){
-		global $wpdb;
-		if( $url == '' ){
-			return false;
-		}
-		$attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE guid='%s';", $url ));
-		return wp_get_attachment_image( $attachment[0], $size );
 	}
 
 	/**
@@ -1263,13 +1068,6 @@ class HTML_emailer {
 
 			$template          = stripslashes( $_POST['template'] );
 			$modify_html_email = ! empty( $_POST['modify_html_email'] ) ? $_POST['modify_html_email'] : 0;
-			$html_template_images = array(
-				'bg'		=> '',
-				'header'	=> ''
-			);
-			if( is_array( $_POST['html_template_images'] ) ){
-				$html_template_images = array_map( "esc_url_raw", $_POST['html_template_images'] );
-			}
 
 			//Update settings for network or blog
 			if ( is_network_admin() || ! is_multisite() ) {
@@ -1279,13 +1077,11 @@ class HTML_emailer {
 				update_site_option( 'htmlemail_settings', $htmlemail_settings );
 				update_site_option( 'html_template', $template );
 				update_site_option( 'modify_html_email', $modify_html_email );
-				update_site_option( 'html_template_images', $html_template_images );
 			} else {
 				update_option( 'html_template', $template );
 				update_option( 'modify_html_email', $modify_html_email );
-				update_option( 'html_template_images', $html_template_images );
 			}
-			$this->update_html_theme( ucfirst( strtolower( $_POST['html_theme'] ) ) );
+
 			echo '<div class="updated"><p>' . esc_html__( 'Success! Your changes were sucessfully saved!', 'htmlemail' ) . '</p></div>';
 		}
 	}

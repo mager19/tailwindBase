@@ -39,7 +39,6 @@ jQuery( document ).ready( function($) {
             return false;
         }
         $textarea = jQuery('#template-content');
-        var current_template_name = jQuery( '#current_template_name' );
 //        if there is already some template content as for confirmation to override the remplate
         if(  $textarea.val() != '' ){
             if( ! confirm( htmlemail_text['load_template'] ) ) {
@@ -49,12 +48,10 @@ jQuery( document ).ready( function($) {
 
         $theme_name = jQuery(this).attr('href');
         $theme_name = $theme_name.substr($theme_name.indexOf("#") + 1);
-		jQuery('#html_theme').val($theme_name);
         jQuery.get( ajaxurl, { 'action': 'htmlemail_get_template_data', 'theme': $theme_name }, function(res){
 
             //Append the template content
             $textarea.val(res.data);
-            current_template_name.val( $theme_name );
 
         });
     });
@@ -161,27 +158,6 @@ jQuery( document ).ready( function($) {
 
         });
     });
-
-    jQuery('body').on( 'click', '.template-image-upload', function(e) {
-        e.preventDefault();
-
-        var image_box = jQuery( '#' + jQuery( this ).data( 'image-box' ) );
-        var title = jQuery( this ).attr("title");
-
-        var image = wp.media({ 
-            title: title,
-            // mutiple: true if we want to upload multiple files at once
-            multiple: false
-        }).open()
-        .on('select', function(e){
-            // This will return the selected image from the Media Uploader, the result is an object
-            var uploaded_image = image.state().get('selection').first();
-            // We convert uploaded_image to a JSON object to make accessing it easier
-            var image_url = uploaded_image.toJSON().url;
-            image_box.val(image_url);
-        });
-    });
-
 });
 function load_templates_slider(){
     jQuery('.email-templates').slick({

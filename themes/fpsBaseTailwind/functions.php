@@ -30,3 +30,9 @@ require('inc/yoast-meta-description.php');
 
 /** CTA'S post type **/
 require('inc/cta-post-type.php');
+
+
+if (function_exists('acf_add_options_page')) {
+
+    acf_add_options_page();
+}
