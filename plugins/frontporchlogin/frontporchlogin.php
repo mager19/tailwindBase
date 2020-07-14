@@ -8,16 +8,16 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              frontporchsolutions.com
+ * @link              https://www.frontporchsolutions.com/
  * @since             1.0.0
  * @package           Frontporchlogin
  *
  * @wordpress-plugin
- * Plugin Name:       FrontporchLogin
+ * Plugin Name:       FPS Custom Login
  * Plugin URI:        frontporchsolutions.com
- * Description:       Fps plugin for wp login modification
- * Version:           1.0.0
- * Author:            mager19
+ * Description:       Allows site admins to tweak the login’s settings, color schemes and logo preview (only works in FPS company).
+ * Version:           2.0.9
+ * Author:            frontporchsolutions
  * Author URI:        frontporchsolutions.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -35,7 +35,30 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'FRONTPORCHLOGIN_VERSION', '1.0.0' );
+define( 'FRONTPORCHLOGIN_VERSION', '2.0.9' );
+
+//plugin-update-checker
+
+require_once plugin_dir_path(__FILE__) . 'plugin-update-checker/plugin-update-checker.php';
+$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+	'https://bitbucket.org/fps-dev/frontporchlogin/',
+	__FILE__,
+	'FrontPorchLogin'
+);
+
+//Optional: If you're using a private repository, create an OAuth consumer
+//and set the authentication credentials like this:
+//Note: For now you need to check "This is a private consumer" when
+//creating the consumer to work around #134:
+// https://github.com/YahnisElsts/plugin-update-checker/issues/134
+$myUpdateChecker->setAuthentication(array(
+	'consumer_key' => 'Eh7XQ4v4RCtpwUUj59',
+	'consumer_secret' => 'mkMCtmjWB7eWA9DEbagRT2suY6vzfcTx',
+));
+
+//Optional: Set the branch that contains the stable release.
+$myUpdateChecker->setBranch('master');
+
 
 /**
  * The code that runs during plugin activation.

@@ -1,0 +1,183 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+ body.login {
+     display: flex;
+     align-items: center;
+     overflow: hidden;
+ }
+
+ body.login div#login {
+     width: 350px;
+     padding: 0;
+     margin: 0 auto;
+ }
+
+ body.login div#login form {
+     width: 300px;
+     margin: 0 auto;
+ }
+
+ body.login div#login h1 {
+     width: 350px;
+ }
+
+ body.login div#login h1 a {
+     background-size: contain !important;
+     width: 80% !important;
+     height: 100px !important;
+ }
+
+ body.login.login-action-confirm_admin_email div#login h1 a {
+     width: auto !important;
+     height: 70px !important;
+ }
+
+ body.login div#login form#loginform p.submit .button,
+ body.login div#login form#loginform p.submit .button-primary:hover,
+ body.login div#login form#loginform p.submit .button-primary:active,
+ body.login div#login form#loginform p.submit .button-primary:focus,
+ body.login div#login form#lostpasswordform p.submit .button {
+     width: 100%;
+     min-height: 50px !important;
+     box-shadow: none;
+     margin-top: 10px;
+     text-shadow: none;
+     text-transform: uppercase;
+     font-weight: bold;
+     transition: all 0.5s ease-out;
+ }
+
+ body.login div#login form .wp-core-ui .button-primary:disabled,
+ body.login div#login form .wp-core-ui .button-primary[disabled] {
+     opacity: .8;
+ }
+
+ body.login div#login form#loginform input#user_pass:focus,
+ body.login div#login form#loginform input#user_login:focus,
+ body.login div#login form#lostpasswordform input#user_login:focus {
+     box-shadow: none;
+     border: none;
+ }
+
+ body.login div#login form#loginform .user-pass-wrap .wp-pwd {
+     position: relative;
+ }
+
+ body.login div#login p#nav a:hover,
+ body.login div#login p#backtoblog a:hover,
+ body.login div#login .privacy-policy-page-link a:hover {
+     opacity: .8;
+     transition: all 0.5s ease-out;
+ }
+
+ body.login div#login form#loginform p.submit .button-primary:hover {
+     opacity: .9;
+     transition: all 0.5s ease-out;
+ }
+
+ body.login div#login form#loginform,
+ body.login div#login form#lostpasswordform {
+     border: none;
+ }
+
+ body.login div#login form#loginform input#user_pass,
+ body.login div#login form#loginform input#user_login,
+ body.login div#login form#lostpasswordform input#user_login {
+     border-color: #ddd;
+     border-radius: 0;
+     background: #fff !important;
+     margin-top: 5px;
+     height: 50px;
+     font-size: 15px;
+     padding: 0 10px;
+     letter-spacing: .5px;
+     margin: 0 6px 16px 0;
+     max-height: none;
+ }
+
+ body.login div#login form#loginform p.forgetmenot {
+     float: none;
+     margin-bottom: 15px !important;
+ }
+
+ body.login div#login .privacy-policy-page-link {
+     margin: 3em 0 2em;
+ }
+
+ body.login div#login p#nav a:focus,
+ body.login div#login p#backtoblog a:focus {
+     box-shadow: none;
+ }
+
+ body.login div#login p#nav,
+ body.login div#login p#backtoblog {
+     text-align: center;
+ }
+
+ body.login div#login form#loginform label,
+ body.login div#login form#lostpasswordform label {
+     text-transform: uppercase;
+     letter-spacing: .7px;
+     font-size: 12px;
+     margin-top: 10px;
+     line-height: 1.5;
+     display: inline-block;
+     margin-bottom: 3px;
+     vertical-align: baseline;
+ }
+
+ body.login div#lform input[type=checkbox] {
+     border: 1px solid #d5d5d5;
+ }
+
+ body.login div#login form .g-recaptcha>div {
+     margin-bottom: 15px;
+ }
+
+ body.login {
+     position: relative;
+ }
+
+ body.login .fps-login-footer {
+     position: absolute;
+     bottom: 0;
+     left: 0;
+     width: 100%;
+     content: "";
+     background-image: url("../images/bottom-bar-min.jpg");
+     background-repeat: no-repeat;
+     background-size: cover;
+     height: 30px;
+     font-size: 13px;
+     letter-spacing: .4px;
+     color: #fff;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     padding: 10px;
+     font-weight: 300;
+ }
+
+ body.login .fps-login-footer svg {
+     padding: 0 4px;
+ }
+
+ body.login .fps-login-footer a {
+     padding-left: 5px;
+     color: #fff;
+     font-weight: 500;
+     text-decoration: none;
+ }
+
+ @media (max-width: 768px) {
+     body.login div#login {
+         margin: 0 auto !important;
+     }
+
+     body.login .fps-login-footer {
+         font-size: 12px;
+     }
+ }

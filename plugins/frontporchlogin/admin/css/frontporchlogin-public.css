@@ -1,0 +1,24 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+#acf-group_5e87aa30c1732 ul.acf-radio-list li input[type="radio"] {
+    display: none;
+}
+#acf-group_5e8c991d24064 .acf-field-5e8c99204d239 {
+    padding-bottom: 0;
+}
+#acf-group_5e863cc2df3e5,
+#acf-group_5d128c2fe0260,
+#acf-group_5e863cc2df3e6,
+#acf-group_5e973f456ff52,
+#acf-group_5e863cc2df3e7 {
+    background: transparent;
+}
+#acf-group_5d128c2fe0262{
+    margin-bottom: 0;
+}
+#acf-group_5d128c2fe0260 {
+    margin-top: 50px;
+}

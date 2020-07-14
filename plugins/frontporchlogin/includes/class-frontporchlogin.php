@@ -70,7 +70,7 @@ class Frontporchlogin {
 		if ( defined( 'FRONTPORCHLOGIN_VERSION' ) ) {
 			$this->version = FRONTPORCHLOGIN_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '2.0';
 		}
 		$this->plugin_name = 'frontporchlogin';
 
@@ -110,7 +110,7 @@ class Frontporchlogin {
 		 * of the plugin.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-frontporchlogin-i18n.php';
-
+		
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
