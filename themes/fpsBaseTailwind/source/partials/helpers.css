@@ -1,7 +1,6 @@
 @for $i from 1 to 6 {
     .title--$i {
-        font-family: $font-family-base;
-        font-weight: $font-weight-bold;
+        @apply font-bold font-inter;
     }
 }
 
@@ -42,36 +41,33 @@
     /* // Other Titles */
 ​
     &--lead {
+        @apply font-normal;
         font-size: rem(18px);
-        font-weight: $font-weight-normal;
         line-height: 30px;
     }
     ​ &--body {
-        font-weight: $font-weight-normal;
+         @apply font-normal;
         font-size: rem(16px);
         line-height: 26px;
     }
     ​ &--button {
+        @apply font-bold uppercase;
         font-size: rem(14px);
-        font-weight: $font-weight-bold;
         line-height: 16px;
         letter-spacing: 0.1em;
-        text-transform: uppercase;
-        font-family: $font-family-alt;
     }
     ​ &--overline {
         font-size: rem(14px);
-        font-family: $font-family-alt;
         font-weight: 900;
         line-height: 16px;
         letter-spacing: 0.1em;
         text-transform: uppercase;
     }
     ​ &--caption {
+        @apply font-semibold;
         font-size: rem(12px);
         line-height: 16px;
         letter-spacing: 0.4px;
-        font-weight: $font-weight-semi;
     }
 }
 ​
