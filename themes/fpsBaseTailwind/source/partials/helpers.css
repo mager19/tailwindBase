@@ -1,165 +1,355 @@
-@for $i from 1 to 6 {
-    .title--$i {
-        @apply font-bold font-inter;
-    }
-}
-
-.test {
-    &--mio {
-        color: green;
-    }
-}
-
 .title {
     &--1 {
-        color: blue;
+        @apply font-bold;
         font-size: rem(64px);
-        line-height: 90px;
+        letter-spacing: -0.02em;
+        line-height: rem(90px);
     }
     &--2 {
-        color: red;
+        @apply font-bold;
         font-size: rem(48px);
-        line-height: 67px;
+        letter-spacing: -0.02em;
+        line-height: rem(67px);
     }
     &--3 {
+        @apply font-bold;
         font-size: rem(36px);
-        line-height: 51px;
+        letter-spacing: -0.02em;
+        line-height: rem(51px);
     }
     &--4 {
+        @apply font-bold;
         font-size: rem(24px);
-        line-height: 36px;
+        letter-spacing: -0.02em;
+        line-height: rem(34px);
     }
     &--5 {
+        @apply font-bold;
         font-size: rem(18px);
-        line-height: 27px;
+        letter-spacing: -0.02em;
+        line-height: rem(25px);
     }
     &--6 {
+        @apply .font-bold;
         font-size: rem(16px);
-        line-height: 24px;
+        letter-spacing: -0.02em;
+        line-height: rem(24px);
     }
-    ​
-    /* // Other Titles */
-​
+
     &--lead {
-        @apply font-normal;
+        @apply font-medium;
         font-size: rem(18px);
-        line-height: 30px;
+        letter-spacing: -0.02em;
+        line-height: rem(30px);
     }
-    ​ &--body {
-         @apply font-normal;
+    &--body {
+        font-weight: 400;
         font-size: rem(16px);
-        line-height: 26px;
+        line-height: rem(26px);
     }
-    ​ &--button {
-        @apply font-bold uppercase;
-        font-size: rem(14px);
-        line-height: 16px;
-        letter-spacing: 0.1em;
-    }
-    ​ &--overline {
-        font-size: rem(14px);
-        font-weight: 900;
-        line-height: 16px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-    }
-    ​ &--caption {
+    &--button {
         @apply font-semibold;
-        font-size: rem(12px);
-        line-height: 16px;
-        letter-spacing: 0.4px;
+        font-size: rem(18px);
+        letter-spacing: -0.03em;
+        line-height: 27px;
+    }
+    &--overline {
+        @apply font-bold uppercase;
+        font-size: rem(18px);
+        letter-spacing: 0.1em;
+        line-height: rem(16px);
+    }
+    &--caption {
+        @apply font-medium;
+        font-size: rem(14px);
+        line-height: rem(24px);
     }
 }
-​
-/* // for table example .title-md--1; */
-​
-.title-md {
-    @media screen and (min-width: 768px) {
+
+/* Breakpoint SM */
+
+@media screen and (min-width: 640px) {
+    .title-sm {
         &--1 {
+            @apply font-bold;
             font-size: rem(64px);
-            line-height: 90px;
+            letter-spacing: -0.02em;
+            line-height: rem(90px);
         }
         &--2 {
+            @apply font-bold;
             font-size: rem(48px);
-            line-height: 67px;
+            letter-spacing: -0.02em;
+            line-height: rem(67px);
         }
         &--3 {
+            @apply font-bold;
             font-size: rem(36px);
-            line-height: 51px;
+            letter-spacing: -0.02em;
+            line-height: rem(51px);
         }
         &--4 {
+            @apply font-bold;
             font-size: rem(24px);
-            line-height: 36px;
+            letter-spacing: -0.02em;
+            line-height: rem(34px);
         }
         &--5 {
+            @apply font-bold;
             font-size: rem(18px);
-            line-height: 27px;
+            letter-spacing: -0.02em;
+            line-height: rem(25px);
         }
         &--6 {
+            @apply .font-bold;
             font-size: rem(16px);
-            line-height: 24px;
+            letter-spacing: -0.02em;
+            line-height: rem(24px);
+        }
+
+        &--lead {
+            @apply font-medium;
+            font-size: rem(18px);
+            letter-spacing: -0.02em;
+            line-height: rem(30px);
+        }
+        &--body {
+            font-weight: 400;
+            font-size: rem(16px);
+            line-height: rem(26px);
+        }
+        &--button {
+            @apply font-semibold;
+            font-size: rem(18px);
+            letter-spacing: -0.03em;
+            line-height: 27px;
+        }
+        &--overline {
+            @apply font-bold uppercase;
+            font-size: rem(18px);
+            letter-spacing: 0.1em;
+            line-height: rem(16px);
+        }
+        &--caption {
+            @apply font-medium;
+            font-size: rem(14px);
+            line-height: rem(24px);
         }
     }
 }
-​
-/* // for Desktop example .title-lg--1; */
-​
-.title-lg {
-    @media screen and (min-width: 992px) {
+
+/* Breakpoint MD */
+
+@media screen and (min-width: 768px) {
+    .title-md {
         &--1 {
+            @apply font-bold;
             font-size: rem(64px);
-            line-height: 90px;
+            letter-spacing: -0.02em;
+            line-height: rem(90px);
         }
         &--2 {
+            @apply font-bold;
             font-size: rem(48px);
-            line-height: 67px;
+            letter-spacing: -0.02em;
+            line-height: rem(67px);
         }
         &--3 {
+            @apply font-bold;
             font-size: rem(36px);
-            line-height: 51px;
+            letter-spacing: -0.02em;
+            line-height: rem(51px);
         }
         &--4 {
+            @apply font-bold;
             font-size: rem(24px);
-            line-height: 36px;
+            letter-spacing: -0.02em;
+            line-height: rem(34px);
         }
         &--5 {
+            @apply font-bold;
             font-size: rem(18px);
-            line-height: 27px;
+            letter-spacing: -0.02em;
+            line-height: rem(25px);
         }
         &--6 {
+            @apply .font-bold;
             font-size: rem(16px);
-            line-height: 24px;
+            letter-spacing: -0.02em;
+            line-height: rem(24px);
+        }
+
+        &--lead {
+            @apply font-medium;
+            font-size: rem(18px);
+            letter-spacing: -0.02em;
+            line-height: rem(30px);
+        }
+        &--body {
+            font-weight: 400;
+            font-size: rem(16px);
+            line-height: rem(26px);
+        }
+        &--button {
+            @apply font-semibold;
+            font-size: rem(18px);
+            letter-spacing: -0.03em;
+            line-height: 27px;
+        }
+        &--overline {
+            @apply font-bold uppercase;
+            font-size: rem(18px);
+            letter-spacing: 0.1em;
+            line-height: rem(16px);
+        }
+        &--caption {
+            @apply font-medium;
+            font-size: rem(14px);
+            line-height: rem(24px);
         }
     }
 }
-​
-/* // for Desktop example .title-xl--1; */
-​
-.title-xl {
-    @media screen and (min-width: 1024px) {
+
+/* Breakpoint LG */
+
+@media screen and (min-width: 1024px) {
+    .title-lg {
         &--1 {
+            @apply font-bold;
             font-size: rem(64px);
-            line-height: 90px;
+            letter-spacing: -0.02em;
+            line-height: rem(90px);
         }
         &--2 {
+            @apply font-bold;
             font-size: rem(48px);
-            line-height: 67px;
+            letter-spacing: -0.02em;
+            line-height: rem(67px);
         }
         &--3 {
+            @apply font-bold;
             font-size: rem(36px);
-            line-height: 51px;
+            letter-spacing: -0.02em;
+            line-height: rem(51px);
         }
         &--4 {
+            @apply font-bold;
             font-size: rem(24px);
-            line-height: 36px;
+            letter-spacing: -0.02em;
+            line-height: rem(34px);
         }
         &--5 {
+            @apply font-bold;
             font-size: rem(18px);
-            line-height: 27px;
+            letter-spacing: -0.02em;
+            line-height: rem(25px);
         }
         &--6 {
+            @apply .font-bold;
             font-size: rem(16px);
-            line-height: 24px;
+            letter-spacing: -0.02em;
+            line-height: rem(24px);
+        }
+
+        &--lead {
+            @apply font-medium;
+            font-size: rem(18px);
+            letter-spacing: -0.02em;
+            line-height: rem(30px);
+        }
+        &--body {
+            font-weight: 400;
+            font-size: rem(16px);
+            line-height: rem(26px);
+        }
+        &--button {
+            @apply font-semibold;
+            font-size: rem(18px);
+            letter-spacing: -0.03em;
+            line-height: 27px;
+        }
+        &--overline {
+            @apply font-bold uppercase;
+            font-size: rem(18px);
+            letter-spacing: 0.1em;
+            line-height: rem(16px);
+        }
+        &--caption {
+            @apply font-medium;
+            font-size: rem(14px);
+            line-height: rem(24px);
+        }
+    }
+}
+
+/* Breakpoint XL */
+
+@media screen and (min-width: 1280px) {
+    .title-xl {
+        &--1 {
+            @apply font-bold;
+            font-size: rem(64px);
+            letter-spacing: -0.02em;
+            line-height: rem(90px);
+        }
+        &--2 {
+            @apply font-bold;
+            font-size: rem(48px);
+            letter-spacing: -0.02em;
+            line-height: rem(67px);
+        }
+        &--3 {
+            @apply font-bold;
+            font-size: rem(36px);
+            letter-spacing: -0.02em;
+            line-height: rem(51px);
+        }
+        &--4 {
+            @apply font-bold;
+            font-size: rem(24px);
+            letter-spacing: -0.02em;
+            line-height: rem(34px);
+        }
+        &--5 {
+            @apply font-bold;
+            font-size: rem(18px);
+            letter-spacing: -0.02em;
+            line-height: rem(25px);
+        }
+        &--6 {
+            @apply .font-bold;
+            font-size: rem(16px);
+            letter-spacing: -0.02em;
+            line-height: rem(24px);
+        }
+
+        &--lead {
+            @apply font-medium;
+            font-size: rem(18px);
+            letter-spacing: -0.02em;
+            line-height: rem(30px);
+        }
+        &--body {
+            font-weight: 400;
+            font-size: rem(16px);
+            line-height: rem(26px);
+        }
+        &--button {
+            @apply font-semibold;
+            font-size: rem(18px);
+            letter-spacing: -0.03em;
+            line-height: 27px;
+        }
+        &--overline {
+            @apply font-bold uppercase;
+            font-size: rem(18px);
+            letter-spacing: 0.1em;
+            line-height: rem(16px);
+        }
+        &--caption {
+            @apply font-medium;
+            font-size: rem(14px);
+            line-height: rem(24px);
         }
     }
 }
