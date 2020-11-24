@@ -1,0 +1,51 @@
+/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 24/11/2020 20:32
+  	*/
+
+@font-face {
+    font-family: "Flaticon";
+    src: url("fonts/icons/fps-icon.eot");
+    src: url("fonts/icons/fps-icon.eot?#iefix") format("embedded-opentype"),
+        url("fonts/icons/fps-icon.woff2") format("woff2"),
+        url("fonts/icons/fps-icon.woff") format("woff"),
+        url("fonts/icons/fps-icon.ttf") format("truetype"),
+        url("fonts/icons/fps-icon.svg#Flaticon") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    @font-face {
+        font-family: "Flaticon";
+        src: url("fonts/icons/fps-icon.svg#Flaticon") format("svg");
+    }
+}
+
+[class^="fpsIcon-"]:before,
+[class*=" fpsIcon-"]:before,
+[class^="fpsIcon-"]:after,
+[class*=" fpsIcon-"]:after {
+    font-family: Flaticon;
+    font-size: inherit;
+    font-style: normal;
+}
+
+.fpsIcon-facebook:before {
+    content: "\f101";
+}
+.fpsIcon-twitter:before {
+    content: "\f102";
+}
+.fpsIcon-linkedin:before {
+    content: "\f104";
+}
+.fpsIcon-youtube:before {
+    content: "\f105";
+}
+.fpsIcon-instagram:before {
+    content: "\f103";
+}
+.fpsIcon-tripadvisor:before {
+    content: "\f100";
+}
