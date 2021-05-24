@@ -5,6 +5,8 @@
  * @package WPSEO\Admin\Notifications
  */
 
+use Yoast\WP\SEO\Presenters\Abstract_Presenter;
+
 /**
  * Handles notifications storage and display.
  */
@@ -353,7 +355,7 @@ class Yoast_Notification_Center {
 	public function display_notifications( $echo_as_json = false ) {
 
 		// Never display notifications for network admin.
-		if ( function_exists( 'is_network_admin' ) && is_network_admin() ) {
+		if ( is_network_admin() ) {
 			return;
 		}
 
@@ -424,7 +426,7 @@ class Yoast_Notification_Center {
 		}
 
 		if ( $notification->is_persistent() && $resolve ) {
-			$this->resolved++;
+			++$this->resolved;
 			$this->clear_dismissal( $notification );
 		}
 
@@ -653,8 +655,9 @@ class Yoast_Notification_Center {
 	private static function get_user_input( $key ) {
 
 		$filter_input_type = INPUT_GET;
+		$request_method    = isset( $_SERVER['REQUEST_METHOD'] ) ? filter_var( wp_unslash( $_SERVER['REQUEST_METHOD'] ) ) : '';
 
-		if ( isset( $_SERVER['REQUEST_METHOD'] ) && strtoupper( wp_unslash( $_SERVER['REQUEST_METHOD'] ) ) === 'POST' ) {
+		if ( strtoupper( $request_method ) === 'POST' ) {
 			$filter_input_type = INPUT_POST;
 		}
 
@@ -786,6 +789,13 @@ class Yoast_Notification_Center {
 
 		if ( isset( $notification_data['options']['nonce'] ) ) {
 			unset( $notification_data['options']['nonce'] );
+		}
+
+		if (
+			isset( $notification_data['message'] ) &&
+			\is_subclass_of( $notification_data['message'], Abstract_Presenter::class, false )
+		) {
+			$notification_data['message'] = $notification_data['message']->present();
 		}
 
 		return new Yoast_Notification(

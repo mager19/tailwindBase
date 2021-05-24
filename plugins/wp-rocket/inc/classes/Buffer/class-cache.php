@@ -1,13 +1,12 @@
 <?php
 namespace WP_Rocket\Buffer;
 
-defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Handle page cache.
  *
  * @since  3.3
- * @author Grégory Viguier
  */
 class Cache extends Abstract_Buffer {
 
@@ -16,8 +15,6 @@ class Cache extends Abstract_Buffer {
 	 *
 	 * @var    string
 	 * @since  3.3
-	 * @access protected
-	 * @author Grégory Viguier
 	 */
 	protected $process_id = 'caching process';
 
@@ -40,8 +37,6 @@ class Cache extends Abstract_Buffer {
 	 *
 	 * @var    string
 	 * @since  3.3
-	 * @access private
-	 * @author Grégory Viguier
 	 */
 	private $cache_dir_path;
 
@@ -49,8 +44,6 @@ class Cache extends Abstract_Buffer {
 	 * Constructor.
 	 *
 	 * @since  3.3
-	 * @access public
-	 * @author Grégory Viguier
 	 *
 	 * @param Tests  $tests Tests instance.
 	 * @param Config $config Config instance.
@@ -77,8 +70,6 @@ class Cache extends Abstract_Buffer {
 	 * Serve the cache file if it exists. If not, init the buffer.
 	 *
 	 * @since  3.3
-	 * @access public
-	 * @author Grégory Viguier
 	 */
 	public function maybe_init_process() {
 		if ( ! $this->tests->can_init_process() ) {
@@ -101,14 +92,45 @@ class Cache extends Abstract_Buffer {
 
 		$cache_filepath_gzip = $cache_filepath . '_gzip';
 		$accept_encoding     = $this->config->get_server_input( 'HTTP_ACCEPT_ENCODING' );
+		$accept_gzip         = $accept_encoding && false !== strpos( $accept_encoding, 'gzip' );
 
 		// Check if cache file exist.
-		if ( $accept_encoding && false !== strpos( $accept_encoding, 'gzip' ) && is_readable( $cache_filepath_gzip ) ) {
+		if ( $accept_gzip && is_readable( $cache_filepath_gzip ) ) {
 			$this->serve_gzip_cache_file( $cache_filepath_gzip );
 		}
 
 		if ( is_readable( $cache_filepath ) ) {
 			$this->serve_cache_file( $cache_filepath );
+		}
+
+		// Maybe we're looking for a webp file.
+		$cache_filename = basename( $cache_filepath );
+
+		if ( strpos( $cache_filename, '-webp' ) !== false ) {
+			// We're looking for a webp file that doesn't exist: try to locate any `.no-webp` file.
+			$cache_dir_path = rtrim( dirname( $cache_filepath ), '/\\' ) . DIRECTORY_SEPARATOR;
+
+			if ( file_exists( $cache_dir_path . '.no-webp' ) ) {
+				// We have a `.no-webp` file: try to deliver a non-webp cache file.
+				$cache_filepath      = $cache_dir_path . str_replace( '-webp', '', $cache_filename );
+				$cache_filepath_gzip = $cache_filepath . '_gzip';
+
+				$this->log(
+					'Looking for non-webp cache file.',
+					[
+						'path' => $cache_filepath,
+					]
+				);
+
+				// Try to deliver the non-webp version instead.
+				if ( $accept_gzip && is_readable( $cache_filepath_gzip ) ) {
+					$this->serve_gzip_cache_file( $cache_filepath_gzip );
+				}
+
+				if ( is_readable( $cache_filepath ) ) {
+					$this->serve_cache_file( $cache_filepath );
+				}
+			}
 		}
 
 		/**
@@ -128,8 +150,6 @@ class Cache extends Abstract_Buffer {
 	 * Serve a cache file.
 	 *
 	 * @since  3.3
-	 * @access private
-	 * @author Grégory Viguier
 	 *
 	 * @param string $cache_filepath Path to the cache file.
 	 */
@@ -174,8 +194,6 @@ class Cache extends Abstract_Buffer {
 	 * Serve a gzipped cache file.
 	 *
 	 * @since  3.3
-	 * @access private
-	 * @author Grégory Viguier
 	 *
 	 * @param string $cache_filepath Path to the gzip cache file.
 	 */
@@ -220,8 +238,6 @@ class Cache extends Abstract_Buffer {
 	 * Maybe cache the page content.
 	 *
 	 * @since  3.3
-	 * @access public
-	 * @author Grégory Viguier
 	 *
 	 * @param  string $buffer The buffer content.
 	 * @return string         The buffered content.
@@ -250,7 +266,9 @@ class Cache extends Abstract_Buffer {
 			return $buffer . $footprint;
 		}
 
-		$cache_filepath = $this->get_cache_path();
+		$webp_enabled   = preg_match( '@<!-- Rocket (has|no) webp -->@', $buffer, $webp_tag );
+		$has_webp       = ! empty( $webp_tag ) ? 'has' === $webp_tag[1] : false;
+		$cache_filepath = $this->get_cache_path( [ 'webp' => $has_webp ] );
 		$cache_dir_path = dirname( $cache_filepath );
 
 		// Create cache folders.
@@ -260,13 +278,19 @@ class Cache extends Abstract_Buffer {
 			$footprint = $this->get_rocket_footprint( time() );
 		}
 
-		// Save the cache file.
-		rocket_put_content( $cache_filepath, $buffer . $footprint );
+		// Webp request.
+		if ( $webp_enabled ) {
+			$buffer = str_replace( $webp_tag[0], '', $buffer );
 
-		if ( function_exists( 'gzencode' ) ) {
-			rocket_put_content( $cache_filepath . '_gzip', gzencode( $buffer . $footprint, apply_filters( 'rocket_gzencode_level_compression', 3 ) ) );
+			if ( ! $has_webp ) {
+				// The buffer doesn’t contain webp files.
+				$cache_dir_path = rtrim( dirname( $cache_filepath ), '/\\' );
+
+				$this->maybe_create_nowebp_file( $cache_dir_path );
+			}
 		}
 
+		$this->write_cache_file( $cache_filepath, $buffer . $footprint );
 		$this->maybe_create_nginx_mobile_file( $cache_dir_path );
 
 		// Send headers with the last modified time of the cache file.
@@ -290,21 +314,59 @@ class Cache extends Abstract_Buffer {
 	}
 
 	/**
+	 * Writes the cache file(s)
+	 *
+	 * @since 3.5
+	 *
+	 * @param string $cache_filepath Absolute path to the cache file.
+	 * @param string $content Content to write in the cache file.
+	 * @return void
+	 */
+	private function write_cache_file( $cache_filepath, $content ) {
+		$gzip_filepath      = $cache_filepath . '_gzip';
+		$temp_filepath      = $cache_filepath . '_temp';
+		$temp_gzip_filepath = $gzip_filepath . '_temp';
+
+		if ( rocket_direct_filesystem()->exists( $temp_filepath ) ) {
+			return;
+		}
+
+		// Save the cache file.
+		rocket_put_content( $temp_filepath, $content );
+		rocket_direct_filesystem()->move( $temp_filepath, $cache_filepath, true );
+
+		if ( function_exists( 'gzencode' ) ) {
+			/**
+			 * Filters the Gzip compression level to use for the cache file
+			 *
+			 * @param int $compression_level Compression level between 0 and 9.
+			 */
+			$compression_level = apply_filters( 'rocket_gzencode_level_compression', 6 );
+
+			rocket_put_content( $temp_gzip_filepath, gzencode( $content, $compression_level ) );
+			rocket_direct_filesystem()->move( $temp_gzip_filepath, $gzip_filepath, true );
+		}
+	}
+
+	/**
 	 * Get the path to the cache file.
 	 *
 	 * @since  3.3
-	 * @access public
-	 * @author Grégory Viguier
 	 *
+	 * @param  array $args {
+	 *     A list of arguments.
+	 *
+	 *     @type bool $webp Set to false to prevent adding the part related to webp.
+	 * }
 	 * @return string
 	 */
-	public function get_cache_path() {
-		static $request_uri_path;
-
-		if ( isset( $request_uri_path ) ) {
-			return $request_uri_path;
-		}
-
+	public function get_cache_path( $args = [] ) {
+		$args             = array_merge(
+			[
+				'webp' => true,
+			],
+			$args
+		);
 		$cookies          = $this->tests->get_cookies();
 		$request_uri_path = $this->get_request_cache_path( $cookies );
 		$filename         = 'index';
@@ -316,12 +378,16 @@ class Cache extends Abstract_Buffer {
 			$filename .= '-https';
 		}
 
+		if ( $args['webp'] ) {
+			$filename = $this->maybe_webp_filename( $filename );
+		}
+
 		$filename = $this->maybe_dynamic_cookies_filename( $filename, $cookies );
 
 		// Ensure proper formatting of the path.
 		$request_uri_path = preg_replace_callback( '/%[0-9A-F]{2}/', [ $this, 'reset_lowercase' ], $request_uri_path );
 		// Directories in Windows can't contain question marks.
-		$request_uri_path = str_replace( '?', '_', $request_uri_path );
+		$request_uri_path = str_replace( '?', '#', $request_uri_path );
 		// Limit filename max length to 255 characters.
 		$request_uri_path .= '/' . substr( $filename, 0, 250 ) . '.html';
 
@@ -335,12 +401,10 @@ class Cache extends Abstract_Buffer {
 	 * Declares and sets value of constant preventing Optimizations.
 	 *
 	 * @since  3.3
-	 * @access private
-	 * @author Grégory Viguier
 	 */
-	final private function define_donotoptimize_true() {
+	private function define_donotoptimize_true() {
 		if ( ! defined( 'DONOTROCKETOPTIMIZE' ) ) {
-			define( 'DONOTROCKETOPTIMIZE', true ); // WPCS: prefix ok.
+			define( 'DONOTROCKETOPTIMIZE', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals
 		}
 	}
 
@@ -348,8 +412,6 @@ class Cache extends Abstract_Buffer {
 	 * Gets If-modified-since header value
 	 *
 	 * @since 3.3
-	 * @access private
-	 * @author Remy Perona
 	 * @return string
 	 */
 	private function get_if_modified_since() {
@@ -409,11 +471,26 @@ class Cache extends Abstract_Buffer {
 	}
 
 	/**
+	 * Create a hidden empty file when webp is enabled but the buffer doesn’t contain webp files.
+	 *
+	 * @since  3.4
+	 *
+	 * @param string $cache_dir_path Path to the current cache directory (without trailing slah).
+	 */
+	private function maybe_create_nowebp_file( $cache_dir_path ) {
+		$nowebp_filepath = $cache_dir_path . DIRECTORY_SEPARATOR . '.no-webp';
+
+		if ( rocket_direct_filesystem()->exists( $nowebp_filepath ) ) {
+			return;
+		}
+
+		rocket_direct_filesystem()->touch( $nowebp_filepath );
+	}
+
+	/**
 	 * Tell if generating cache files is allowed.
 	 *
 	 * @since  3.3
-	 * @access public
-	 * @author Grégory Viguier
 	 *
 	 * @return bool
 	 */
@@ -425,14 +502,13 @@ class Cache extends Abstract_Buffer {
 		 *
 		 * @param bool True will force the cache file generation.
 		 */
-		return (bool) apply_filters( 'do_rocket_generate_caching_files', true ); // WPCS: prefix ok.
+		return (bool) apply_filters( 'do_rocket_generate_caching_files', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals
 	}
 
 	/**
 	 * Gets the base cache path for the current request
 	 *
 	 * @since 3.3
-	 * @author Remy Perona
 	 *
 	 * @param array $cookies Cookies for the current request.
 	 * @return string
@@ -470,7 +546,6 @@ class Cache extends Abstract_Buffer {
 	 * Modifies the filename if the request is from a mobile device.
 	 *
 	 * @since 3.3
-	 * @author Remy Perona
 	 *
 	 * @param string $filename Cache filename.
 	 * @return string
@@ -486,17 +561,63 @@ class Cache extends Abstract_Buffer {
 			return $filename;
 		}
 
-		if ( ! class_exists( 'Rocket_Mobile_Detect' ) ) {
+		if ( ! class_exists( 'WP_Rocket_Mobile_Detect' ) ) {
 			return $filename;
 		}
 
-		$detect = new \Rocket_Mobile_Detect();
+		$detect = new \WP_Rocket_Mobile_Detect();
 
 		if ( $detect->isMobile() && ! $detect->isTablet() && 'desktop' === $cache_mobile_files_tablet || ( $detect->isMobile() || $detect->isTablet() ) && 'mobile' === $cache_mobile_files_tablet ) {
 				return $filename .= '-mobile';
 		}
 
 		return $filename;
+	}
+
+	/**
+	 * Modifies the filename if the request is WebP compatible
+	 *
+	 * @since 3.4
+	 *
+	 * @param string $filename Cache filename.
+	 * @return string
+	 */
+	private function maybe_webp_filename( $filename ) {
+		if ( ! $this->config->get_config( 'cache_webp' ) ) {
+			return $filename;
+		}
+
+		/**
+		 * Force WP Rocket to disable its webp cache.
+		 *
+		 * @since  3.4
+		 *
+		 * @param bool $disable_webp_cache Set to true to disable the webp cache.
+		 */
+		$disable_webp_cache = apply_filters( 'rocket_disable_webp_cache', false );
+
+		if ( $disable_webp_cache ) {
+			return $filename;
+		}
+
+		$http_accept = $this->config->get_server_input( 'HTTP_ACCEPT', '' );
+
+		if ( ! $http_accept && function_exists( 'apache_request_headers' ) ) {
+			$headers     = apache_request_headers();
+			$http_accept = isset( $headers['Accept'] ) ? $headers['Accept'] : '';
+		}
+
+		if ( ! $http_accept || false === strpos( $http_accept, 'webp' ) ) {
+			if ( preg_match( '#Firefox/(?<version>[0-9]{2})#i', $this->config->get_server_input( 'HTTP_USER_AGENT' ), $matches ) ) {
+				if ( 66 <= (int) $matches['version'] ) {
+					return $filename . '-webp';
+				}
+			}
+
+			return $filename;
+		}
+
+		return $filename . '-webp';
 	}
 
 	/**
@@ -541,8 +662,6 @@ class Cache extends Abstract_Buffer {
 	 * Force lowercase on encoded url strings from different alphabets to prevent issues on some hostings.
 	 *
 	 * @since  3.3
-	 * @access protected
-	 * @author Grégory Viguier
 	 *
 	 * @param  array $matches Cache path.
 	 * @return string         Cache path in lowercase.

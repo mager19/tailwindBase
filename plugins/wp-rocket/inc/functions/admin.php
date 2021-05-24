@@ -1,5 +1,5 @@
 <?php
-defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
+defined( 'ABSPATH' ) || exit;
 
 /**
  * This warning is displayed when the API KEY isn't already set or not valid
@@ -8,12 +8,10 @@ defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
  */
 function rocket_need_api_key() {
 	$message = '';
-	$errors  = get_transient( 'rocket_check_key_errors' );
+	$errors  = (array) get_transient( 'rocket_check_key_errors' );
 
-	if ( false !== $errors ) {
-		foreach ( $errors as $error ) {
-			$message .= '<p>' . $error . '</p>';
-		}
+	foreach ( $errors as $error ) {
+		$message .= '<p>' . $error . '</p>';
 	}
 
 	?>
@@ -23,7 +21,7 @@ function rocket_need_api_key() {
 		echo esc_html( _n( 'There seems to be an issue validating your license. Please see the error message below.', 'There seems to be an issue validating your license. You can see the error messages below.', count( $errors ), 'rocket' ) );
 		?>
 		</p>
-		<?php echo $message; ?>
+		<?php echo wp_kses_post( $message ); ?>
 	</div>
 	<?php
 }
@@ -39,7 +37,7 @@ function rocket_need_api_key() {
  * @param (string|array) $keep_this : which box have to be kept.
  * @return void
  */
-function rocket_renew_all_boxes( $uid = null, $keep_this = array() ) {
+function rocket_renew_all_boxes( $uid = null, $keep_this = [] ) {
 	// Delete a user meta for 1 user or all at a time.
 	delete_metadata( 'user', $uid, 'rocket_boxes', null === $uid );
 
@@ -76,21 +74,21 @@ function rocket_renew_box( $function, $uid = 0 ) {
 }
 
 /**
- * Dismissed 1 box, wrapper of rocket_dismiss_boxes()
+ * Dismiss one box.
  *
  * @since 1.3.0
+ * @since 3.6 Doesn’t die anymore.
  *
- * @param string $function function name.
- * @return void
+ * @param string $function Function (box) name.
  */
 function rocket_dismiss_box( $function ) {
-	rocket_dismiss_boxes(
-		array(
-			'box'      => $function,
-			'_wpnonce' => wp_create_nonce( 'rocket_ignore_' . $function ),
-			'action'   => 'rocket_ignore',
-		)
-	);
+	$actual = get_user_meta( get_current_user_id(), 'rocket_boxes', true );
+	$actual = array_merge( (array) $actual, [ $function ] );
+	$actual = array_filter( $actual );
+	$actual = array_unique( $actual );
+
+	update_user_meta( get_current_user_id(), 'rocket_boxes', $actual );
+	delete_transient( $function );
 }
 
 /**
@@ -98,7 +96,7 @@ function rocket_dismiss_box( $function ) {
  *
  * @since 2.1
  */
-function create_rocket_uniqid() {
+function create_rocket_uniqid() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals
 	return str_replace( '.', '', uniqid( '', true ) );
 }
 
@@ -111,7 +109,7 @@ function create_rocket_uniqid() {
  * @return array An array of active plugins names.
  */
 function rocket_get_active_plugins() {
-	$plugins        = array();
+	$plugins        = [];
 	$active_plugins = array_intersect_key( get_plugins(), array_flip( array_filter( array_keys( get_plugins() ), 'is_plugin_active' ) ) );
 
 	foreach ( $active_plugins as $plugin ) {
@@ -150,12 +148,10 @@ function rocket_is_ssl_website() {
  *
  * @since 2.7
  */
-function get_rocket_documentation_url() {
-	$langs  = array(
+function get_rocket_documentation_url() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals
+	$langs  = [
 		'fr_FR' => 'fr.',
-		'it_IT' => 'it.',
-		'de_DE' => 'de.',
-	);
+	];
 	$lang   = get_locale();
 	$prefix = isset( $langs[ $lang ] ) ? $langs[ $lang ] : '';
 	$url    = "https://{$prefix}docs.wp-rocket.me/?utm_source=wp_plugin&utm_medium=wp_rocket";
@@ -171,15 +167,16 @@ function get_rocket_documentation_url() {
  *
  * @return string URL in the correct language
  */
-function get_rocket_faq_url() {
-	$langs = array(
-		'fr_FR' => 'fr.docs.wp-rocket.me/category/146-faq',
-		'it_IT' => 'it.docs.wp-rocket.me/category/321-domande-frequenti',
-		'de_DE' => 'de.docs.wp-rocket.me/category/285-haufig-gestellte-fragen-faq',
-	);
-	$lang  = get_locale();
-	$faq   = isset( $langs[ $lang ] ) ? $langs[ $lang ] : 'docs.wp-rocket.me/category/65-faq';
-	$url   = "https://{$faq}/?utm_source=wp_plugin&utm_medium=wp_rocket";
+function get_rocket_faq_url() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals
+	$langs  = [
+		'de' => 1,
+		'es' => 1,
+		'fr' => 1,
+		'it' => 1,
+	];
+	$locale = explode( '_', get_locale() );
+	$lang   = isset( $langs[ $locale[0] ] ) ? $locale[0] . '/' : '';
+	$url    = WP_ROCKET_WEB_MAIN . "{$lang}faq/?utm_source=wp_plugin&utm_medium=wp_rocket";
 
 	return $url;
 }
@@ -246,12 +243,12 @@ function rocket_after_update_single_options( $old_value, $value ) {
  * @param array $value An array of submitted settings values.
  */
 function rocket_after_update_array_options( $old_value, $value ) {
-	$options = array(
+	$options = [
 		'purchase_page',
 		'jigoshop_cart_page_id',
 		'jigoshop_checkout_page_id',
 		'jigoshop_myaccount_page_id',
-	);
+	];
 
 	foreach ( $options as $val ) {
 		if ( ( ! isset( $old_value[ $val ] ) && isset( $value[ $val ] ) ) ||
@@ -350,8 +347,11 @@ function rocket_check_json_filetype( $wp_check_filetype_and_ext, $file, $filenam
  * @return string HTML list table
  */
 function rocket_data_collection_preview_table() {
-
 	$data = rocket_analytics_data();
+
+	if ( ! $data ) {
+		return;
+	}
 
 	$html  = '<table class="wp-rocket-data-table widefat striped">';
 	$html .= '<tbody>';
@@ -388,7 +388,7 @@ function rocket_data_collection_preview_table() {
 	$html .= sprintf( '<strong>%s</strong>', __( 'WordPress multisite:', 'rocket' ) );
 	$html .= '</td>';
 	$html .= '<td>';
-	$html .= sprintf( '<code>%s</code>', var_export( $data['multisite'], true ) );
+	$html .= sprintf( '<code>%s</code>', $data['multisite'] ? 'true' : 'false' );
 	$html .= '</td>';
 	$html .= '</tr>';
 

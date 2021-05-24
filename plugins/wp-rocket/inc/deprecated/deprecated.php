@@ -1,7 +1,7 @@
 <?php
-use MatthiasMullie\Minify;
+use WP_Rocket\Dependencies\Minify;
 
-defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Deprecated functions come here to die.
@@ -50,7 +50,6 @@ if ( ! function_exists( 'set_rocket_cloudflare_async' ) ) :
 	 */
 	function set_rocket_cloudflare_async( $cf_rocket_loader ) {
 		_deprecated_function( __FUNCTION__, '2.8.16', 'set_rocket_cloudflare_rocket_loader()' );
-		return set_rocket_cloudflare_rocket_loader( $cf_rocket_loader );
 	}
 endif;
 
@@ -66,7 +65,6 @@ if ( ! function_exists( 'set_rocket_cloudflare_cache_lvl' ) ) :
 	 */
 	function set_rocket_cloudflare_cache_lvl( $cf_cache_level ) {
 		_deprecated_function( __FUNCTION__, '2.8.16', 'set_rocket_cloudflare_cache_level()' );
-		return set_rocket_cloudflare_cache_level( $cf_cache_level );
 	}
 endif;
 
@@ -678,11 +676,11 @@ function rocket_insert_critical_css() {
  *
  * @since 2.10
  * @deprecated 2.11
- * @see Rocket_Critical_CSS->insert_load_css()
+ * @see WP_Rocket\Engine\CriticalPath\CriticalCSSSubscriber->insert_load_css()
  * @author Remy Perona
  */
 function rocket_insert_load_css() {
-	_deprecated_function( __FUNCTION__, '2.11', 'Rocket_Critical_CSS->insert_load_css()' );
+	_deprecated_function( __FUNCTION__, '2.11', 'WP_Rocket\Engine\CriticalPath\CriticalCSSSubscriber->insert_load_css()' );
 }
 
 if ( ! function_exists( 'rocket_lazyload_async_script' ) ) {
@@ -867,13 +865,13 @@ if ( ! function_exists( 'rocket_correct_capability_for_options_page' ) ) {
 	 *
 	 * @since 2.6
 	 * @deprecated 3.0
-	 * @see WP_Rocket\Admin\Settings\Page->required_capability()
+	 * @see WP_Rocket\Engine\Settings\Page->required_capability()
 	 *
 	 * @param string $capability Capacity to access WP Rocket options.
 	 * @return string Updated capacity
 	 */
 	function rocket_correct_capability_for_options_page( $capability ) {
-		_deprecated_function( __FUNCTION__, '3.0', 'WP_Rocket\Admin\Settings\Page->required_compatibility()' );
+		_deprecated_function( __FUNCTION__, '3.0', 'WP_Rocket\Engine\Settings\Page->required_compatibility()' );
 		/** This filter is documented in inc/admin-bar.php */
 		return apply_filters( 'rocket_capacity', 'manage_options' );
 	}
@@ -885,10 +883,10 @@ if ( ! function_exists( 'rocket_admin_menu' ) ) {
 	 *
 	 * @since 1.0
 	 * @deprecated 3.0
-	 * @see WP_Rocket\Admin\Settings\Page->add_admin_page()
+	 * @see WP_Rocket\Engine\Settings\Page->add_admin_page()
 	 */
 	function rocket_admin_menu() {
-		_deprecated_function( __FUNCTION__, '3.0', 'WP_Rocket\Admin\Settings\Page->add_admin_page()' );
+		_deprecated_function( __FUNCTION__, '3.0', 'WP_Rocket\Engine\Settings\Page->add_admin_page()' );
 		add_options_page( WP_ROCKET_PLUGIN_NAME, WP_ROCKET_PLUGIN_NAME, apply_filters( 'rocket_capacity', 'manage_options' ), WP_ROCKET_PLUGIN_SLUG, 'rocket_display_options' );
 	}
 }
@@ -914,10 +912,10 @@ if ( ! function_exists( 'rocket_register_setting' ) ) {
 	 *
 	 * @since 1.0
 	 * @deprecated 3.0
-	 * @see WP_Rocket\Admin\Settings\Page->configure()
+	 * @see WP_Rocket\Engine\Settings\Page->configure()
 	 */
 	function rocket_register_setting() {
-		_deprecated_function( __FUNCTION__, '3.0', 'WP_Rocket\Admin\Settings\Page->configure()' );
+		_deprecated_function( __FUNCTION__, '3.0', 'WP_Rocket\Engine\Settings\Page->configure()' );
 		register_setting( 'wp_rocket', WP_ROCKET_SLUG, 'rocket_settings_callback' );
 	}
 }
@@ -931,7 +929,7 @@ if ( ! function_exists( 'rocket_settings_callback' ) ) {
 	 * @param array $inputs An array of values submitted by the settings form.
 	 */
 	function rocket_settings_callback( $inputs ) {
-		_deprecated_function( __FUNCTION__, '3.0', 'WP_Rocket\Admin\Settings\Settings->sanitize_callback()' );
+		_deprecated_function( __FUNCTION__, '3.0', 'WP_Rocket\Engine\Admin\Settings\Settings->sanitize_callback()' );
 		if ( isset( $_GET['action'] ) && 'purge_cache' === $_GET['action'] ) {
 			return $inputs;
 		}

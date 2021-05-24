@@ -20,8 +20,15 @@ $knowledge_graph_help = new WPSEO_Admin_Help_Panel(
 );
 ?>
 <div class="tab-block">
-	<h2 class="help-button-inline"><?php echo esc_html__( 'Knowledge Graph & Schema.org', 'wordpress-seo' ) . $knowledge_graph_help->get_button_html(); ?></h2>
+
+	<h2 class="help-button-inline">
+		<?php
+		// phpcs:ignore WordPress.Security.EscapeOutput -- get_button_html() output is properly escaped.
+		echo esc_html__( 'Knowledge Graph & Schema.org', 'wordpress-seo' ) . $knowledge_graph_help->get_button_html();
+		?>
+	</h2>
 	<?php
+	// phpcs:ignore WordPress.Security.EscapeOutput -- get_panel_html() output is properly escaped.
 	echo $knowledge_graph_help->get_panel_html();
 	/**
 	 * Filter: 'wpseo_knowledge_graph_setting_msg' - Allows adding a message above these settings.
@@ -44,8 +51,8 @@ $knowledge_graph_help = new WPSEO_Admin_Help_Panel(
 	$yform->select( 'company_or_person', __( 'Organization or person', 'wordpress-seo' ), $yoast_free_kg_select_options, 'styled', false );
 	?>
 	<div id="knowledge-graph-company">
+		<h3><?php esc_html_e( 'Organization', 'wordpress-seo' ); ?></h3>
 		<?php
-
 		/*
 		 * Render the `knowledge-graph-company-warning` div when the company name or logo are not set.
 		 * This div is used as React render root in `js/src/search-appearance.js`.
@@ -54,21 +61,25 @@ $knowledge_graph_help = new WPSEO_Admin_Help_Panel(
 		$yoast_seo_company_logo = WPSEO_Options::get( 'company_logo', '' );
 		if ( empty( $yoast_seo_company_name ) || empty( $yoast_seo_company_logo ) ) :
 			?>
-		<div id="knowledge-graph-company-warning"></div>
-		<?php endif; ?>
+			<div id="knowledge-graph-company-warning"></div>
+			<?php
+		endif;
 
-		<h3><?php esc_html_e( 'Organization', 'wordpress-seo' ); ?></h3>
-		<?php
 		$yform->textinput( 'company_name', __( 'Organization name', 'wordpress-seo' ), [ 'autocomplete' => 'organization' ] );
-		$yform->media_input( 'company_logo', __( 'Organization logo', 'wordpress-seo' ) );
+		$yform->hidden( 'company_logo', 'company_logo' );
+		$yform->hidden( 'company_logo_id', 'company_logo_id' );
 		?>
+		<div id="yoast-organization-image-select"></div>
 		<div id="wpseo-local-seo-upsell"></div>
 	</div>
 	<div id="knowledge-graph-person">
 		<h3><?php esc_html_e( 'Personal info', 'wordpress-seo' ); ?></h3>
+
+		<div id="wpseo-person-selector"></div>
+		<div id="yoast-person-image-select"></div>
 		<?php
-		echo '<div id="wpseo-person-selector"></div>';
-		$yform->media_input( 'person_logo', __( 'Person logo / avatar', 'wordpress-seo' ) );
+		$yform->hidden( 'person_logo', 'person_logo' );
+		$yform->hidden( 'person_logo_id', 'person_logo_id' );
 		$yform->hidden( 'company_or_person_user_id', 'person_id' );
 		?>
 	</div>

@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
+
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Link to the configuration page of the plugin, support & documentation
@@ -10,6 +11,10 @@ defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
  * @return array Updated array of links
  */
 function rocket_settings_action_links( $actions ) {
+	if ( ! current_user_can( 'rocket_manage_options' ) ) {
+		return $actions;
+	}
+
 	array_unshift( $actions, sprintf( '<a href="%s">%s</a>', 'https://wp-rocket.me/support/?utm_source=wp_plugin&utm_medium=wp_rocket', __( 'Support', 'rocket' ) ) );
 
 	array_unshift( $actions, sprintf( '<a href="%s">%s</a>', get_rocket_documentation_url(), __( 'Docs', 'rocket' ) ) );
@@ -58,37 +63,17 @@ add_action( 'plugin_row_meta', 'rocket_plugin_row_meta', 10, 2 );
  * @return array Updated array of row action links
  */
 function rocket_post_row_actions( $actions, $post ) {
-	/** This filter is documented in inc/admin-bar.php */
-	if ( current_user_can( apply_filters( 'rocket_capacity', 'manage_options' ) ) ) {
-		$url                     = wp_nonce_url( admin_url( 'admin-post.php?action=purge_cache&type=post-' . $post->ID ), 'purge_cache_post-' . $post->ID );
-		$actions['rocket_purge'] = sprintf( '<a href="%s">%s</a>', $url, __( 'Clear this cache', 'rocket' ) );
+	if ( ! current_user_can( 'rocket_purge_posts' ) ) {
+		return $actions;
 	}
+
+	$url                     = wp_nonce_url( admin_url( 'admin-post.php?action=purge_cache&type=post-' . $post->ID ), 'purge_cache_post-' . $post->ID );
+	$actions['rocket_purge'] = sprintf( '<a href="%s">%s</a>', $url, __( 'Clear this cache', 'rocket' ) );
+
 	return $actions;
 }
 add_filter( 'page_row_actions', 'rocket_post_row_actions', 10, 2 );
 add_filter( 'post_row_actions', 'rocket_post_row_actions', 10, 2 );
-
-/**
- * Add a link "Purge this cache" in the taxonomy edit area
- *
- * @since 1.0
- *
- * @param array  $actions An array of row action links.
- * @param object $term The term object.
- * @return array Updated array of row action links
- */
-function rocket_tag_row_actions( $actions, $term ) {
-	global $taxnow;
-
-	/** This filter is documented in inc/admin-bar.php */
-	if ( current_user_can( apply_filters( 'rocket_capacity', 'manage_options' ) ) ) {
-		$url                     = wp_nonce_url( admin_url( 'admin-post.php?action=purge_cache&type=term-' . $term->term_id . '&taxonomy=' . $taxnow ), 'purge_cache_term-' . $term->term_id );
-		$actions['rocket_purge'] = sprintf( '<a href="%s">%s</a>', $url, __( 'Clear this cache', 'rocket' ) );
-	}
-
-	return $actions;
-}
-add_filter( 'tag_row_actions', 'rocket_tag_row_actions', 10, 2 );
 
 /**
  * Add a link "Purge this cache" in the user edit area
@@ -99,65 +84,53 @@ add_filter( 'tag_row_actions', 'rocket_tag_row_actions', 10, 2 );
  * @return array Updated array of row action links
  */
 function rocket_user_row_actions( $actions, $user ) {
-	/** This filter is documented in inc/admin-bar.php */
-	if ( current_user_can( apply_filters( 'rocket_capacity', 'manage_options' ) ) && get_rocket_option( 'cache_logged_user', false ) ) {
-		$url                     = wp_nonce_url( admin_url( 'admin-post.php?action=purge_cache&type=user-' . $user->ID ), 'purge_cache_user-' . $user->ID );
-		$actions['rocket_purge'] = sprintf( '<a href="%s">%s</a>', $url, __( 'Clear this cache', 'rocket' ) );
+	if ( ! current_user_can( 'rocket_purge_users' ) || ! get_rocket_option( 'cache_logged_user', false ) ) {
+		return $actions;
 	}
+
+	$url                     = wp_nonce_url( admin_url( 'admin-post.php?action=purge_cache&type=user-' . $user->ID ), 'purge_cache_user-' . $user->ID );
+	$actions['rocket_purge'] = sprintf( '<a href="%s">%s</a>', $url, __( 'Clear this cache', 'rocket' ) );
 
 	return $actions;
 }
 add_filter( 'user_row_actions', 'rocket_user_row_actions', 10, 2 );
 
 /**
- * Manage the dismissed boxes
+ * Manage the dismissed boxes.
  *
- * @since 2.4 Add a delete_transient on function name (box name)
- * @since 1.3.0 $args can replace $_GET when called internaly
+ * @since 3.6   Reverse dependency with rocket_dismiss_box().
+ * @since 2.4   Add a delete_transient on function name (box name).
+ * @since 1.3.0 $args can replace $_GET when called internaly.
  * @since 1.1.10
  *
- * @param array $args An array of query args.
+ * @param array $args An array of query args. Should not be used: see rocket_dismiss_box().
  */
-function rocket_dismiss_boxes( $args ) {
-	$args = empty( $args ) ? $_GET : $args;
+function rocket_dismiss_boxes( $args = [] ) {
+	global $pagenow;
 
-	if ( isset( $args['box'], $args['_wpnonce'] ) ) {
+	$args = empty( $args ) ? $_GET : $args; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-		if ( ! wp_verify_nonce( $args['_wpnonce'], $args['action'] . '_' . $args['box'] ) ) {
-			if ( defined( 'DOING_AJAX' ) ) {
-				wp_send_json(
-					array(
-						'error' => 1,
-					)
-				);
-			} else {
-				wp_nonce_ays( '' );
-			}
+	if ( ! isset( $args['box'], $args['action'], $args['_wpnonce'] ) ) {
+		return;
+	}
+
+	if ( ! wp_verify_nonce( $args['_wpnonce'], "{$args['action']}_{$args['box']}" ) ) {
+		if ( rocket_get_constant( 'DOING_AJAX' ) ) {
+			wp_send_json( [ 'error' => 1 ] );
+		} else {
+			wp_nonce_ays( '' );
 		}
+		return;
+	}
 
-		if ( '__rocket_imagify_notice' === $args['box'] ) {
-			update_option( 'wp_rocket_dismiss_imagify_notice', 0 );
-		}
+	rocket_dismiss_box( $args['box'] );
 
-		global $current_user;
-		$actual = get_user_meta( $current_user->ID, 'rocket_boxes', true );
-		$actual = array_merge( (array) $actual, array( $args['box'] ) );
-		$actual = array_filter( $actual );
-		$actual = array_unique( $actual );
-		update_user_meta( $current_user->ID, 'rocket_boxes', $actual );
-		delete_transient( $args['box'] );
-
-		if ( 'admin-post.php' === $GLOBALS['pagenow'] ) {
-			if ( defined( 'DOING_AJAX' ) ) {
-				wp_send_json(
-					array(
-						'error' => 0,
-					)
-				);
-			} else {
-				wp_safe_redirect( wp_get_referer() );
-				die();
-			}
+	if ( 'admin-post.php' === $pagenow ) {
+		if ( rocket_get_constant( 'DOING_AJAX' ) ) {
+			wp_send_json( [ 'error' => 0 ] );
+		} else {
+			wp_safe_redirect( esc_url_raw( wp_get_referer() ) );
+			rocket_get_constant( 'WP_ROCKET_IS_TESTING', false ) ? wp_die() : exit;
 		}
 	}
 }
@@ -185,11 +158,14 @@ add_action( 'deactivated_plugin', 'rocket_dismiss_plugin_box' );
  * @since 1.3.0
  */
 function rocket_deactivate_plugin() {
-	if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'deactivate_plugin' ) ) {
+	if ( ! isset( $_GET['plugin'], $_GET['_wpnonce'] ) ) {
+		return;
+	}
+	if ( ! wp_verify_nonce( sanitize_key( $_GET['_wpnonce'] ), 'deactivate_plugin' ) ) {
 		wp_nonce_ays( '' );
 	}
 
-	deactivate_plugins( $_GET['plugin'] );
+	deactivate_plugins( sanitize_text_field( wp_unslash( $_GET['plugin'] ) ) );
 
 	wp_safe_redirect( wp_get_referer() );
 	die();
@@ -202,11 +178,11 @@ add_action( 'admin_post_deactivate_plugin', 'rocket_deactivate_plugin' );
  * @since 2.2
  */
 function rocket_do_options_export() {
-	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'rocket_export' ) ) {
+	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_GET['_wpnonce'] ), 'rocket_export' ) ) {
 		wp_nonce_ays( '' );
 	}
 
-	$filename = sprintf( 'wp-rocket-settings-%s-%s.json', date( 'Y-m-d' ), uniqid() );
+	$filename = sprintf( 'wp-rocket-settings-%s-%s.json', date( 'Y-m-d' ), uniqid() ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 	$gz       = 'gz' . strrev( 'etalfed' );
 	$options  = wp_json_encode( get_option( WP_ROCKET_SLUG ) ); // do not use get_rocket_option() here.
 	nocache_headers();
@@ -215,7 +191,7 @@ function rocket_do_options_export() {
 	@header( 'Content-Transfer-Encoding: binary' );
 	@header( 'Content-Length: ' . strlen( $options ) );
 	@header( 'Connection: close' );
-	echo $options;
+	echo $options; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	exit();
 }
 add_action( 'admin_post_rocket_export', 'rocket_do_options_export' );
@@ -226,7 +202,7 @@ add_action( 'admin_post_rocket_export', 'rocket_do_options_export' );
  * @since 2.4
  */
 function rocket_rollback() {
-	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'rocket_rollback' ) ) {
+	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_GET['_wpnonce'] ), 'rocket_rollback' ) ) {
 		wp_nonce_ays( '' );
 	}
 
@@ -300,7 +276,6 @@ if ( ! defined( 'DOING_AJAX' ) && ! defined( 'DOING_AUTOSAVE' ) ) {
 	add_action( 'admin_init', 'rocket_init_cache_dir' );
 	add_action( 'admin_init', 'rocket_maybe_generate_advanced_cache_file' );
 	add_action( 'admin_init', 'rocket_maybe_generate_config_files' );
-	add_action( 'admin_init', 'rocket_maybe_set_wp_cache_define' );
 }
 
 /**
@@ -326,17 +301,6 @@ function rocket_maybe_generate_config_files() {
 
 	if ( ! file_exists( WP_ROCKET_CONFIG_PATH . strtolower( $home['host'] ) . $path . '.php' ) ) {
 		rocket_generate_config_file();
-	}
-}
-
-/**
- * Define WP_CACHE to true if it's not defined yet.
- *
- * @since 2.6
- */
-function rocket_maybe_set_wp_cache_define() {
-	if ( defined( 'WP_CACHE' ) && ! WP_CACHE ) {
-		set_rocket_wp_cache_define( true );
 	}
 }
 
@@ -376,15 +340,15 @@ function rocket_add_imagify_api_result( $result, $action, $args ) {
 		return $result;
 	}
 
-	$query_args   = array(
+	$query_args   = [
 		'slug'   => 'imagify',
-		'fields' => array(
+		'fields' => [
 			'icons'             => true,
 			'active_installs'   => true,
 			'short_description' => true,
 			'group'             => true,
-		),
-	);
+		],
+	];
 	$imagify_data = plugins_api( 'plugin_information', $query_args );
 
 	if ( is_wp_error( $imagify_data ) ) {
@@ -408,7 +372,7 @@ add_filter( 'plugins_api_result', 'rocket_add_imagify_api_result', 11, 3 );
  * @since 2.11
  * @author Remy Perona
  *
- * @return array An array of data
+ * @return mixed An array of data, or false if WP Rocket options is not an array
  */
 function rocket_analytics_data() {
 	global $wp_version, $is_nginx, $is_apache, $is_iis7, $is_IIS;
@@ -417,7 +381,7 @@ function rocket_analytics_data() {
 		return false;
 	}
 
-	$untracked_wp_rocket_options = array(
+	$untracked_wp_rocket_options = [
 		'license'                 => 1,
 		'consumer_email'          => 1,
 		'consumer_key'            => 1,
@@ -431,7 +395,7 @@ function rocket_analytics_data() {
 		'cloudflare_old_settings' => 1,
 		'submit_optimize'         => 1,
 		'analytics_enabled'       => 1,
-	);
+	];
 
 	$theme              = wp_get_theme();
 	$data               = array_diff_key( get_option( WP_ROCKET_SLUG ), $untracked_wp_rocket_options );
@@ -454,8 +418,18 @@ function rocket_analytics_data() {
 	$data['active_plugins']    = rocket_get_active_plugins();
 	$data['locale']            = $locale[0];
 	$data['multisite']         = is_multisite();
-	$data['cdn_cnames']        = count( $data['cdn_cnames'] );
-	$data['sitemaps']          = array_map( 'rocket_clean_exclude_file', $data['sitemaps'] );
+
+	if ( ! empty( $data['cdn_cnames'] ) && is_array( $data['cdn_cnames'] ) ) {
+		$data['cdn_cnames'] = count( $data['cdn_cnames'] );
+	} else {
+		$data['cdn_cnames'] = 0;
+	}
+
+	if ( ! empty( $data['sitemaps'] ) && is_array( $data['sitemaps'] ) ) {
+		$data['sitemaps'] = array_map( 'rocket_clean_exclude_file', $data['sitemaps'] );
+	} else {
+		$data['sitemaps'] = [];
+	}
 
 	return $data;
 }
@@ -492,23 +466,23 @@ function rocket_send_analytics_data() {
  * @author Remy Perona
  */
 function rocket_analytics_optin() {
-	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'analytics_optin' ) ) {
+	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_GET['_wpnonce'] ), 'analytics_optin' ) ) {
 		wp_nonce_ays( '' );
 	}
 
 	if ( ! current_user_can( 'administrator' ) ) {
-		wp_redirect( wp_get_referer() );
+		wp_safe_redirect( wp_get_referer() );
 		die();
 	}
 
-	if ( 'yes' === $_GET['value'] ) {
+	if ( isset( $_GET['value'] ) && 'yes' === $_GET['value'] ) {
 		update_rocket_option( 'analytics_enabled', 1 );
 		set_transient( 'rocket_analytics_optin', 1 );
 	}
 
 	update_option( 'rocket_analytics_notice_displayed', 1 );
 
-	wp_redirect( wp_get_referer() );
+	wp_safe_redirect( wp_get_referer() );
 	die();
 }
 add_action( 'admin_post_rocket_analytics_optin', 'rocket_analytics_optin' );
@@ -525,30 +499,34 @@ add_action( 'admin_post_rocket_analytics_optin', 'rocket_analytics_optin' );
 function rocket_handle_settings_import() {
 	check_ajax_referer( 'rocket_import_settings', 'rocket_import_settings_nonce' );
 
-	if ( ! current_user_can( apply_filters( 'rocket_capacity', 'manage_options' ) ) ) {
+	if ( ! current_user_can( 'rocket_manage_options' ) ) {
 		rocket_settings_import_redirect( __( 'Settings import failed: you do not have the permissions to do this.', 'rocket' ), 'error' );
 	}
 
-	if ( ! isset( $_FILES['import'] ) || 0 === $_FILES['import']['size'] ) {
+	if ( ! isset( $_FILES['import'] ) || ( isset( $_FILES['import']['size'] ) && 0 === $_FILES['import']['size'] ) ) {
 		rocket_settings_import_redirect( __( 'Settings import failed: no file uploaded.', 'rocket' ), 'error' );
 	}
 
-	if ( ! preg_match( '/wp-rocket-settings-20\d{2}-\d{2}-\d{2}-[a-f0-9]{13}\.(?:txt|json)/', $_FILES['import']['name'] ) ) {
+	if ( isset( $_FILES['import']['name'] ) && ! preg_match( '/wp-rocket-settings-20\d{2}-\d{2}-\d{2}-[a-f0-9]{13}\.(?:txt|json)/', sanitize_file_name( $_FILES['import']['name'] ) ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		rocket_settings_import_redirect( __( 'Settings import failed: incorrect filename.', 'rocket' ), 'error' );
 	}
 
 	add_filter( 'mime_types', 'rocket_allow_json_mime_type' );
 	add_filter( 'wp_check_filetype_and_ext', 'rocket_check_json_filetype', 10, 4 );
 
-	$file_data = wp_check_filetype_and_ext( $_FILES['import']['tmp_name'], $_FILES['import']['name'] );
+	$mimes     = get_allowed_mime_types();
+	$mimes     = rocket_allow_json_mime_type( $mimes );
+	$file_data = wp_check_filetype_and_ext( $_FILES['import']['tmp_name'], sanitize_file_name( $_FILES['import']['name'] ), $mimes ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 
 	if ( 'text/plain' !== $file_data['type'] && 'application/json' !== $file_data['type'] ) {
 		rocket_settings_import_redirect( __( 'Settings import failed: incorrect filetype.', 'rocket' ), 'error' );
 	}
 
-	$_post_action    = $_POST['action'];
-	$_POST['action'] = 'wp_handle_sideload';
-	$file            = wp_handle_sideload( $_FILES['import'] );
+	$_post_action       = isset( $_POST['action'] ) ? wp_unslash( sanitize_key( $_POST['action'] ) ) : '';
+	$_POST['action']    = 'wp_handle_sideload';
+	$overrides          = [];
+	$overrides['mimes'] = $mimes;
+	$file               = wp_handle_sideload( $_FILES['import'], $overrides ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 
 	if ( isset( $file['error'] ) ) {
 		rocket_settings_import_redirect( __( 'Settings import failed: ', 'rocket' ) . $file['error'], 'error' );
@@ -561,8 +539,7 @@ function rocket_handle_settings_import() {
 
 	if ( 'text/plain' === $file_data['type'] ) {
 		$gz       = 'gz' . strrev( 'etalfni' );
-		$settings = $gz// ;
-		( $settings );
+		$settings = $gz( $settings );
 		$settings = maybe_unserialize( $settings );
 	} elseif ( 'application/json' === $file_data['type'] ) {
 		$settings = json_decode( $settings, true );
@@ -577,7 +554,7 @@ function rocket_handle_settings_import() {
 
 	if ( is_array( $settings ) ) {
 		$options_api     = new WP_Rocket\Admin\Options( 'wp_rocket_' );
-		$current_options = $options_api->get( 'settings', array() );
+		$current_options = $options_api->get( 'settings', [] );
 
 		$settings['consumer_key']     = $current_options['consumer_key'];
 		$settings['consumer_email']   = $current_options['consumer_email'];

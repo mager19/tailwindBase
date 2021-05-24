@@ -30,7 +30,7 @@
         line-height: rem(25px);
     }
     &--6 {
-        @apply .font-bold;
+        @apply font-bold;
         font-size: rem(16px);
         letter-spacing: -0.02em;
         line-height: rem(24px);
@@ -101,7 +101,7 @@
             line-height: rem(25px);
         }
         &--6 {
-            @apply .font-bold;
+            @apply font-bold;
             font-size: rem(16px);
             letter-spacing: -0.02em;
             line-height: rem(24px);
@@ -173,7 +173,7 @@
             line-height: rem(25px);
         }
         &--6 {
-            @apply .font-bold;
+            @apply font-bold;
             font-size: rem(16px);
             letter-spacing: -0.02em;
             line-height: rem(24px);
@@ -245,7 +245,7 @@
             line-height: rem(25px);
         }
         &--6 {
-            @apply .font-bold;
+            @apply font-bold;
             font-size: rem(16px);
             letter-spacing: -0.02em;
             line-height: rem(24px);
@@ -317,7 +317,7 @@
             line-height: rem(25px);
         }
         &--6 {
-            @apply .font-bold;
+            @apply font-bold;
             font-size: rem(16px);
             letter-spacing: -0.02em;
             line-height: rem(24px);
@@ -352,4 +352,8 @@
             line-height: rem(24px);
         }
     }
+}
+
+.cosarara {
+    color: pink;
 }

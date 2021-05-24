@@ -20,7 +20,8 @@
  * }
  */
 
-defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
+defined( 'ABSPATH' ) || exit;
+
 ?>
 <div id="<?php echo esc_attr( $data['id'] ); ?>" class="wpr-Page">
 	<div class="wpr-sectionHeader">
@@ -40,13 +41,20 @@ defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
 			<br>
 			<?php esc_html_e( 'Your website should be loading faster now!', 'rocket' ); ?>
 			</h2>
-				<div class="wpr-notice-description"><?php esc_html_e( 'To guarantee fast websites, WP Rocket applies 80% of web performance best practices.', 'rocket' ); ?><br> <?php esc_html_e( 'We also enable options that provide immediate benefits to your website.', 'rocket' ); ?></div>
+				<div class="wpr-notice-description"><?php esc_html_e( 'To guarantee fast websites, WP Rocket automatically applies 80% of web performance best practices.', 'rocket' ); ?><br> <?php esc_html_e( 'We also enable options that provide immediate benefits to your website.', 'rocket' ); ?></div>
 				<div class="wpr-notice-continue"><?php esc_html_e( 'Continue to the options to further optimize your site!', 'rocket' ); ?></div>
 				<a class="wpr-notice-close wpr-icon-close rocket-dismiss" href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=rocket_ignore&box=rocket_activation_notice' ), 'rocket_ignore_rocket_activation_notice' ) ); ?>"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'rocket' ); ?></span></a>
 		</div>
 	</div>
 	<?php endif; ?>
-
+	<?php
+		/**
+		 * Fires before displaying the dashboard tab content
+		 *
+		 * @since 3.7.4
+		 */
+		do_action( 'rocket_before_dashboard_content' );
+	?>
 	<div class="wpr-Page-row">
 		<div class="wpr-Page-col">
 			<?php if ( ! defined( 'WP_ROCKET_WHITE_LABEL_ACCOUNT' ) || ! WP_ROCKET_WHITE_LABEL_ACCOUNT ) : ?>
@@ -67,12 +75,24 @@ defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
 			</div>
 
 			<div class="wpr-field wpr-field-account">
-				<div class="wpr-flex wpr-flex--egal">
-					<div>
+				<div class="wpr-flex">
+					<div class="wpr-infoAccount-License">
 						<span class="wpr-title3"><?php esc_html_e( 'License', 'rocket' ); ?></span>
-						<span class="wpr-infoAccount wpr-isValid" id="wpr-account-data"><?php echo esc_html( $data['customer_data']->licence_account ); ?></span><br>
-						<span class="wpr-title3"><?php esc_html_e( 'Expiration Date', 'rocket' ); ?></span>
-						<span class="wpr-infoAccount <?php echo esc_attr( $data['customer_data']->class ); ?>" id="wpr-expiration-data"><?php echo esc_html( $data['customer_data']->licence_expiration ); ?></span>
+						<span class="wpr-infoAccount wpr-isValid" id="wpr-account-data">
+							<?php echo esc_html( $data['customer_data']['license_type'] ); ?>
+						</span><br>
+						<?php
+						/**
+						 * Fires when displaying the license information
+						 *
+						 * @since 3.7.3
+						 */
+						do_action( 'rocket_dashboard_license_info' );
+						?>
+						<p>
+							<span class="wpr-title3"><?php esc_html_e( 'Expiration Date', 'rocket' ); ?></span>
+							<span class="wpr-infoAccount <?php echo esc_attr( $data['customer_data']['license_class'] ); ?>" id="wpr-expiration-data"><?php echo esc_html( $data['customer_data']['license_expiration'] ); ?></span>
+						</p>
 					</div>
 					<div>
 						<?php
@@ -92,7 +112,14 @@ defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
 				</div>
 			</div>
 			<?php endif; ?>
-
+			<?php
+			/**
+			 * Fires after the account data section on the WP Rocket settings dashboard
+			 *
+			 * @since 3.5
+			 */
+			do_action( 'rocket_dashboard_after_account_data' );
+			?>
 			<?php
 				$this->render_settings_sections( $data['id'] );
 			?>
@@ -105,6 +132,7 @@ defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
 
 			<div class="wpr-fieldsContainer">
 				<fieldset class="wpr-fieldsContainer-fieldset">
+					<?php if ( current_user_can( 'rocket_purge_cache' ) ) : ?>
 					<div class="wpr-field">
 						<h4 class="wpr-title3"><?php esc_html_e( 'Remove all cached files', 'rocket' ); ?></h4>
 						<?php
@@ -123,8 +151,8 @@ defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
 						);
 						?>
 					</div>
-
-					<?php if ( get_rocket_option( 'manual_preload' ) ) : ?>
+					<?php endif; ?>
+					<?php if ( get_rocket_option( 'manual_preload' ) && current_user_can( 'rocket_preload_cache' ) ) : ?>
 					<div class="wpr-field">
 						<h4 class="wpr-title3"><?php esc_html_e( 'Start cache preloading', 'rocket' ); ?></h4>
 						<?php
@@ -142,7 +170,15 @@ defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
 					</div>
 					<?php endif; ?>
 
-					<?php if ( function_exists( 'opcache_reset' ) ) : ?>
+					<?php
+					$opcache_enabled  = filter_var( ini_get( 'opcache.enable' ), FILTER_VALIDATE_BOOLEAN ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+					$restrict_api     = ini_get( 'opcache.restrict_api' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+					$can_restrict_api = true; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+					if ( $restrict_api && strpos( __FILE__, $restrict_api ) !== 0 ) {
+						$can_restrict_api = false; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+					}
+					if ( function_exists( 'opcache_reset' ) && $opcache_enabled && current_user_can( 'rocket_purge_opcache' ) && $can_restrict_api ) :
+						?>
 					<div class="wpr-field">
 						<h4 class="wpr-title3"><?php esc_html_e( 'Purge OPCache content', 'rocket' ); ?></h4>
 						<?php
@@ -159,7 +195,7 @@ defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
 						?>
 					</div>
 					<?php endif; ?>
-					<?php if ( get_rocket_option( 'async_css' ) && apply_filters( 'do_rocket_critical_css_generation', true ) ) : ?>
+					<?php if ( get_rocket_option( 'async_css' ) && apply_filters( 'do_rocket_critical_css_generation', true ) && current_user_can( 'rocket_regenerate_critical_css' ) ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound ?>
 					<div class="wpr-field">
 						<h4 class="wpr-title3"><?php esc_html_e( 'Regenerate Critical CSS', 'rocket' ); ?></h4>
 						<?php
@@ -182,10 +218,11 @@ defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
 	</div>
 	<div class="wpr-Page-row">
 		<div class="wpr-Page-col">
+			<?php $this->render_part( 'getting-started' ); ?>
 			<div class="wpr-optionHeader">
 				<h3 class="wpr-title2"><?php esc_html_e( 'Frequently Asked Questions', 'rocket' ); ?></h3>
 			</div>
-			<fieldset class="wpr-fieldsContainer-fieldset">
+			<div class="wpr-fieldsContainer-fieldset">
 				<div class="wpr-field">
 					<ul class="wpr-field-list">
 					<?php foreach ( $data['faq'] as $rocket_faq_item ) : ?>
@@ -207,7 +244,7 @@ defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
 								[
 									'label'      => __( 'Ask support', 'rocket' ),
 									'attributes' => [
-										'class'  => 'wpr-button wpr-button--icon wpr-button--small wpr-button--blue wpr-icon-help wpr-js-askSupport',
+										'class'  => 'wpr-button wpr-button--icon wpr-button--small wpr-button--blue wpr-icon-help',
 										'target' => '_blank',
 									],
 								]
@@ -216,7 +253,7 @@ defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
 						</div>
 					</div>
 				</div>
-			</fieldset>
+			</div>
 		</div>
 
 		<div class="wpr-Page-col wpr-Page-col--fixed">

@@ -16,7 +16,7 @@
  * Plugin Name:       FPS Sticky Menu
  * Plugin URI:        http://frontporchsolutions.com
  * Description:       Quickly add a Sticky Menu to any site that works with ACF
- * Version:           1.6.21
+ * Version:           1.6.25
  * Author:            Joel Bohorquez
  * Author URI:        http://frontporchsolutions.com
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if (!defined('WPINC')) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('FPS_STICKY_MENU_VERSION', '1.6.21');
+define('FPS_STICKY_MENU_VERSION', '1.6.25');
 
 define('FPS_STICKY_MENU__FILE__', __FILE__);
 define('FPS_STICKY_MENU__DIR__', __DIR__);

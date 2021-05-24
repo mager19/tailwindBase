@@ -1,7 +1,7 @@
 <?php
 namespace WP_Rocket\ServiceProvider;
 
-use League\Container\ServiceProvider\AbstractServiceProvider;
+use WP_Rocket\Engine\Container\ServiceProvider\AbstractServiceProvider;
 
 /**
  * Service provider for WP Rocket features common for admin and front
@@ -21,12 +21,9 @@ class Common_Subscribers extends AbstractServiceProvider {
 	 * @var array
 	 */
 	protected $provides = [
-		'heartbeat_subscriber',
 		'db_optimization_subscriber',
-		'critical_css_generation',
-		'critical_css',
-		'critical_css_subscriber',
-		'cache_dir_size_check_subscriber',
+		'webp_subscriber',
+		'detect_missing_tags',
 	];
 
 	/**
@@ -38,17 +35,16 @@ class Common_Subscribers extends AbstractServiceProvider {
 	 * @return void
 	 */
 	public function register() {
-		$this->getContainer()->share( 'heartbeat_subscriber', 'WP_Rocket\Subscriber\Heartbeat_Subscriber' )
-			->withArgument( $this->getContainer()->get( 'options' ) );
+		$options = $this->getContainer()->get( 'options' );
+
 		$this->getContainer()->share( 'db_optimization_subscriber', 'WP_Rocket\Subscriber\Admin\Database\Optimization_Subscriber' )
 			->withArgument( $this->getContainer()->get( 'db_optimization' ) )
-			->withArgument( $this->getContainer()->get( 'options' ) );
-		$this->getContainer()->add( 'critical_css_generation', 'WP_Rocket\Optimization\CSS\Critical_CSS_Generation' );
-		$this->getContainer()->add( 'critical_css', 'WP_Rocket\Optimization\CSS\Critical_CSS' )
-			->withArgument( $this->getContainer()->get( 'critical_css_generation' ) );
-		$this->getContainer()->share( 'critical_css_subscriber', 'WP_Rocket\Subscriber\Optimization\Critical_CSS_Subscriber' )
-			->withArgument( $this->getContainer()->get( 'critical_css' ) )
-			->withArgument( $this->getContainer()->get( 'options' ) );
-		$this->getContainer()->share( 'cache_dir_size_check_subscriber', 'WP_Rocket\Subscriber\Tools\Cache_Dir_Size_Check_Subscriber' );
+			->withArgument( $options );
+		$this->getContainer()->share( 'webp_subscriber', 'WP_Rocket\Subscriber\Media\Webp_Subscriber' )
+			->withArgument( $options )
+			->withArgument( $this->getContainer()->get( 'options_api' ) )
+			->withArgument( $this->getContainer()->get( 'cdn_subscriber' ) )
+			->withArgument( $this->getContainer()->get( 'beacon' ) );
+		$this->getContainer()->share( 'detect_missing_tags_subscriber', 'WP_Rocket\Subscriber\Tools\Detect_Missing_Tags_Subscriber' );
 	}
 }

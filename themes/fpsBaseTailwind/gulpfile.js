@@ -1,60 +1,34 @@
-const gulp = require("gulp"),
-    postcss = require("gulp-postcss"),
-    sourcemaps = require('gulp-sourcemaps'),
-    browserSync = require("browser-sync").create();
-
-var reload = browserSync.reload;
-
-gulp.task("css", function () {
-    return (
-        gulp
-            .src("source/tailwind.css")
-            .pipe(sourcemaps.init())
-            .pipe(
-                postcss([
-                    require("postcss-import"),
-                    require('postcss-rem'),
-                    require("postcss-mixins"),
-                    require("precss"),
-                    require("tailwindcss"),
-                    require("autoprefixer"),
-                    require('postcss-nested'),
-                ])
-            )
-            .on('error', function (errorInfo) {  // if the error event is triggered, do something
-                console.log(errorInfo.toString()); // show the error information
-                this.emit('end'); // tell the gulp that the task is ended gracefully and resume
-            })
-            // ...
-            .pipe(sourcemaps.write('../maps'))
-            .pipe(gulp.dest("css/"))
-            .pipe(browserSync.stream())
-    );
-});
-
-// Watch scss AND html files, doing different things with each.
-gulp.task("serve", function () {
-    //Variables para que sepa que archivos refrescar
-    var files = [
-        "./css/main.css",
-        "./source/tailwind.css",
-        "./source/partials/*.css",
-        "./*.php",
-        "./js/*.js",
-        "tailwind.config.js",
-        "./inc/*.php",
-        "**/*.js",
-        // include specific files and folders
-        "screenshot.png"
-    ];
-
-    // Serve files from the root of this project
-    browserSync.init(files, {
-        proxy: "http://tailwindBase.local/"
+const { src, dest, watch, series } = require("gulp");
+const sourcemaps = require("gulp-sourcemaps");
+const postcss = require("gulp-postcss");
+var browserSync = require("browser-sync").create();
+//post css
+function cssTask(cb) {
+    return src("./source/tailwind.css")
+        .pipe(sourcemaps.init())
+        .pipe(postcss())
+        .pipe(sourcemaps.write("../maps"))
+        .pipe(dest("./css/"))
+        .pipe(browserSync.stream());
+    cb();
+}
+//serve
+function browsersyncServe(cb) {
+    browserSync.init({
+        proxy: "https://test.local/",
     });
-});
-
-gulp.task("default", ["css", "serve"], function () {
-    gulp.watch("source/partials/*.css", ["css"]);
-    gulp.watch("tailwind.config.js", ["css"]);
-});
+    cb();
+}
+function browsersyncReload(cb) {
+    browserSync.reload();
+    cb();
+}
+//watch
+function watchTask() {
+    watch(["./**/*.php", "./**/*.js"], browsersyncReload),
+        // watch(["./**/*.js"], browsersyncReload),
+        watch(["./source/**/*.css"], series(cssTask, browsersyncReload));
+}
+//default
+exports.default = series(cssTask, browsersyncServe, watchTask);
+exports.css = cssTask;

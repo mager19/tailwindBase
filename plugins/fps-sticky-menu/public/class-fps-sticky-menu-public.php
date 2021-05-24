@@ -97,7 +97,7 @@ class Fps_Sticky_Menu_Public
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		wp_enqueue_script($this->plugin_name . '-headroom', 'https://npmcdn.com/headroom.js@0.9.4/dist/headroom.min.js', array('jquery'), $this->version, false);
+		wp_enqueue_script($this->plugin_name . '-headroom', plugin_dir_url(__FILE__) . 'js/vendor/headroom.min.js', array('jquery'), $this->version, false);
 		wp_enqueue_script($this->plugin_name . '-mmenu', plugin_dir_url(__FILE__) . 'js/vendor/mmenu-light.js');
 		wp_enqueue_script('vuejs', 'https://cdn.jsdelivr.net/npm/vue@2.6.0', array('jquery'), $this->version, false);
 		// Use the version below for debugging

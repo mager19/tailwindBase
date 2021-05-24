@@ -1,3 +1,11 @@
+# New Updates 2021
+
+### 24 January
+
+-   Updating Plugins
+-   Updatind Dependencies
+-   Updatind gulpfile
+
 # New Updates 2020
 
 ### 18 January

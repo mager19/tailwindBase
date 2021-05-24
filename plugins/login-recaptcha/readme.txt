@@ -2,8 +2,8 @@
 Contributors: robertpeake, robert.peake
 Tags: google,nocaptcha,recaptcha,security,login,bots
 Requires at least: 4.6
-Tested up to: 5.3
-Stable tag: 1.6.7
+Tested up to: 5.6.1
+Stable tag: 1.6.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,14 +68,31 @@ This plugin is not affiliated with or endorsed by Google in any way. Google is a
 
 == Changelog ==
 
+= 1.6.11 =
+ - Backwards compatbility fix for PHP <= 5.5 empty() quirk/bug: https://www.php.net/manual/en/function.empty.php
+
+= 1.6.10 =
+
+ - Resolve issue whereby captcha could be bypassed for new user registrations introduced in 1.6.9
+ - Add option to disable default CSS entirely
+
+= 1.6.9 =
+
+ - Resolves CSS dependency issue causing conflicts on non-login pages
+
+= 1.6.8 =
+
+ * Prevent information disclosure by only returning error about blank captcha, not login status
+
 = 1.6.7 =
 
  * Revert CSS styling changes after multiple reports of problems
+ * Add German language support
 
 = 1.6.6 =
 
  * CSS styling improvement
-  
+ *
 = 1.6.5 =
 
  * Tested with 5.3

@@ -2,14 +2,14 @@
 @define-mixin nameMixin $property: value */
 
 /* //Mixin Background-image */
-@define-mixin background-image $background-position: center center,
+@mixin background-image $background-position: center center,
     $background-size: cover, $background-repeat: no-repeat {
     background-position: $background-position;
     background-size: $background-size;
     background-repeat: $background-repeat;
 }
 
-@define-mixin mIcons $content: "backup", $font-size: 18px {
+@mixin mIcons $content: "backup", $font-size: 18px {
     content: $content;
     direction: ltr;
     display: inline-block;
@@ -26,7 +26,7 @@
     -webkit-font-smoothing: antialiased;
 }
 
-@define-mixin center-block $max-width: 600px {
+@mixin center-block $max-width: 600px {
     margin-left: auto;
     margin-right: auto;
     max-width: $max-width;
@@ -34,11 +34,11 @@
     width: 100%;
 }
 
-@define-mixin section-padding $padding-top: 60px, $padding-bottom: 60px {
+@mixin section-padding $padding-top: 60px, $padding-bottom: 60px {
     padding-top: $padding-top;
     padding-bottom: $padding-bottom;
 }
 
-@define-mixin fade $time {
+@mixin fade $time {
     transition: all ease $time;
 }

@@ -98,13 +98,7 @@ class Updater_Api_Common_Subscriber implements Subscriber_Interface {
 	}
 
 	/**
-	 * Returns an array of events that this subscriber wants to listen to.
-	 *
-	 * @since  3.3.6
-	 * @access public
-	 * @author Grégory Viguier
-	 *
-	 * @return array
+	 * {@inheritdoc}
 	 */
 	public static function get_subscribed_events() {
 		return [
@@ -154,10 +148,9 @@ class Updater_Api_Common_Subscriber implements Subscriber_Interface {
 	public function get_rocket_user_agent() {
 		$consumer_key   = $this->get_current_option( 'consumer_key' );
 		$consumer_email = $this->get_current_option( 'consumer_email' );
-		$bonus          = $this->plugin_options && $this->plugin_options->get( 'do_beta' ) ? '+' : '';
 		$php_version    = preg_replace( '@^(\d+\.\d+).*@', '\1', phpversion() );
 
-		return sprintf( 'WP-Rocket|%s%s|%s|%s|%s|%s;', $this->plugin_version, $bonus, $consumer_key, $consumer_email, esc_url( $this->site_url ), $php_version );
+		return sprintf( 'WP-Rocket|%s|%s|%s|%s|%s;', $this->plugin_version, $consumer_key, $consumer_email, esc_url( $this->site_url ), $php_version );
 	}
 
 	/**
@@ -171,7 +164,7 @@ class Updater_Api_Common_Subscriber implements Subscriber_Interface {
 	 * @return string
 	 */
 	protected function get_current_option( $field_name ) {
-		if ( current_user_can( apply_filters( 'rocket_capacity', 'manage_options' ) ) && wp_verify_nonce( filter_input( INPUT_POST, '_wpnonce' ), $this->settings_nonce_key . '-options' ) ) {
+		if ( current_user_can( 'rocket_manage_options' ) && wp_verify_nonce( filter_input( INPUT_POST, '_wpnonce' ), $this->settings_nonce_key . '-options' ) ) {
 			$posted = filter_input( INPUT_POST, $this->settings_slug, FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
 			if ( ! empty( $posted[ $field_name ] ) && is_string( $posted[ $field_name ] ) ) {

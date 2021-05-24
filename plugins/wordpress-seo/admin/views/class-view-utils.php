@@ -5,6 +5,8 @@
  * @package WPSEO\Admin\Views
  */
 
+use Yoast\WP\SEO\Presenters\Admin\Alert_Presenter;
+
 /**
  * Class Yoast_View_Utils.
  */
@@ -65,51 +67,58 @@ class Yoast_View_Utils {
 	}
 
 	/**
-	 * Shows the search appearance settings for a post type.
+	 * Generates the OpenGraph disabled alert, depending on whether the OpenGraph feature is disabled.
 	 *
-	 * @param string|object $post_type   The post type to show the search appearance settings for.
-	 * @param bool          $paper_style Whether or not the paper style should be shown.
+	 * @param string $type The type of message. Can be altered to taxonomies or archives. Empty string by default.
 	 *
-	 * @return void
+	 * @return string The alert. Returns an empty string if the setting is enabled.
 	 */
-	public function show_post_type_settings( $post_type, $paper_style = false ) {
-		if ( ! is_object( $post_type ) ) {
-			$post_type = get_post_type_object( $post_type );
+	public function generate_opengraph_disabled_alert( $type = '' ) {
+		$is_enabled = WPSEO_Options::get( 'opengraph', true );
+
+		if ( $is_enabled || ! YoastSEO()->helpers->product->is_premium() ) {
+			return '';
 		}
 
-		$show_post_type_help = $this->search_results_setting_help( $post_type );
-		$noindex_option_name = 'noindex-' . $post_type->name;
-
-		$this->form->index_switch(
-			$noindex_option_name,
-			$post_type->labels->name,
-			$show_post_type_help->get_button_html() . $show_post_type_help->get_panel_html()
+		$message = sprintf(
+			/* translators: 1: link open tag; 2: link close tag. */
+			\esc_html__(
+				'The frontpage settings and the social image, social title and social description are hidden for all content types. If you want to show these settings, please enable the ‘Open Graph meta data’ setting on the %1$sFacebook tab of the Social section%2$s.',
+				'wordpress-seo'
+			),
+			'<a href="' . \esc_url( \admin_url( 'admin.php?page=wpseo_social#top#facebook' ) ) . '">',
+			'</a>'
 		);
 
-		$this->form->show_hide_switch(
-			'showdate-' . $post_type->name,
-			__( 'Date in Google Preview', 'wordpress-seo' )
-		);
+		if ( $type === 'taxonomies' ) {
+			$message = sprintf(
+				/* translators: 1: link open tag; 2: link close tag. */
+				\esc_html__(
+					'The social image, social title and social description are hidden for all taxonomies. If you want to show these settings, please enable the ‘Open Graph meta data’ setting on the %1$sFacebook tab of the Social section%2$s.',
+					'wordpress-seo'
+				),
+				'<a href="' . \esc_url( \admin_url( 'admin.php?page=wpseo_social#top#facebook' ) ) . '">',
+				'</a>'
+			);
+		}
 
-		$this->form->show_hide_switch(
-			'display-metabox-pt-' . $post_type->name,
-			/* translators: %1$s expands to Yoast SEO */
-			sprintf( __( '%1$s Meta Box', 'wordpress-seo' ), 'Yoast SEO' )
-		);
+		if ( $type === 'archives' ) {
+			$message = sprintf(
+				/* translators: 1: link open tag; 2: link close tag. */
+				\esc_html__(
+					'The social image, social title and social description are hidden for all archives. If you want to show these settings, please enable the ‘Open Graph meta data’ setting on the %1$sFacebook tab of the Social section%2$s.',
+					'wordpress-seo'
+				),
+				'<a href="' . \esc_url( \admin_url( 'admin.php?page=wpseo_social#top#facebook' ) ) . '">',
+				'</a>'
+			);
+		}
 
-		$recommended_replace_vars     = new WPSEO_Admin_Recommended_Replace_Vars();
-		$editor_specific_replace_vars = new WPSEO_Admin_Editor_Specific_Replace_Vars();
+		$alert = new Alert_Presenter( $message, 'info' );
 
-		$editor = new WPSEO_Replacevar_Editor(
-			$this->form,
-			[
-				'title'                 => 'title-' . $post_type->name,
-				'description'           => 'metadesc-' . $post_type->name,
-				'page_type_recommended' => $recommended_replace_vars->determine_for_post_type( $post_type->name ),
-				'page_type_specific'    => $editor_specific_replace_vars->determine_for_post_type( $post_type->name ),
-				'paper_style'           => $paper_style,
-			]
+		return sprintf(
+			'<div class="yoast-measure padded">%s</div>',
+			$alert->present()
 		);
-		$editor->render();
 	}
 }

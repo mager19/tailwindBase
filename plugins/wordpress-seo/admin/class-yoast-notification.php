@@ -281,12 +281,7 @@ class Yoast_Notification {
 	 */
 	private function has_capability( $capability ) {
 		$user = $this->options['user'];
-
-		$role_caps = $user->get_role_caps();
-		if ( array_key_exists( $capability, $role_caps ) ) {
-			return $role_caps[ $capability ];
-		}
-		return false;
+		return $user->has_cap( $capability );
 	}
 
 	/**
@@ -320,10 +315,10 @@ class Yoast_Notification {
 
 		// Default notification classes.
 		$classes = [
-			'yoast-alert',
+			'yoast-notification',
 		];
 
-		// Maintain WordPress visualisation of alerts when they are not persistent.
+		// Maintain WordPress visualisation of notifications when they are not persistent.
 		if ( ! $this->is_persistent() ) {
 			$classes[] = 'notice';
 			$classes[] = $this->get_type();

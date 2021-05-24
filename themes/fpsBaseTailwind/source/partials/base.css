@@ -34,7 +34,7 @@ body {
     .h4,
     .h5,
     .h6 {
-        @apply font-bold mb-4 text-dark-1;
+        @apply mb-4 font-bold text-dark-1;
         hyphens: none;
         letter-spacing: -0.02em;
         word-break: keep-all;
@@ -117,7 +117,7 @@ body {
 }
 
 p {
-    @apply text-dark-3 mb-4;
+    @apply mb-4 text-dark-3;
     hyphens: none;
     word-break: keep-all;
     word-wrap: normal;
@@ -134,7 +134,7 @@ a {
 input[type="text"],
 select,
 textarea {
-    @apply text-light-1 font-normal;
+    @apply font-normal text-light-1;
     border-radius: 9px;
     border: 1px solid theme(colors.primary);
     box-sizing: border-box;
@@ -202,7 +202,7 @@ a img.aligncenter {
 
 input[type="text"],
 select {
-    @apply appearance-none w-full text-dark-3 py-4;
+    @apply w-full py-4 appearance-none text-dark-3;
     border-radius: 10px;
     border: 3px solid #ebf2ff;
     box-sizing: border-box;
@@ -212,7 +212,7 @@ select {
 }
 
 blockquote {
-    @apply text-primary text-center bg-primary;
+    @apply text-center text-primary bg-primary;
     border-radius: 10px;
     margin-bottom: 24px;
     margin-top: 24px;
@@ -236,5 +236,14 @@ blockquote {
     h4,
     h5 {
         @apply mt-8 text-dark-1;
+    }
+}
+
+.test {
+    @apply title-lg--1 title-md--2;
+    background: green;
+
+    &__res {
+        color: blue;
     }
 }
