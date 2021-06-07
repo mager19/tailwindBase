@@ -16,7 +16,7 @@ get_header(); ?>
 <?php get_template_part('inc/hero', 'content'); ?>
 <!-- /Hero Header -->
 
-<div class="content-area">
+<div class="content-area grid">
     <div class="container">
         <section class="flex-inverter">
             <?php while (have_posts()) : the_post(); ?>

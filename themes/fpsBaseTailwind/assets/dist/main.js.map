@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./src/demo.js"],"names":["console","log"],"mappings":"mBACIA,QAAQC,IAAI,e","file":"main.js","sourcesContent":["export const test = () => {\r\n    console.log(\"como estas\");\r\n}"],"sourceRoot":""}
