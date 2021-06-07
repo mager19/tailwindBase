@@ -1,30 +1,24 @@
 {
-    "name": "fpsBaseTailwind",
-    "version": "1.1.0",
-    "description": "WordPress theme base using Tailwind css",
-    "main": "gulpfile.js",
-    "keywords": [
-        "Tailwind",
-        "WordPress",
-        "Theme"
-    ],
-    "author": "mager19",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/mager19/tailwindBase/issues"
-    },
-    "devDependencies": {
-        "autoprefixer": "^10.2.5",
-        "browser-sync": "^2.26.14",
-        "gulp": "^4.0.2",
-        "gulp-postcss": "^9.0.0",
-        "gulp-sourcemaps": "^3.0.0",
-        "postcss": "^8.3.0",
-        "postcss-import": "^14.0.2",
-        "postcss-mixins": "^8.0.0",
-        "postcss-nested": "^5.0.5",
-        "postcss-rem": "^2.0.1",
-        "tailwindcss": "^2.1.2",
-        "precss": "^4.0.0"
-    }
+  "name": "tailwindbase",
+  "version": "1.0.0",
+  "description": "WordPress base theme using TailwindCSS ❤",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mager19/tailwindBase.git"
+  },
+  "keywords": [
+    "Tailwind",
+    "WordPress",
+    "Theme",
+    "CSS"
+  ],
+  "author": "@mager19 + @yavallejo",
+  "devDependencies": {
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0"
+  }
 }

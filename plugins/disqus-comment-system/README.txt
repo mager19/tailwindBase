@@ -3,7 +3,7 @@ Contributors: disqus, alexkingorg, crowdfavorite, zeeg, tail, thetylerhayes, rya
 Tags: disqus, comments, engagement, threaded, email, notification, spam, avatars, community, profile, widget
 Requires at least: 4.4
 Tested up to: 5.6
-Stable tag: 3.0.21
+Stable tag: 3.0.22
 Requires PHP: 5.6
 
 Disqus is the web's most popular comment system. Use Disqus to increase engagement, retain readers, and grow your audience.
@@ -124,7 +124,12 @@ Go to [https://disqus.com/help/wordpress](https://disqus.com/help/wordpress)
 
 == Changelog ==
 
-= 3.0.20 =
+= 3.0.22 =
+* Added improvements to manual comment syncing (thanks Artem Russakovskii)
+* Fixed a bug with the embed handling pages with missing container IDs
+* Fixed a bug with REST URLs handling emtpy host configurations
+
+= 3.0.21 =
 * Fixed issue with mismatched DISQUSVERSION causing admin issues
 
 = 3.0.20 =
