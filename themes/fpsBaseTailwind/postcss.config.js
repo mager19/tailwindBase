@@ -1,10 +1,11 @@
 module.exports = {
     plugins: [
-        // require('postcss-import'),
-        // require('precss'),
-        // require('tailwindcss'),
-        // require('autoprefixer'),
         require("tailwindcss")("./tailwind.config.js"),
+        require('postcss-import'),
+        require('postcss-mixins'),
+        require('postcss-nested'),
+        require("postcss-rem"),
+        require('precss'),
         require("autoprefixer"),
     ]
 }

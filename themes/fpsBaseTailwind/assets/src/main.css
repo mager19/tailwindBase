@@ -1,3 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "./partials/mixins.css";
+
+@import "./partials/helpers.css";
+
+@import "./partials/base.css";
+
+@import "./partials/icons.css";
+
+@import "tailwindcss/utilities";
