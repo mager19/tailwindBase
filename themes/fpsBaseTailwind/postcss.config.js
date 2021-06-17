@@ -1,8 +1,8 @@
 module.exports = {
     plugins: [
-        require("tailwindcss")("./tailwind.config.js"),
+        require('postcss-simple-vars'),
         require('postcss-import'),
-        require('postcss-mixins'),
+        require("tailwindcss")("./tailwind.config.js"),
         require('postcss-nested'),
         require("postcss-rem"),
         require('precss'),

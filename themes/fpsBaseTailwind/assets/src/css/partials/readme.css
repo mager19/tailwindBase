@@ -1,0 +1,40 @@
+/* in this information file find the ways for use 
+sass features on post css */
+
+/***** 
+Variables 
+*****/
+
+$variable-name: #4d4d4d;
+
+.selector {
+    color: $variable-name;
+}
+
+/***** 
+Mixins
+*****/
+
+@define-mixin transition $property: all, $time: 150ms, $easing: ease-out {
+    /* Default properties $property: all, $time: 150ms, $easing: ease-out */
+    transition: $(property) $(time) $(easing);
+}
+
+.selector {
+    @mixin transition color, 2s, ease-in;
+}
+
+/*****
+Colors tailwind.config.js
+*****/
+.selector {
+    background-color: theme("colors.test-color");
+}
+
+/*****
+PostCSS 
+*****/
+.selector {
+    font-size: rem(24px); /* Simple */
+    padding: rem(5px 10px); /* Multiple values */
+}

@@ -17,6 +17,19 @@ get_header(); ?>
 
 <!-- Hero Header -->
 <?php while (have_posts()) : the_post(); ?>
+
+	<div class="hola">
+		Phasellus volutpat, metus eget egestas mollis, lacus lacus blandit dui, id egestas quam mauris ut lacus. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. In hac habitasse platea dictumst. In dui magna, posuere eget, vestibulum et, tempor auctor, justo.
+
+Vestibulum eu odio. In ac felis quis tortor malesuada pretium. Sed fringilla mauris sit amet nibh. Praesent metus tellus, elementum eu, semper a, adipiscing nec, purus.
+
+Suspendisse enim turpis, dictum sed, iaculis a, condimentum nec, nisi. Vivamus consectetuer hendrerit lacus. Suspendisse feugiat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos.
+
+Praesent nec nisl a purus blandit viverra. Etiam sit amet orci eget eros faucibus tincidunt. Phasellus nec sem in justo pellentesque facilisis. Nunc nec neque.
+
+Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Etiam sit amet orci eget eros faucibus tincidunt. Pellentesque commodo eros a enim. Etiam iaculis nunc ac metus.
+	</div>
+
 	<div class="content-area top-bar">
 		<div class="container m-auto ">
 			<!-- Three columns -->

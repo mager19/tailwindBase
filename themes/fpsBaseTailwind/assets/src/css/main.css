@@ -1,0 +1,19 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "./partials/helpers.css";
+
+@import "./partials/base.css";
+
+@import "./partials/icons.css";
+
+@import "tailwindcss/utilities";
+
+.hola {
+    color:red;
+    @screen md{
+        color:blue;
+        text-align:center;
+    }
+}
