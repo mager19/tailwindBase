@@ -5,21 +5,10 @@
 
 @font-face {
     font-family: "Flaticon";
-    src: url("./fonts/icons/fps-icon.eot");
-    src: url("./fonts/icons/fps-icon.eot?#iefix") format("embedded-opentype"),
-        url("./fonts/icons/fps-icon.woff2") format("woff2"),
-        url("./fonts/icons/fps-icon.woff") format("woff"),
-        url("./fonts/icons/fps-icon.ttf") format("truetype"),
-        url("./fonts/icons/fps-icon.svg#Flaticon") format("svg");
+    src: url("./fonts/icons/fps-icon.woff2") format("woff2"),
+        url("./fonts/icons/fps-icon.woff") format("woff");
     font-weight: normal;
     font-style: normal;
-}
-
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-    @font-face {
-        font-family: "Flaticon";
-        src: url("./fonts/icons/fps-icon.svg#Flaticon") format("svg");
-    }
 }
 
 [class^="fpsIcon-"]:before,

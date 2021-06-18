@@ -1,101 +1,101 @@
-const path = require( 'path' );
-const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
-const OptimizeCssAssetsPlugin = require( 'optimize-css-assets-webpack-plugin' );
-const cssnano = require( 'cssnano' ); // https://cssnano.co/
-const { CleanWebpackPlugin } = require( 'clean-webpack-plugin' );
-const UglifyJsPlugin = require( 'uglifyjs-webpack-plugin' );
-// JS Directory path.
-const JS_DIR = path.resolve( __dirname, 'assets/src/js' );
-const BUILD_DIR = path.resolve( __dirname, 'assets/dist' );
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinizerPlugin = require('css-minimizer-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-/**
- * Note: argv.mode will return 'development' or 'production'.
- */
-const plugins = ( argv ) => [
-	new CleanWebpackPlugin( {
-		cleanStaleWebpackAssets: ( argv.mode === 'production' ) // Automatically remove all unused webpack assets on rebuild, when set to true in production. ( https://www.npmjs.com/package/clean-webpack-plugin#options-and-defaults-optional )
-	} ),
-	new MiniCssExtractPlugin( {
-		filename: 'css/tailwind.css'
-	} ),
-];
-const rules = [
-	{
-		test: /\.js$/,
-		include: [ JS_DIR ],
-		exclude: /node_modules/,
-		use: {
-              loader: 'babel-loader'
-        }
-	},
-	{
-		test: /\.css$/,
-		use: [
-			MiniCssExtractPlugin.loader,
-            {
-                loader: 'css-loader',
-                options: {
-                    importLoaders: 1
+// change these variables to fit your project
+const jsPath= './assets/src/js';
+const cssPath = './assets/src/css';
+const outputPath = './assets/dist';
+const localDomain = 'http://webpack.local/';
+const entryPoints = {
+  // 'app' is the output name, people commonly use 'bundle'
+  // you can have more than 1 entry point
+  'app': jsPath + '/index.js',
+};
+
+module.exports = {
+  entry: entryPoints,
+  output: {
+    path: path.resolve(__dirname, outputPath),
+    filename: './js/[name].js',
+    assetModuleFilename: "./img/[name][ext]",
+    clean: true,
+  },
+  stats: {
+        children: true,
+  },
+  plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].css'
+        }),
+
+        // Uncomment this if you want to use CSS Live reload
+        new BrowserSyncPlugin({
+          proxy: localDomain,
+          files: [ outputPath + '/css/*.css' ],
+          injectCss: true,
+        }, { reload: true, }),
+
+        new CopyWebpackPlugin({
+            patterns: [
+                            { from: path.resolve(__dirname, 'assets', 'src/img'), to: 'img'}
+                      ]
+        })
+
+  ],
+  module: {
+    rules:  [
+                {
+                    test: /\.js$/i,
+                    exclude: /node_modules/,
+                    include: path.resolve(__dirname, 'src/js'),
+                    use: {
+                            loader: 'babel-loader',
+                            options: {
+                                presets: ['@babel/preset-env'],
+                            },
+                        },
+                },
+                {
+                    test: /\.css$/i,
+                    use: [
+                            MiniCssExtractPlugin.loader,
+                            {
+                                loader: 'css-loader',
+                                options: {
+                                importLoaders: 1
+                                }
+                            },
+                            'postcss-loader'
+                         ]
+                },
+                {
+                    test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                    type: "asset/resource"
+                },
+                {
+                    test: /\.(woff|woff2)$/i,
+                    use: {
+                        loader: "url-loader",
+                        options: {
+                            limit: 10000,
+                            mimetype: "application/font-woff",
+                            name: "[name].[ext]",
+                            outputPath: "./css/fonts/",
+                            publicPath: "./css/fonts/",
+                            esModule: false
+                        }
+                    }
                 }
-            },
-            {
-                loader: 'postcss-loader'
-            }
-		]
-	},
-	{
-		test: /\.(png|jpg|svg|jpeg|gif|ico)$/,
-		use: {
-			loader: 'file-loader',
-			options: {
-				name: '[path][name].[ext]',
-				publicPath: 'production' === process.env.NODE_ENV ? '../' : '../../'
-			}
-		}
-	},
-    {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/i,
-        use: {
-            loader: "url-loader",
-            options: {
-                limit: 10000,
-                name: "[name].[ext]",
-                outputPath: BUILD_DIR + "/fonts/",
-                publicPath: BUILD_DIR + "/fonts/",
-            }
-        }
-    }
-];
-
-module.exports = ( env, argv ) => ({
-	entry: JS_DIR + '/index.js',
-	output: {
-        path:  BUILD_DIR + "/",
-        filename: "main.js",
+            ]
     },
-    /**
-	 * A full SourceMap is emitted as a separate file ( e.g.  main.js.map )
-	 * It adds a reference comment to the bundle so development tools know where to find it.
-	 * set this to false if you don't need it
-	 */
-	devtool: 'source-map',
-	module: {
-		rules: rules,
-	},
-	optimization: {
-		minimizer: [
-			new OptimizeCssAssetsPlugin( {
-				cssProcessor: cssnano
-			} ),
-			new UglifyJsPlugin( {
-				cache: false,
-				parallel: true,
-				sourceMap: false
-			} )
-		]
-	},
-	plugins: plugins( argv ),
-	externals: {
-		jquery: 'jQuery'
-	}
-});
+    optimization: {
+        minimizer: [
+          // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
+          // `...`,
+          new CssMinizerPlugin(),
+        ]
+    }
+}
