@@ -124,7 +124,7 @@ get_header(); ?>
     </div>
 
     <div class="container pt-5 mx-auto bg-gray-400">
-        <h1 class="mt-5 mb-10 text-4xl text-center">Probando Slick</h1>
+        <h1 class="mt-5 mb-10 text-4xl text-center text-red-100">Probando Slick</h1>
         <div class="flex justify-center">
             <div class="w-96">
                 <div class="slickDemo">
