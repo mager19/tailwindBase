@@ -149,7 +149,7 @@ get_header(); ?>
         </div>
     </div>
 
-    <div class="container mx-auto prose-sm">
+    <div class="container mx-auto prose-sm line-clamp-4">
         <h3>This is my title</h3>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque sit, officiis doloribus nostrum labore eligendi doloremque ducimus enim cupiditate quasi soluta, natus non esse sequi, sapiente adipisci obcaecati. Temporibus, aperiam.</p>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque sit, officiis doloribus nostrum labore eligendi doloremque ducimus enim cupiditate quasi soluta, natus non esse sequi, sapiente adipisci obcaecati. Temporibus, aperiam.</p>

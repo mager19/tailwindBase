@@ -20,6 +20,7 @@
   "author": "@mager19 + @yavallejo",
   "dependencies": {
     "@babel/polyfill": "^7.11.5",
+    "@tailwindcss/line-clamp": "^0.2.1",
     "@tailwindcss/typography": "^0.4.1"
   },
   "devDependencies": {
