@@ -7,16 +7,12 @@
  */
 get_header(); ?>
 
-<div class="error-404">
-  <div class="container">
-    <section class="justify-content-center">
-      <div class="info">
+<section class="container mx-auto py-14">
+    <div class="info">
         <!-- <img src="<?php echo get_template_directory_uri(); ?>/img/404-preview.jpg" alt="404 icon"> -->
-        <h1 class="page-title text-center"><?php esc_html_e(the_field('title_error_page', 'options')); ?></h1>
+        <h1 class="text-center title--1"><?php esc_html_e(the_field('title_error_page', 'options')); ?></h1>
         <?php the_field('description_error_page', 'options'); ?>
-      </div>
-    </section>
-  </div>
-</div>
+    </div>
+</section>
 
 <?php get_footer();

@@ -18,67 +18,51 @@ get_header(); ?>
 <!-- Hero Header -->
 <?php get_template_part('inc/hero', 'content'); ?>
 
-<div class="container mx-auto">
-    <div class="flex">
-        <div class="w-full">
-            <h1 class="cosarara">Probando</h1>
-            Yan Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </div>
-    </div>
-</div>
-
 <!-- /Hero Header -->
-<div class="content-area full-page">
-    <div class="container mx-auto">
-        <section>
-            <div class="info">
 
-                <!-- Title Blog Page -->
-                <h1 class="entrey-title cosarara">aBLOG</h1>
-                <!-- End Title Blog Page -->
+<section class="container mx-auto py-14">
+    <div class="info">
+        <h1 class="uppercase title--3 title-md--1">Index</h1>
+        <!-- End Title Blog Page -->
 
-                <!-- List Post -->
-                <section>
-                    <?php while (have_posts()) : the_post(); ?>
+        <!-- List Post -->
+        <div class="grid grid-cols-3 gap-3">
+            <?php while (have_posts()) : the_post(); ?>
 
-                        <!-- Item Post -->
-                        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                            <div class="header-post">
-                                <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail(); ?></a>
-                            </div>
+                <!-- Item Post -->
+                <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                    <header class="header-post">
+                        <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail(); ?></a>
+                    </header>
 
-                            <div class="info-post">
-                                <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+                    <div class="info-post">
+                        <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
-                                <?php the_excerpt(); ?>
+                        <?php the_excerpt(); ?>
 
-                                <a href="<?php the_permalink(); ?>" class="link">
-                                    Continue Reading
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </div>
-                        </article>
-                        <!-- Item Post -->
+                        <a href="<?php the_permalink(); ?>" class="link">
+                            <?php _e('Continue Reading', 'frontporchsolutions'); ?>
+                        </a>
+                    </div>
+                </article>
+                <!-- Item Post -->
 
-                    <?php endwhile; ?>
-                </section>
-                <!-- List Post -->
+            <?php endwhile; ?>
+        </div>
+        <!-- List Post -->
 
-                <!-- Pagination -->
-                <div class="pagination">
-                    <?php custom_pagination($posts->max_num_pages, "", $paged); ?>
-                </div>
-                <!-- End Pagination -->
-
+        <!-- Pagination -->
+        <?php if (function_exists('custom_pagination')) : ?>
+            <div class="pagination">
+                <?php custom_pagination($posts->max_num_pages, "", $paged); ?>
             </div>
-        </section>
-    </div><!-- #main -->
-</div><!-- #primary -->
+        <?php endif; ?>
+        <!-- End Pagination -->
+
+    </div>
+
+</section><!-- #main -->
+
 
 <?php
 get_footer();

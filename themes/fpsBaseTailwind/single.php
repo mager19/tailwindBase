@@ -8,60 +8,54 @@
 
 get_header(); ?>
 
-<div class="content-area">
-    <div class="container">
-        <section>
-            <?php while (have_posts()) : the_post(); ?>
 
-                <div class="info">
-                    <?php the_title('<h1 class="entrey-title text-center">', '</h1>'); ?>
-                    <?php the_post_thumbnail(); ?>
+<section class="container pb-0 mx-auto py-14">
+    <?php while (have_posts()) : the_post(); ?>
+        <div class="info">
+            <?php the_title('<h1 class="text-center title--3 title-md--1">', '</h1>'); ?>
+            <?php the_post_thumbnail(); ?>
+            <?php
+            the_content();
+            echo social_sharing_buttons();
+            ?>
+
+            <div class="entry-author">
+                <div class="img-author">
                     <?php
-                    the_content();
-                    echo social_sharing_buttons();
+                    $author_id = get_the_author_meta('ID');
+                    if (get_field('author_image', 'user_' . $author_id))
+                    {
+                        $url = get_field('author_image', 'user_' . $author_id);
+                    }
                     ?>
-
-                    <div class="entry-author">
-                        <div class="img-author">
-                            <?php
-                            $author_id = get_the_author_meta('ID');
-                            if (get_field('author_image', 'user_' . $author_id)) {
-                                $url = get_field('author_image', 'user_' . $author_id);
-                            }
-                            ?>
-                            <a href="<?php echo get_author_posts_url($author_id); ?>">
-                                <img src="<?php echo $url; ?>" alt="author">
-                            </a>
-                        </div>
-
-                        <div class="info-author">
-                            <h2>
-                                <span>ABOUT AUTHOR</span>
-                                <?php the_author_meta('first_name'); ?>
-                                <?php the_author_meta('last_name'); ?>
-                            </h2>
-                            <p><?php the_author_meta('description'); ?></p>
-                            <a href="<?php echo get_author_posts_url($author_id); ?>">
-                                Read more
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </div>
-                    </div><!-- .entry-content -->
-
+                    <a href="<?php echo get_author_posts_url($author_id); ?>">
+                        <img src="<?php echo $url; ?>" alt="author">
+                    </a>
                 </div>
 
-            <?php endwhile; ?>
-        </section>
-    </div><!-- #main -->
-</div><!-- #primary -->
+                <div class="info-author">
+                    <h2>
+                        <span>ABOUT AUTHOR</span>
+                        <?php the_author_meta('first_name'); ?>
+                        <?php the_author_meta('last_name'); ?>
+                    </h2>
+                    <p><?php the_author_meta('description'); ?></p>
+                    <a href="<?php echo get_author_posts_url($author_id); ?>">
+                        Read more
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+            </div><!-- .entry-content -->
 
-<div class="last-post">
-    <div class="container">
-        <section>
-            <div class="full-content">
-                <h2>You might also like</h2>
-            </div>
+        </div>
+    <?php endwhile; ?>
+</section><!-- #main -->
 
+
+<section class="last-post py-14">
+    <div class="container mx-auto">
+        <h2>You might also like</h2>
+        <div class="grid grid-cols-3">
             <?php
             $loop = new WP_Query(
                 array(
@@ -79,18 +73,16 @@ get_header(); ?>
                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                             </h2>
                             <?php the_excerpt(); ?>
-
                             <a href="<?php the_permalink(); ?>" class="link">
-                                Continue Reading
-                                <i class="fa fa-angle-right"></i>
+                                <?php _e('Continue Reading', 'frontporchsolutions'); ?>
                             </a>
                         </div>
                     </article>
                 </div>
             <?php endwhile; ?>
-        </section>
+        </div>
     </div>
-</div>
+</section>
 
 <?php
 get_footer();

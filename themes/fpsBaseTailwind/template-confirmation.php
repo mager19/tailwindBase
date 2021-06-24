@@ -14,17 +14,13 @@
  */
 
 get_header(); ?>
-<div class="container">
-	<section class="confirmation-page">
-		<div class="template-confirmation-page">
-			<div class="info">
-				<?php while (have_posts()) : the_post(); ?>
-					<!-- <img src="<?php echo get_template_directory_uri(); ?>/img/confirmation.jpg" alt="confirmation template preview"> -->
-					<?php the_content(); ?>
-				<?php endwhile; ?>
-			</div>
-		</div>
-	</section>
-</div><!-- #main -->
+<section class="container mx-auto py-14">
+    <div class="info">
+        <?php while (have_posts()) : the_post(); ?>
+            <!-- <img src="<?php echo get_template_directory_uri(); ?>/img/confirmation.jpg" alt="confirmation template preview"> -->
+            <?php the_content(); ?>
+        <?php endwhile; ?>
+    </div>
+</section><!-- #main -->
 <?php
 get_footer();

@@ -21,8 +21,8 @@ if (!is_404())
 ?>
 
 <footer class="site-footer">
-    <div class="container">
-        <section>
+    <section class="container mx-auto py-14">
+        <div class="site-footer__top">
             <!--Footer Menu-->
             <div class="footer-menu">
                 <?php if (has_nav_menu('menu-2'))
@@ -53,17 +53,15 @@ if (!is_404())
                 </div>
                 <!--/Social Icons-->
             </div>
-        </section>
-
-        <section>
+        </div>
+        <div class="site-footer__bottom">
             <!--/copyright-->
             <div class="copyright">
                 <?php the_field('copyright', 'option'); ?>
             </div>
             <!--/copyright-->
-        </section>
-
-    </div>
+        </div>
+    </section>
 </footer><!-- #colophon -->
 
 </div><!-- #page -->

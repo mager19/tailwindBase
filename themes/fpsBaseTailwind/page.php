@@ -16,25 +16,25 @@ get_header(); ?>
 <?php get_template_part('inc/hero', 'content'); ?>
 <!-- /Hero Header -->
 
-<div class="content-area grid">
-    <div class="container">
-        <section class="flex-inverter">
-            <?php while (have_posts()) : the_post(); ?>
+<section class="container grid grid-cols-12 mx-auto py-14">
 
-                <aside class="sidebar">
-                    <?php if (function_exists('subpages_menu')) {
-                        subpages_menu();
-                    } ?>
-                </aside>
+    <?php while (have_posts()) : the_post(); ?>
 
-                <div class="info">
-                    <?php the_post_thumbnail(); ?>
-                    <?php the_content(); ?>
-                </div>
+        <aside class="col-start-1 col-start-5 sidebar">
+            <?php if (function_exists('subpages_menu'))
+            {
+                subpages_menu();
+            } ?>
+        </aside>
 
-            <?php endwhile; ?>
-        </section>
-    </div><!-- #main -->
-</div>
+        <div class="col-start-6 col-end-13 info">
+            <?php the_post_thumbnail(); ?>
+            <?php the_content(); ?>
+        </div>
+
+    <?php endwhile; ?>
+
+</section><!-- #main -->
+
 <?php
 get_footer();

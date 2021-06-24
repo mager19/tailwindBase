@@ -12,54 +12,46 @@
 
 get_header(); ?>
 
-<div class="content-area full-page">
-    <div class="container">
-        <section>
-            <div class="info">
 
-                <!-- Title Blog Page -->
-                <h1 class="entrey-title">BLOG</h1>
-                <!-- End Title Blog Page -->
+<section class="container mx-auto py-14">
+    <div class="info">
 
-                <!-- List Post -->
-                <section>
-                    <?php while (have_posts()) : the_post(); ?>
+        <h1 class="uppercase title--3 title-md--1">Blog</h1>
 
-                        <!-- Item Post -->
-                        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                            <div class="header-post">
-                                <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail(); ?></a>
-                            </div>
+        <!-- List Post -->
+        <div class="grid grid-cols-3">
+            <?php while (have_posts()) : the_post(); ?>
 
-                            <div class="info-post">
-                                <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+                <!-- Item Post -->
+                <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                    <header class="header-post">
+                        <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail(); ?></a>
+                    </header>
 
-                                <?php the_excerpt(); ?>
+                    <div class="info-post">
+                        <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
-                                <a href="<?php the_permalink(); ?>" class="link">
-                                    Continue Reading
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </div>
-                        </article>
-                        <!-- Item Post -->
+                        <?php the_excerpt(); ?>
 
-                    <?php endwhile; ?>
-                </section>
-                <!-- List Post -->
-
-                <!-- Pagination -->
-                <?php if (function_exists(custom_pagination)) : ?>
-                    <div class="pagination">
-                        <?php custom_pagination($posts->max_num_pages, "", $paged); ?>
+                        <a href="<?php the_permalink(); ?>" class="link">
+                            <?php _e('Continue Reading', 'frontporchsolutions'); ?>
+                        </a>
                     </div>
-                <?php endif; ?>
-                <!-- End Pagination -->
+                </article>
+                <!-- Item Post -->
 
+            <?php endwhile; ?>
+        </div>
+        <!-- List Post -->
+
+        <!-- Pagination -->
+        <?php if (function_exists('custom_pagination')) : ?>
+            <div class="pagination">
+                <?php custom_pagination($posts->max_num_pages, "", $paged); ?>
             </div>
-        </section>
-    </div><!-- #main -->
-</div><!-- #primary -->
-
+        <?php endif; ?>
+        <!-- End Pagination -->
+    </div>
+</section><!-- #main -->
 <?php
 get_footer();

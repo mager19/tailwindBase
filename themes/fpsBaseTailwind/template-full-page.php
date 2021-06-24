@@ -14,18 +14,16 @@
  */
 
 get_header(); ?>
-<div class="content-area full-page">
-    <div class="container">
-        <section>
-            <?php while (have_posts()) : the_post(); ?>
-                <div class="info">
-                    <?php the_title('<h1 class="entry-title">', '</h1>'); ?>
-                    <?php the_post_thumbnail(); ?>
-                    <?php the_content(); ?>
-                </div>
-            <?php endwhile; ?>
-        </section>
-    </div><!-- #main -->
-</div><!-- #primary -->
+
+<section class="container mx-auto py-14">
+    <?php while (have_posts()) : the_post(); ?>
+        <div class="info">
+            <?php the_title('<h1 class="title--3 title-md--1">', '</h1>'); ?>
+            <?php the_post_thumbnail(); ?>
+            <?php the_content(); ?>
+        </div>
+    <?php endwhile; ?>
+</section><!-- #main -->
+
 <?php
 get_footer();

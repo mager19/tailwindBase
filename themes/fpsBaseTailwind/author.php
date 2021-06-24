@@ -14,96 +14,85 @@ global $wp_query;
 $curauth = $wp_query->get_queried_object();
 ?>
 
-<div class="content-area full-page">
-    <div class="container">
-        <section>
-            <div class="info">
-
-                <div class="entry-author text-center">
-                    <div class="img-author">
-                        <?php
-                        $author_id = get_the_author_meta('ID');
-                        if (get_field('author_image', 'user_' . $author_id))
-                        {
-                            $url = get_field('author_image', 'user_' . $author_id);
-                            $avatarautor =  $url['ID'];
-                            $size = 'thumbnail';
-                        }
-                        else
-                        {
-                            $url = get_template_directory_uri() . '/img/avatar.png';
-                        }
-                        echo wp_get_attachment_image($avatarautor, $size); ?>
-                    </div>
-
-                    <div class="info-author">
-                        <!-- Title Blog Page -->
-                        <div class="title-page">
-                            <h2 class="entry-title">
-                                <span>ABOUT AUTHOR</span>
-                                <?php the_author_meta('first_name'); ?>
-                                <?php the_author_meta('last_name'); ?>
-                            </h2>
-                            <p><?php the_author_meta('description'); ?></p>
-
-                            <!--Social Icons-->
-                            <div class="social-icons">
-                                <?php
-                                if (have_rows('social_icons_author', 'user_' . $author_id)) :
-                                    while (have_rows('social_icons_author', 'user_' . $author_id)) : the_row();
-                                        $social = get_sub_field('social_icon');
-                                ?>
-                                        <a href="<?php the_sub_field('social_profile'); ?>" target="_blank" data-link-type="social" data-social-network="<?php echo $social['value']; ?>">
-                                            <span class="fpsIcon-<?php echo $social['value']; ?>"></span>
-                                        </a>
-                                <?php endwhile;
-                                endif; ?>
-                            </div>
-                            <!--/Social Icons-->
-
-                        </div>
-                    </div>
-                </div><!-- .entry-content -->
-
-                <!-- List Post -->
-                <section>
-                    <?php while (have_posts()) : the_post(); ?>
-
-                        <!-- Item Post -->
-                        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                            <div class="header-post">
-                                <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail(); ?></a>
-                            </div>
-
-                            <div class="info-post">
-                                <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-
-                                <?php the_excerpt(); ?>
-
-                                <a href="<?php the_permalink(); ?>" class="link">
-                                    Continue Reading
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </div>
-                        </article>
-                        <!-- Item Post -->
-
-                    <?php endwhile; ?>
-                </section>
-                <!-- List Post -->
-
-                <!-- Pagination -->
-                <?php if (function_exists(custom_pagination)) : ?>
-                    <div class="pagination">
-                        <?php custom_pagination($posts->max_num_pages, "", $paged); ?>
-                    </div>
-                <?php endif; ?>
-                <!-- End Pagination -->
-
+<section class="container mx-auto py-14">
+    <div class="info">
+        <div class="text-center entry-author">
+            <div class="img-author">
+                <?php
+                $author_id = get_the_author_meta('ID');
+                if (get_field('author_image', 'user_' . $author_id))
+                {
+                    $url = get_field('author_image', 'user_' . $author_id);
+                    $avatarautor =  $url['ID'];
+                    $size = 'thumbnail';
+                }
+                else
+                {
+                    $url = get_template_directory_uri() . '/img/avatar.png';
+                }
+                echo wp_get_attachment_image($avatarautor, $size); ?>
             </div>
-        </section>
-    </div><!-- #main -->
-</div><!-- #primary -->
+            <div class="info-author">
+                <!-- Title Blog Page -->
+                <div class="title-page">
+                    <span class="uppercase"><?php _e('About author', 'frontporchsolutions'); ?></span>
+                    <h2 class="title--3 title-md--1">
+                        <?php the_author_meta('first_name'); ?>
+                        <?php the_author_meta('last_name'); ?>
+                    </h2>
+                    <p><?php the_author_meta('description'); ?></p>
+                    <div class="social-icons">
+                        <?php
+                        if (have_rows('social_icons_author', 'user_' . $author_id)) :
+                            while (have_rows('social_icons_author', 'user_' . $author_id)) : the_row();
+                                $social = get_sub_field('social_icon');
+                        ?>
+                                <a href="<?php the_sub_field('social_profile'); ?>" target="_blank" data-link-type="social" data-social-network="<?php echo $social['value']; ?>">
+                                    <span class="fpsIcon-<?php echo $social['value']; ?>"></span>
+                                </a>
+                        <?php endwhile;
+                        endif; ?>
+                    </div>
+                    <!--/Social Icons-->
+                </div>
+            </div>
+        </div><!-- .entry-content -->
+
+        <!-- List Post -->
+        <div class="grid grid-cols-3">
+            <?php while (have_posts()) : the_post(); ?>
+
+                <!-- Item Post -->
+                <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                    <header class="header-post">
+                        <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail(); ?></a>
+                    </header>
+
+                    <div class="info-post">
+                        <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+                        <?php the_excerpt(); ?>
+                        <a href="<?php the_permalink(); ?>" class="link">
+                            <?php _e('Continue Reading', 'frontporchsolutions'); ?>
+                        </a>
+                    </div>
+                </article>
+                <!-- Item Post -->
+
+            <?php endwhile; ?>
+        </div>
+        <!-- List Post -->
+
+        <!-- Pagination -->
+        <?php if (function_exists('custom_pagination')) : ?>
+            <div class="pagination">
+                <?php custom_pagination($posts->max_num_pages, "", $paged); ?>
+            </div>
+        <?php endif; ?>
+        <!-- End Pagination -->
+
+    </div>
+</section><!-- #main -->
+
 
 <?php
 get_footer();
