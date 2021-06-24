@@ -20,17 +20,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jque
 
 /***/ }),
 
-/***/ "./assets/src/js/demo.js":
-/*!*******************************!*\
-  !*** ./assets/src/js/demo.js ***!
-  \*******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"suma\": () => (/* binding */ suma)\n/* harmony export */ });\nfunction suma(a,b) {\r\n    console.log(\"Hola funciono el JS\");\r\n    return a + b;\r\n}\r\n\r\nsuma(20,40);\n\n//# sourceURL=webpack://tailwindbase/./assets/src/js/demo.js?");
-
-/***/ }),
-
 /***/ "./assets/src/js/index.js":
 /*!********************************!*\
   !*** ./assets/src/js/index.js ***!
@@ -38,7 +27,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _css_main_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../css/main.css */ \"./assets/src/css/main.css\");\n/* harmony import */ var _js_base_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../js/base.js */ \"./assets/src/js/base.js\");\n/* harmony import */ var _demo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./demo */ \"./assets/src/js/demo.js\");\n\r\n\r\n\r\n\r\n(0,_demo__WEBPACK_IMPORTED_MODULE_2__.suma)();\r\n\r\n\r\n\n\n//# sourceURL=webpack://tailwindbase/./assets/src/js/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _css_main_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../css/main.css */ \"./assets/src/css/main.css\");\n/* harmony import */ var _js_base_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../js/base.js */ \"./assets/src/js/base.js\");\n\r\n\r\n\r\n\r\n\n\n//# sourceURL=webpack://tailwindbase/./assets/src/js/index.js?");
 
 /***/ }),
 
