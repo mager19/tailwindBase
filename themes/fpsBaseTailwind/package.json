@@ -19,7 +19,8 @@
   ],
   "author": "@mager19 + @yavallejo",
   "dependencies": {
-    "@babel/polyfill": "^7.11.5"
+    "@babel/polyfill": "^7.11.5",
+    "@tailwindcss/typography": "^0.4.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.5",

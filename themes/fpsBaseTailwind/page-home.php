@@ -73,8 +73,8 @@ get_header(); ?>
                 <div class="absolute bottom-0 left-0 block w-48 h-48 ml-3 -mb-24" style="background: radial-gradient(black, transparent 60%); transform: rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1); opacity: 0.2;"></div>
                 <img class="relative w-40" src="https://user-images.githubusercontent.com/2805249/64069899-8bdaa180-cc97-11e9-9b19-1a9e1a254c18.png" alt="">
             </div>
-            <div class="relative px-6 pb-6 mt-6 text-white">
-                <span class="block -mb-1 opacity-75">Outdoor</span>
+            <div class="relative px-6 pb-6 mt-6 text-dark-1">
+                <span class="block -mb-1">Outdoor</span>
                 <div class="flex justify-between">
                     <span class="block text-xl font-semibold">Oak Tree</span>
                     <span class="flex items-center block px-3 py-2 text-xs font-bold leading-none bg-white rounded-full">$68.50</span>
@@ -147,6 +147,22 @@ get_header(); ?>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="container mx-auto prose-sm">
+        <h3>This is my title</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque sit, officiis doloribus nostrum labore eligendi doloremque ducimus enim cupiditate quasi soluta, natus non esse sequi, sapiente adipisci obcaecati. Temporibus, aperiam.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque sit, officiis doloribus nostrum labore eligendi doloremque ducimus enim cupiditate quasi soluta, natus non esse sequi, sapiente adipisci obcaecati. Temporibus, aperiam.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque sit, officiis doloribus nostrum labore eligendi doloremque ducimus enim cupiditate quasi soluta, natus non esse sequi, sapiente adipisci obcaecati. Temporibus, aperiam.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque sit, officiis doloribus nostrum labore eligendi doloremque ducimus enim cupiditate quasi soluta, natus non esse sequi, sapiente adipisci obcaecati. Temporibus, aperiam.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque sit, officiis doloribus nostrum labore eligendi doloremque ducimus enim cupiditate quasi soluta, natus non esse sequi, sapiente adipisci obcaecati. Temporibus, aperiam.</p>
+        <ul>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+        </ul>
     </div>
 
 <?php endwhile; ?>
