@@ -18,11 +18,11 @@ get_header(); ?>
 <!-- Hero Header -->
 <?php while (have_posts()) : the_post(); ?>
 
-    <div class="content-area top-bar">
+    <div class="content-area top-bar md:mt-[113px]">
         <div class="container m-auto ">
             <!-- Three columns -->
             <div class="flex content-center justify-center h-12 mb-0 mb-2">
-                <h1 class="flex items-center rotate-90 foo">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem, unde.</h1>
+                <h1 class="flex items-center text-yellow-700 foo">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem, unde.</h1>
 
                 <button class="px-2 blue_button">Test</button>
             </div>
@@ -77,14 +77,14 @@ get_header(); ?>
                 <span class="block -mb-1 opacity-75">Outdoor</span>
                 <div class="flex justify-between">
                     <span class="block text-xl font-semibold">Oak Tree</span>
-                    <span class="flex items-center block px-3 py-2 text-xs font-bold leading-none text-purple-500 bg-white rounded-full">$68.50</span>
+                    <span class="flex items-center block px-3 py-2 text-xs font-bold leading-none bg-white rounded-full">$68.50</span>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <div class="container m-auto max-w-4x">
+    <div class="container m-auto max-w-4x " id="hola">
         <section class="flex flex-wrap items-start items-center justify-between m-auto">
             <article class="w-full px-4 m-auto mb-10 shadow-lg lg:w-1/3 md:w-1/2">
                 <img class="object-cover w-full" src="https://placeimg.com/640/480/any" alt="">

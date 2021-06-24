@@ -1424,6 +1424,15 @@ blockquote p {
 .fpsIcon-tripadvisor:before {
     content: "\f100";
 }
+.visible {
+	visibility: visible;
+}
+.static {
+	position: static;
+}
+.fixed {
+	position: fixed;
+}
 .absolute {
 	position: absolute;
 }
@@ -1479,11 +1488,29 @@ blockquote p {
 .block {
 	display: block;
 }
+.inline-block {
+	display: inline-block;
+}
+.inline {
+	display: inline;
+}
 .flex {
 	display: flex;
 }
+.table {
+	display: table;
+}
 .grid {
 	display: grid;
+}
+.contents {
+	display: contents;
+}
+.hidden {
+	display: none;
+}
+.\!hidden {
+	display: none !important;
 }
 .h-12 {
 	height: 3rem;
@@ -1518,12 +1545,11 @@ blockquote p {
 .flex-shrink-0 {
 	flex-shrink: 0;
 }
-.rotate-90 {
-	--tw-rotate: 90deg;
-	transform: var(--tw-transform);
-}
 .transform {
 	transform: var(--tw-transform);
+}
+.resize {
+	resize: both;
 }
 .flex-wrap {
 	flex-wrap: wrap;
@@ -1549,11 +1575,22 @@ blockquote p {
 .overflow-hidden {
 	overflow: hidden;
 }
+.truncate {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
 .rounded-lg {
 	border-radius: 0.5rem;
 }
 .rounded-full {
 	border-radius: 9999px;
+}
+.rounded {
+	border-radius: 0.25rem;
+}
+.border {
+	border-width: 1px;
 }
 .bg-white {
 	--tw-bg-opacity: 1;
@@ -1570,6 +1607,10 @@ blockquote p {
 .bg-gray-400 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(156, 163, 175, var(--tw-bg-opacity));
+}
+.bg-red-700 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(185, 28, 28, var(--tw-bg-opacity));
 }
 .object-cover {
 	-o-object-fit: cover;
@@ -1638,20 +1679,22 @@ blockquote p {
 .font-bold {
 	font-weight: 700;
 }
+.uppercase {
+	text-transform: uppercase;
+}
+.lowercase {
+	text-transform: lowercase;
+}
 .leading-none {
 	line-height: 1;
+}
+.text-yellow-700 {
+	--tw-text-opacity: 1;
+	color: rgba(180, 83, 9, var(--tw-text-opacity));
 }
 .text-white {
 	--tw-text-opacity: 1;
 	color: rgba(255, 255, 255, var(--tw-text-opacity));
-}
-.text-purple-500 {
-	--tw-text-opacity: 1;
-	color: rgba(139, 92, 246, var(--tw-text-opacity));
-}
-.text-red-100 {
-	--tw-text-opacity: 1;
-	color: rgba(254, 226, 226, var(--tw-text-opacity));
 }
 .text-red-500 {
 	--tw-text-opacity: 1;
@@ -1666,7 +1709,38 @@ blockquote p {
 	box-shadow: 0 0 rgba(0,0,0,0), 0 0 rgba(0,0,0,0), var(--tw-shadow);
 	box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0,0,0,0)), var(--tw-ring-shadow, 0 0 rgba(0,0,0,0)), var(--tw-shadow);
 }
+.shadow {
+	--tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+	box-shadow: 0 0 rgba(0,0,0,0), 0 0 rgba(0,0,0,0), var(--tw-shadow);
+	box-shadow: 0 0 rgba(0,0,0,0), 0 0 rgba(0,0,0,0), var(--tw-shadow);
+	box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0,0,0,0)), var(--tw-ring-shadow, 0 0 rgba(0,0,0,0)), var(--tw-shadow);
+}
+.blur {
+	--tw-blur: blur(8px);
+	filter: var(--tw-filter);
+}
+.invert {
+	--tw-invert: invert(100%);
+	filter: var(--tw-filter);
+}
+.filter {
+	filter: var(--tw-filter);
+}
+.\!filter {
+	filter: var(--tw-filter) !important;
+}
+.transition {
+	transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+	transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+	transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-duration: 150ms;
+}
 @media (min-width: 768px) {
+
+	.md\:mt-\[113px\] {
+		margin-top: 113px;
+	}
 
 	.md\:w-1\/2 {
 		width: 50%;

@@ -2,7 +2,7 @@ module.exports = {
     mode: 'jit',
     purge: {
         enabled: true,
-        content: ['./*.php'],
+        content: ['./*.php', './assets/**/*.js'],
     },
     theme: {
         extend: {

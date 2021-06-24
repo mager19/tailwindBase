@@ -8,7 +8,6 @@ import 'slick-carousel/slick/slick-theme.css';
 (function ($) {
 
     // Slick
-
     $(".slickDemo").slick({
         arrows: true,
         infinite: true,
