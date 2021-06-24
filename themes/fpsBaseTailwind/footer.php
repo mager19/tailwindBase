@@ -15,7 +15,7 @@ if (!is_404())
 {
     if (!is_home())
     {
-        get_template_part('inc/cta', 'footer');
+        get_template_part('template-parts/cta', 'footer');
     }
 }
 ?>

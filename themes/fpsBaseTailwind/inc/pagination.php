@@ -1,6 +1,6 @@
 <?php
 
-function custom_pagination($numpages = '', $pagerange = '', $paged='') {
+function fpsBaseTailwind__pagination($numpages = '', $pagerange = '', $paged='') {
   if (empty($pagerange)) {
     $pagerange = 2;
   }

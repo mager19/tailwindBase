@@ -16,7 +16,7 @@ get_header(); ?>
             <?php the_post_thumbnail(); ?>
             <?php
             the_content();
-            echo social_sharing_buttons();
+            echo fpsBaseTailwind__socialShare();
             ?>
 
             <div class="entry-author">

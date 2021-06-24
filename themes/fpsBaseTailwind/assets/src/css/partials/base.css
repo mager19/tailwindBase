@@ -2,10 +2,6 @@
     @apply text-white bg-primary;
 }
 
-.color {
-    color: blue;
-}
-
 html {
     box-sizing: border-box;
     scroll-behavior: smooth;

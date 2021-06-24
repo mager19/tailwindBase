@@ -1,5 +1,5 @@
 <?php
-function cptui_register_my_cpts_cta() {
+function fpsBaseTailwind__registerCTA() {
 
 	/**
 	 * Post Type: CTA'S.
@@ -37,6 +37,4 @@ function cptui_register_my_cpts_cta() {
 	register_post_type( "cta", $args );
 }
 
-add_action( 'init', 'cptui_register_my_cpts_cta' );
-
-?>
+add_action( 'init', 'fpsBaseTailwind__registerCTA' );

@@ -83,9 +83,9 @@ $curauth = $wp_query->get_queried_object();
         <!-- List Post -->
 
         <!-- Pagination -->
-        <?php if (function_exists('custom_pagination')) : ?>
+        <?php if (function_exists('fpsBaseTailwind__pagination')) : ?>
             <div class="pagination">
-                <?php custom_pagination($posts->max_num_pages, "", $paged); ?>
+                <?php fpsBaseTailwind__pagination($posts->max_num_pages, "", $paged); ?>
             </div>
         <?php endif; ?>
         <!-- End Pagination -->

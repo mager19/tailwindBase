@@ -79,7 +79,7 @@
         <!--/Menu-->
 
         <!--Breadcrumbs-->
-        <?php get_template_part('inc/content', 'breadcrumbs'); ?>
+        <?php get_template_part('template-parts/content', 'breadcrumbs'); ?>
         <!--/Breadcrumbs-->
 
 

@@ -13,7 +13,7 @@
 get_header(); ?>
 
 <!-- Hero Header -->
-<?php get_template_part('inc/hero', 'content'); ?>
+<?php get_template_part('template-parts/hero', 'content'); ?>
 <!-- /Hero Header -->
 
 <section class="container grid grid-cols-12 mx-auto py-14">
