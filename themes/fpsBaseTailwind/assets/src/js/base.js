@@ -7,6 +7,8 @@ import 'slick-carousel/slick/slick-theme.css';
 
 (function ($) {
 
+    // Slick
+
     $(".slickDemo").slick({
         arrows: true,
         infinite: true,
@@ -19,7 +21,7 @@ import 'slick-carousel/slick/slick-theme.css';
         speed: 500,
     });
 
-
+    // Menu Mobile Plugin FPS Menu
     document.querySelector("#menumobile").addEventListener("click", (e) => {
         e.preventDefault();
         fps_mmenu.open();
