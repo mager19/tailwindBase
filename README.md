@@ -1,4 +1,77 @@
-# New Updates 2021
+# WebPack
+
+-  Updating Plugins
+-  Updatind Dependencies
+   - @babel/cli
+   - @babel/core
+   - @babel/preset-env
+   - autoprefixer
+   - babel-core
+   - babel-loader
+   - browser-sync
+   - browser-sync-webpack-plugin
+   - copy-webpack-plugin
+   - css-loader
+   - css-minimizer-webpack-plugin
+   - file-loader
+   - jquery
+   - mini-css-extract-plugin
+   - postcss
+   - postcss-import
+   - postcss-loader
+   - postcss-nested
+   - postcss-preset-env
+   - postcss-rem
+   - postcss-simple-vars
+   - precss
+   - slick-carousel
+   - style-loader
+   - tailwindcss
+   - url-loader
+   - webpack
+   - webpack-cli
+   - webpack-dev-server
+-  Removing Gulp
+-  Remove Postcss mixins
+-  Change structure class bootstrap to tailwind
+-  Add WebPack
+
+## Getting Started
+
+This Base theme Code is developed using next tools:
+
+-   Underscores as source code http://underscores.me
+-   Tailwind v2.2.x https://tailwindcss.com/
+-   PostCSS https://postcss.org/
+-   Material Design --- Icons Here https://material.io/tools/icons/?style=baseline + Developer Guide here https://google.github.io/material-design-icons/
+
+### PostCSS + TailwindCss + Browser sync
+
+It helps us to automate so that every time we make a change in our css we update the ./assets/main.css and we refresh the browser.
+
+1- Go to /themes/fpsbaseTailwind
+
+2- Open console in the fpsbaseTailwind directory, and type:
+
+npm install
+
+4- Open webpack.config.js and change the domain Here
+
+    const localDomain = 'http://webpack.local/';
+
+5- Open the console and sun scripts
+
+    npm run dev
+    npm run prod 'when finished project or the update task'
+
+6- Enjoy
+
+---
+
+
+
+
+
 
 ### 24 May
 
