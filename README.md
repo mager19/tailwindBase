@@ -1,6 +1,7 @@
 # WebPack
 
 -  Updating Plugins
+-  Add editorconfig
 -  Updatind Dependencies
    - @babel/cli
    - @babel/core
@@ -44,6 +45,7 @@ This Base theme Code is developed using next tools:
 -   Tailwind v2.2.x https://tailwindcss.com/
 -   PostCSS https://postcss.org/
 -   Material Design --- Icons Here https://material.io/tools/icons/?style=baseline + Developer Guide here https://google.github.io/material-design-icons/
+-   Editorconfig https://editorconfig.org/
 
 ### PostCSS + TailwindCss + Browser sync
 
