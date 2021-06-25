@@ -64,7 +64,9 @@ npm install
 5- Open the console and sun scripts
 
     npm run dev
-    npm run prod 'when finished project or the update task'
+    npm run prod
+
+Note: important use script npm run prod when finished project or the update task
 
 6- Enjoy
 
