@@ -54,3 +54,8 @@ if (!function_exists('fpsBaseTailwind')) :
     }
 endif;
 add_action('after_setup_theme', 'fpsBaseTailwind');
+
+
+// Disable Guteneberg
+
+add_filter('use_block_editor_for_post', '__return_false');
