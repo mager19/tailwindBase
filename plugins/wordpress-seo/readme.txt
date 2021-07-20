@@ -4,8 +4,13 @@ Donate link: https://yoa.st/1up
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: SEO, XML sitemap, Content analysis, Readability, Schema
+<<<<<<< HEAD
 Tested up to: 5.8
 Stable tag: 16.7
+=======
+Tested up to: 5.7
+Stable tag: 16.6.1
+>>>>>>> 2e681335b8ead145aa245f3a4d8e8666addd6625
 Requires PHP: 5.6.20
 
 Improve your WordPress SEO: Write better content and have a fully optimized WordPress site using the Yoast SEO plugin.
@@ -236,21 +241,10 @@ Your question has most likely been answered on our help center: [yoast.com/help/
 
 == Changelog ==
 
+<<<<<<< HEAD
 = 16.7 =
 Release Date: July 13th, 2021
-
-Meet Yoast SEO 16.7! This release comes with extended support for headless WordPress. Yoast SEO comes with a REST API that developers can use to access our metadata in a headless WordPress installation. In Yoast SEO 16.7, we’re making more data available and also in a different format: JSON. Read more about what’s new in Yoast SEO 16.7 in [our release post](https://yoa.st/release-16-7)!
-
-Enhancements:
-
-* Upgrades our REST API to include individual keys/values for all of our meta tags, data and schema output. Read all about it in [this in-depth explanation about our REST API](https://yoa.st/rest-api).
-
-Bugfixes:
-
-* Fixes a bug where a database entry would be added in the indexables table every time a WooCommerce order was created.
-* Fixes a bug where the SEO optimization could run indefinitely when the database contained at least 25 faulty indexables without a permalink.
-* Fixes a bug where the Advanced section and Schema tab wouldn't be visible in the metabox for Editors. Props to [jordif](https://github.com/jordif).
-
+=======
 = 16.6.1 =
 Release Date: July 1st, 2021
 
@@ -278,5 +272,51 @@ Bugfixes:
 * Fixes a bug where using the `wpseo_schema_{@type}` filter would result in a fatal error.
 * Fixes a bug where the last breadcrumb item was stripped in breadcrumb Schema output on subsequent pages of a static posts page.
 
+= 16.5 =
+Release Date: June 15th, 2021
+>>>>>>> 2e681335b8ead145aa245f3a4d8e8666addd6625
+
+Meet Yoast SEO 16.7! This release comes with extended support for headless WordPress. Yoast SEO comes with a REST API that developers can use to access our metadata in a headless WordPress installation. In Yoast SEO 16.7, we’re making more data available and also in a different format: JSON. Read more about what’s new in Yoast SEO 16.7 in [our release post](https://yoa.st/release-16-7)!
+
+Enhancements:
+
+* Upgrades our REST API to include individual keys/values for all of our meta tags, data and schema output. Read all about it in [this in-depth explanation about our REST API](https://yoa.st/rest-api).
+
+Bugfixes:
+
+* Fixes a bug where a database entry would be added in the indexables table every time a WooCommerce order was created.
+* Fixes a bug where the SEO optimization could run indefinitely when the database contained at least 25 faulty indexables without a permalink.
+* Fixes a bug where the Advanced section and Schema tab wouldn't be visible in the metabox for Editors. Props to [jordif](https://github.com/jordif).
+
+= 16.6.1 =
+Release Date: July 1st, 2021
+
+Bugfixes:
+
+* Fixes a bug where many Premium editor features would not work if Yoast SEO was updated to version 16.6 while Yoast SEO Premium was still on version 16.5 or lower.
+
+<<<<<<< HEAD
+= 16.6 =
+Release Date: June 29th, 2021
+
+Yoast SEO 16.6 comes with a new round of improvements and fixes. We’ve updated the analysis to exclude sentences inside tables and table captions from the consecutive sentences assessment. Enjoy! Read more about what’s new in Yoast SEO 16.6 in [our release post](https://yoa.st/release-16-6)!
+
+Enhancements:
+
+* Updates `SearchAction` schema to comply with Google's updated specification.
+* Excludes sentences inside tables and table captions from the consecutive sentences assessment.
+* Adds adjacent relative links (`rel="prev"` and `rel="next"`) for WooCommerce shop pages. Props to [stodorovic](https://github.com/stodorovic).
+* Adds increased compatibility for LiteSpeed web servers. Props to [J-Rey](https://github.com/J-Rey).
+* Adds adjacent relative links for WooCommerce shop pages. Props to [stodorovic](https://github.com/stodorovic).
+
+Bugfixes:
+
+* Fixes a bug where an error would be shown on the page overview and post overview when the website's MySQL database was run in ANSI-mode. Props to [stodorovic](https://github.com/stodorovic).
+* Fixes a bug where shortcodes would be removed from the Open Graph description even when they were explicitly added. Props to [Lomerill](https://github.com/Lomerill).
+* Fixes a bug where using the `wpseo_schema_{@type}` filter would result in a fatal error.
+* Fixes a bug where the last breadcrumb item was stripped in breadcrumb Schema output on subsequent pages of a static posts page.
+
+=======
+>>>>>>> 2e681335b8ead145aa245f3a4d8e8666addd6625
 = Earlier versions =
 For the changelog of earlier versions, please refer to [the changelog on yoast.com](https://yoa.st/yoast-seo-changelog).
