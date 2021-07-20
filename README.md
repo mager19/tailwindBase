@@ -1,41 +1,45 @@
+# July 20 - 2021
+
+-   add action for remove type in script and style (good practices validator w3c)
+
 # WebPack
 
--  Updating Plugins
--  Add editorconfig
--  Updatind Dependencies
-   - @babel/cli
-   - @babel/core
-   - @babel/preset-env
-   - autoprefixer
-   - babel-core
-   - babel-loader
-   - browser-sync
-   - browser-sync-webpack-plugin
-   - copy-webpack-plugin
-   - css-loader
-   - css-minimizer-webpack-plugin
-   - file-loader
-   - jquery
-   - mini-css-extract-plugin
-   - postcss
-   - postcss-import
-   - postcss-loader
-   - postcss-nested
-   - postcss-preset-env
-   - postcss-rem
-   - postcss-simple-vars
-   - precss
-   - slick-carousel
-   - style-loader
-   - tailwindcss
-   - url-loader
-   - webpack
-   - webpack-cli
-   - webpack-dev-server
--  Removing Gulp
--  Remove Postcss mixins
--  Change structure class bootstrap to tailwind
--  Add WebPack
+-   Updating Plugins
+-   Add editorconfig
+-   Updatind Dependencies
+    -   @babel/cli
+    -   @babel/core
+    -   @babel/preset-env
+    -   autoprefixer
+    -   babel-core
+    -   babel-loader
+    -   browser-sync
+    -   browser-sync-webpack-plugin
+    -   copy-webpack-plugin
+    -   css-loader
+    -   css-minimizer-webpack-plugin
+    -   file-loader
+    -   jquery
+    -   mini-css-extract-plugin
+    -   postcss
+    -   postcss-import
+    -   postcss-loader
+    -   postcss-nested
+    -   postcss-preset-env
+    -   postcss-rem
+    -   postcss-simple-vars
+    -   precss
+    -   slick-carousel
+    -   style-loader
+    -   tailwindcss
+    -   url-loader
+    -   webpack
+    -   webpack-cli
+    -   webpack-dev-server
+-   Removing Gulp
+-   Remove Postcss mixins
+-   Change structure class bootstrap to tailwind
+-   Add WebPack
 
 ## Getting Started
 
@@ -71,11 +75,6 @@ Note: important use script npm run prod when finished project or the update task
 6- Enjoy
 
 ---
-
-
-
-
-
 
 ### 24 May
 
