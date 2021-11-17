@@ -1,3 +1,7 @@
+# November 16 - 2021
+
+-   Update Plugins
+
 # July 20 - 2021
 
 -   add action for remove type in script and style (good practices validator w3c)
