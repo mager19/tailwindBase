@@ -34,7 +34,7 @@ if (post_password_required())
             {
                 printf(
                     /* translators: 1: title. */
-                    esc_html_e('One thought on &ldquo;%1$s&rdquo;', 'fpsBaseTailwind'),
+                    esc_html_e('One thought on &ldquo;%1$s&rdquo;', 'frontporchsolutions'),
                     '<span>' . get_the_title() . '</span>'
                 );
             }
@@ -42,7 +42,7 @@ if (post_password_required())
             {
                 printf( // WPCS: XSS OK.
                     /* translators: 1: comment count number, 2: title. */
-                    esc_html(_nx('%1$s thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', $comment_count, 'comments title', 'fpsBaseTailwind')),
+                    esc_html(_nx('%1$s thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', $comment_count, 'comments title', 'frontporchsolutions')),
                     number_format_i18n($comment_count),
                     '<span>' . get_the_title() . '</span>'
                 );
@@ -65,7 +65,7 @@ if (post_password_required())
 
         // If comments are closed and there are comments, let's leave a little note, shall we?
         if (!comments_open()) : ?>
-            <p class="no-comments"><?php esc_html_e('Comments are closed.', 'fpsBaseTailwind'); ?></p>
+            <p class="no-comments"><?php esc_html_e('Comments are closed.', 'frontporchsolutions'); ?></p>
     <?php
         endif;
 

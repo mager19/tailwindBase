@@ -15,9 +15,7 @@
 
 get_header(); ?>
 
-<!-- Hero Header -->
 <?php get_template_part('template-parts/hero', 'content'); ?>
-
 <!-- /Hero Header -->
 
 <section class="container mx-auto py-14">

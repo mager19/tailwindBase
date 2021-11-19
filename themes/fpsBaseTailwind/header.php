@@ -14,20 +14,15 @@
 <head>
 
     <?php get_template_part('inc/datalayer', 'info'); ?>
-
-    <!--Google Tag Manager-->
     <?php the_field('google_tag_header', 'option'); ?>
     <!--/Google Tag Manager-->
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="profile" href="http://gmpg.org/xfn/11">
-
-    <!--Favicon-->
     <link rel="icon" href="<?php the_field('favicon', 'option'); ?>">
     <!--/Favicon-->
     <meta name="msapplication-TileColor" content="#d65a45">
     <meta name="theme-color" content="#d65a45">
-
     <?php wp_head(); ?>
 </head>
 

@@ -20,7 +20,7 @@ get_header(); ?>
                 <h1 class="title--3 title-md--1">
                     <?php
                     /* translators: %s: search query. */
-                    printf(esc_html__('Search Results for: %s', 'fpsBaseTailwind'), '<span>' . get_search_query() . '</span>');
+                    printf(esc_html__('Search Results for: %s', 'frontporchsolutions'), '<span>' . get_search_query() . '</span>');
                     ?>
                 </h1>
             </header><!-- .page-header -->
@@ -49,7 +49,7 @@ get_header(); ?>
                 <?php endwhile; ?>
             </div>
             <!-- Pagination -->
-            <?php if (function_exists('fpsBaseTailwind__pagination')) : ?>
+            <?php if (function_exists('frontporchsolutions__pagination')) : ?>
                 <div class="pagination">
                     <?php fpsBaseTailwind__pagination($posts->max_num_pages, "", $paged); ?>
                 </div>
