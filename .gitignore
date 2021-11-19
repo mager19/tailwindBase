@@ -1,15 +1,17 @@
 # https://git-scm.com/docs/gitignore
 # https://help.github.com/articles/ignoring-files
 # Example .gitignore files: https://github.com/github/gitignore
-bower_components/
-node_modules/
-themes/fpsBase/.sass-cache/
-themes/fpsBase/node_modules/
+
+
+themes/fpsBaseTailwind/.sass-cache/
+themes/fpsBaseTailwind/node_modules/
+themes/fpsBaseTailwind/bower_components/
+themes/fpsBaseTailwind/__MACOSX/
 uploads/
 
 # OS generated files #
 ######################
-.DS_Store
+**/.DS_Store
 .DS_Store?
 ._*
 .Spotlight-V100
@@ -19,4 +21,3 @@ Thumbs.db
 
 # Remove theme default
 /themes/twenty*/
-
