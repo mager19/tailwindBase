@@ -675,10 +675,9 @@ add_action('admin_head', 'add_site_favicon');
 /**
  * Embedded style sheet
  */
-function custom_login_styles()
-{
+function custom_login_styles(){
 	$dir = plugin_dir_url(__FILE__);
-	wp_enqueue_style('custom-login', $dir . 'css/frontporchlogin-custom-login.css');
+	wp_enqueue_style('custom-login', $dir . 'css/frontporchlogin-custom-login.css', array(), '1.2', 'all' );
 }
 add_action('login_enqueue_scripts', 'custom_login_styles');
 

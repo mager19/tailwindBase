@@ -7,6 +7,12 @@
      display: flex;
      align-items: center;
      overflow: hidden;
+     justify-content: center;
+     flex-direction: column;
+ }
+
+ body .language-switcher{
+     display: none !important;
  }
 
  body.login div#login {

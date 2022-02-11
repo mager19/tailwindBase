@@ -16,7 +16,7 @@
  * Plugin Name:       FPS Custom Login
  * Plugin URI:        frontporchsolutions.com
  * Description:       Allows site admins to tweak the login’s settings, color schemes and logo preview (only works in FPS company).
- * Version:           2.0.9
+ * Version:           2.1.1
  * Author:            frontporchsolutions
  * Author URI:        frontporchsolutions.com
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'FRONTPORCHLOGIN_VERSION', '2.0.9' );
+define( 'FRONTPORCHLOGIN_VERSION', '2.1.1' );
 
 //plugin-update-checker
 

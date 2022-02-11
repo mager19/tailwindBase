@@ -8,7 +8,10 @@ themes/fpsBaseTailwind/node_modules/
 themes/fpsBaseTailwind/bower_components/
 themes/fpsBaseTailwind/__MACOSX/
 themes/__MACOSX/
-uploads/
+
+# Enabled when deployment site in server dev
+# plugins/
+# uploads/
 
 # OS generated files #
 ######################
