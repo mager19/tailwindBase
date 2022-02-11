@@ -1,3 +1,8 @@
+# February 11 - 2022
+
+-   Update Plugins
+-   Update .gitignore
+
 # November 16 - 2021
 
 -   Update Plugins
